@@ -4,7 +4,9 @@
 (def aurriz "http://localhost:3000/v1/")
 
 (defonce saioa (atom {:erabiltzailea nil
-                      :token nil}))
+                      :izena nil
+                      :token nil
+                      :iraungitze_data nil}))
 
 (defn erabiltzailea-gehitu
   "Erabiltzaile berri bat gehitzen du."
@@ -19,23 +21,36 @@
               :format :json
               :handler #(println %)
               :error-handler #(println %)}))))
-
 #_(erabiltzailea-gehitu "era" "1234" "era")
+
+(defn saioa-hasi
+  "Saioa hasten du."
+  [era pas]
+  (POST (str aurriz "saioak")
+        {:params {:erabiltzailea era
+                  :pasahitza pas}
+         :format :json
+         :handler #(swap! saioa assoc
+                          :erabiltzailea era
+                          :token (% "token")
+                          :iraungitze_data (% "iraungitze_data"))
+         :error-handler #(println %)}))
+#_(saioa-hasi "era" "1234")
+
+(defn saioa-amaitu
+  "Saioa amaitzen du."
+  []
+  (DELETE (str aurriz "saioak/" (:token @saioa))
+          {:handler #(reset! saioa {:erabiltzailea nil
+                                    :izena nil
+                                    :token nil
+                                    :iraungitze_data nil})
+           :error-handler #(println %)}))
+#_(saioa-amaitu)
 
 (GET (str aurriz "erabiltzaileak")
      {:handler #(println %)
       :error-handler #(println %)})
-
-
-(POST (str aurriz "saioak")
-      {:params {:erabiltzailea "era"
-               :pasahitza "1234"
-               :izena "era"}
-       :format :json
-       :handler #(swap! saioa assoc
-                        :erabiltzailea "era"
-                        :token (% "token"))
-       :error-handler #(println %)})
 
 (DELETE (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "?token=" (:token @saioa))
      {:handler #(println %)
