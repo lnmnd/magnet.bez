@@ -48,10 +48,14 @@
            :error-handler #(println %)}))
 #_(saioa-amaitu)
 
-(GET (str aurriz "erabiltzaileak")
-     {:handler #(println %)
-      :error-handler #(println %)})
+(defn erabiltzailea-ezabatu
+  "Erabiltzailea ezabatu eta saioa amaitzen du."
+  []
+  (DELETE (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "?token=" (:token @saioa))
+          {:handler #(saioa-amaitu)
+           :error-handler #(println %)}))
+#_(erabiltzailea-ezabatu)
 
-(DELETE (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "?token=" (:token @saioa))
+(GET (str aurriz "erabiltzaileak")
      {:handler #(println %)
       :error-handler #(println %)})
