@@ -1,10 +1,8 @@
-# magnet
+# Magnet loturak: bezeroa
 
-A Clojure library designed to ... well, that part is up to you.
+## Garapena
 
-## Usage
-
-cljs REPL abiarazteko (phantomjs eduki behar da):
+cljs REPL abiarazteko (phantomjs instalatuta eduki behar da):
 
 > => (cemerick.piggieback/cljs-repl :repl-env (cemerick.austin/exec-env))
 
@@ -14,11 +12,4 @@ Browser REPL:
 
 Ateratzeko:
 
-> > :cljs/quit
-
-## License
-
-Copyright © 2014 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+> => :cljs/quit
