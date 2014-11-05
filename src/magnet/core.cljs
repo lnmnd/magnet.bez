@@ -31,10 +31,12 @@
         {:params {:erabiltzailea era
                   :pasahitza pas}
          :format :json
+         :response-format :json
+         :keywords? true
          :handler #(swap! saioa assoc
                           :erabiltzailea era
-                          :token (% "token")
-                          :iraungitze_data (% "iraungitze_data"))
+                          :token (:token %)
+                          :iraungitze_data (:iraungitze_data %))
          :error-handler #(println %)}))
 #_(saioa-hasi "era" "1234")
 
