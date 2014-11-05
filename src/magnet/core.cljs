@@ -7,6 +7,7 @@
                       :izena nil
                       :token nil
                       :iraungitze_data nil}))
+(defonce azken-iruzkinak (atom []))
 
 (defn erabiltzailea-gehitu
   "Erabiltzaile berri bat gehitzen du."
@@ -55,6 +56,16 @@
           {:handler #(saioa-amaitu)
            :error-handler #(println %)}))
 #_(erabiltzailea-ezabatu)
+
+(defn azken-iruzkinak-lortu
+  "TODO oraingoz iruzkin guztiak lortzen ditu."
+  []
+  (GET (str aurriz "iruzkinak")
+       {:response-format :json
+        :keywords? true
+        :handler #(reset! azken-iruzkinak (:iruzkinak %))
+        :error-handler #(println %)}))
+#_(azken-iruzkinak-lortu)
 
 (GET (str aurriz "erabiltzaileak")
      {:handler #(println %)
