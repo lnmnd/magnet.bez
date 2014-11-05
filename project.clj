@@ -7,4 +7,9 @@
                  [org.clojure/clojurescript "0.0-2371"]
                  [cljs-ajax "0.3.3"]]
   :plugins [[cider/cider-nrepl "0.7.0"]
-            [com.cemerick/austin "0.1.5"]])
+            [com.cemerick/austin "0.1.5"]
+            [codox "0.8.10"]]
+  :codox {:language :clojurescript
+          :include ["magnet.core"]
+          :src-dir-uri "http://github.com/lnmnd/magnet.bez/blob/master/"
+          :src-linenum-anchor-prefix "L"})
