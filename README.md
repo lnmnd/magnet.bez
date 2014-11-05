@@ -4,9 +4,17 @@ A Clojure library designed to ... well, that part is up to you.
 
 ## Usage
 
-cljs REPL abiarazteko:
+cljs REPL abiarazteko (phantomjs eduki behar da):
 
-> => (cemerick.piggieback/cljs-repl)
+> => (cemerick.piggieback/cljs-repl :repl-env (cemerick.austin/exec-env))
+
+Browser REPL:
+
+> => (cemerick.austin.repls/exec :exec-cmds ["firefox"])
+
+Ateratzeko:
+
+> > :cljs/quit
 
 ## License
 

@@ -1,6 +1,8 @@
-(ns magnet.core)
+(ns magnet.core
+  (:require [ajax.core :refer [GET POST PUT DELETE]]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(def aurriz "http://localhost:3000/v1/")
+
+(GET (str aurriz "erabiltzaileak")
+     {:handler #(println %)
+      :error-handler #(println %)})
