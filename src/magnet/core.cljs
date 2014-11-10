@@ -1,6 +1,6 @@
 (ns magnet.core
   (:require [ajax.core :refer [GET POST PUT DELETE]]
-            [magnet.config :refer [azken-iruzkin-kopurua]]))
+            [magnet.config :refer [azken-iruzkin-kopurua azken-liburu-kopurua]]))
 
 (def aurriz "http://localhost:3000/v1/")
 
@@ -9,6 +9,7 @@
                       :token nil
                       :iraungitze_data nil}))
 (defonce azken-iruzkinak (atom []))
+(defonce azken-liburuak (atom []))
 
 (defn erabiltzailea-gehitu
   "Erabiltzaile berri bat gehitzen du."
@@ -75,6 +76,22 @@
            :keywords? true
            :handler #(reset! azken-iruzkinak (reverse (:iruzkinak %)))})))
 #_(azken-iruzkinak-lortu)
+
+(defn azken-liburuak-lortu
+  "Azken liburuak lortzen ditu"
+  ([]
+     (GET (str aurriz "liburuak")
+          {:response-format :json
+           :keywords? true
+           :handler #(azken-liburuak-lortu (if (> (:guztira %) azken-liburu-kopurua)
+                                              (- (:guztira %) azken-liburu-kopurua)
+                                              0))}))
+  ([desp]
+     (GET (str aurriz "liburuak?desplazamendua=" desp "&muga=" azken-liburu-kopurua)
+          {:response-format :json
+           :keywords? true
+           :handler #(reset! azken-liburuak (reverse (:liburuak %)))})))
+#_(azken-liburuak-lortu)
 
 (GET (str aurriz "erabiltzaileak")
      {:handler #(println %)
