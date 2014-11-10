@@ -1,5 +1,7 @@
 (ns magnet.core
-  (:require [ajax.core :refer [GET POST PUT DELETE]]
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require [cljs.core.async :refer [chan put! <! >! timeout]]
+            [ajax.core :refer [GET POST PUT DELETE]]
             [magnet.config :refer [azken-iruzkin-kopurua azken-liburu-kopurua]]))
 
 (def aurriz "http://localhost:3000/v1/")
@@ -92,6 +94,17 @@
            :keywords? true
            :handler #(reset! azken-liburuak (reverse (:liburuak %)))})))
 #_(azken-liburuak-lortu)
+
+(defn egile-guztiak-lortu
+  "Egile guztien zerrenda lortzen du"
+  []
+  (let [kan (chan)]
+    (GET (str aurriz "egileak?muga=0")
+         {:response-format :json
+          :keywords? true
+          :handler #(put! kan (:egileak %))})
+    kan))
+#_(go (println (<! (egile-guztiak-lortu))))
 
 (GET (str aurriz "erabiltzaileak")
      {:handler #(println %)
