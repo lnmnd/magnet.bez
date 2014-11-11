@@ -36,10 +36,10 @@
     (if (:hasita @saioa)
       [:ul.right
        [:li.divider]
-       [:li [:a {:href "#" :on-click #(println "todo")}
+       [:li [:a {:href "#/liburua-gehitu"}
              "Liburua gehitu"]]
        [:li.divider]
-       [:li [:a {:href "#" :on-click #(println "todo")}
+       [:li [:a {:href "#/nire-liburuak"}
              "Nire liburuak"]]
        [:li.divider]
        [:li [:a {:href "#" :on-click #(put! kon [:saioa-amaitu])}
@@ -76,6 +76,8 @@
      [:div.row
       (case bid
         :index "todo index"
+        :liburua-gehitu "todo liburua gehitu"
+        :nire-liburuak "todo nire liburuak"
         :liburua "todo lib"
         nil)]]))
 

@@ -123,10 +123,9 @@
 
 (defn bide-kud [[mota bal]]
   "Bidearen gertaerekin zer egin erabakitzen du."
-  (case mota
-    :index (reset! bidea [:index nil])
-    :liburua (reset! bidea [:liburua bal])
-    nil))
+  (when (contains? #{:index :liburua-gehitu :nire-liburuak :liburua}
+                   mota)
+    (reset! bidea [mota bal])))
 
 (defn errendatu [saio-kon]
   (reagent/render-component [bistak/main saio-kon saioa bidea azken-iruzkinak]

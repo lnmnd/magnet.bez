@@ -9,6 +9,12 @@
 
 (secretary/set-config! :prefix "#")
 
+(defroute "/liburua-gehitu" []
+  (put! kan [:liburua-gehitu nil]))
+
+(defroute "/nire-liburuak" []
+  (put! kan [:nire-liburuak nil]))
+
 (defroute "/liburuak/:id" {:as params}
   (put! kan [:liburua (:id params)]))
 
