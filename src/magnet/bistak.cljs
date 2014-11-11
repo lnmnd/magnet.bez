@@ -32,7 +32,20 @@
        [:li.divider]
        [saioa-hasi kon]])]])
 
+(defn oina []
+  [:footer.row
+   [:div.large-12.columns
+    [:div.row
+     [:div.large-6.columns
+      [:p "Oineko mezua"]]
+     [:div.large-6.columns
+      [:ul.inline-list.right
+       [:li [:a {:href "#"} "Lotura 1"]]
+       [:li [:a {:href "#"} "Lotura 2"]]
+       [:li [:a {:href "#"} "Lotura 3"]]]]]]])
+
 (defn main [saio-kon saioa]
   [:div {:class "row"}
    [:div {:class "large-12 columns"}
-    [goiko-barra saio-kon saioa]]])
+    [goiko-barra saio-kon saioa]
+    [oina]]])
