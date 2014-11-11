@@ -63,7 +63,7 @@
       ^{:key ir} [azken-iruzkina ir])]])
 
 (defn alboko-barra [iruzkinak]
-  [:div.large-4.small-12.columns
+  [:div.medium-4.small-12.columns
    [:img {:src "http://placehold.it/500x500&text=Azala"}]
    [:div.hide-for-small.panel
     [:h3 "Titulua"]
@@ -72,7 +72,7 @@
 
 (defn nagusia [bidea]
   (let [[bid bal] @bidea]
-    [:div.large-8.columns
+    [:div.medium-8.columns
      [:div.row
       (case bid
         :index "todo index"
@@ -88,11 +88,11 @@
 
 (defn oina []
   [:footer.row
-   [:div.large-12.columns
+   [:div.medium-12.columns
     [:div.row
-     [:div.large-6.columns
+     [:div.medium-6.columns
       [:p "Oineko mezua"]]
-     [:div.large-6.columns
+     [:div.medium-6.columns
       [:ul.inline-list.right
        [:li [:a {:href "#"} "Lotura 1"]]
        [:li [:a {:href "#"} "Lotura 2"]]
@@ -100,7 +100,7 @@
 
 (defn main [saio-kon saioa bidea azken-iruzkinak]
   [:div {:class "row"}
-   [:div {:class "large-12 columns"}
+   [:div {:class "medium-12 columns"}
     [goiko-barra saio-kon saioa]
     [erdia bidea azken-iruzkinak]
     [oina]]])
