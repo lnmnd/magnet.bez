@@ -6,6 +6,8 @@
             [magnet.config :refer [azken-iruzkin-kopurua azken-liburu-kopurua]]
             [magnet.bistak :as bistak]))
 
+(enable-console-print!)
+
 (def aurriz "http://localhost:3000/v1/")
 
 (defonce saioa (atom {:erabiltzailea nil
