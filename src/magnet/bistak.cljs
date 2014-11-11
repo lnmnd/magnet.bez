@@ -1,12 +1,15 @@
-(ns magnet.bistak)
+(ns magnet.bistak
+  (:require [cljs.core.async :refer [put!]]))
 
-(defn saioa-hasi []
+; TODO saioa hasteko formu
+(defn saioa-hasi [kon]
   [:li
-   [:a {:href "#" :data-reveal-id "saioaHasiModal"} "Saioa hasi"]
+   [:a {:href "#" :data-reveal-id "saioaHasiModal"
+        :on-click #(put! kon [:saioa-hasi {:era "era" :pas "1234"}])} "Saioa hasi"]
    [:div {:id "saioaHasiModal" :class "reveal-modal" "remove-whitespace" :data-reveal}
     "TODO"]])
 
-(defn goiko-barra [saioa]
+(defn goiko-barra [kon saioa]
   [:nav {:class "top-bar" :data-topbar true}
    [:ul.title-area
     [:li.name
@@ -18,9 +21,9 @@
      [:li.divider]
      (if (:hasita @saioa)
        [:li [:a {:href "#"} "Saioa amaitu"]]
-       [saioa-hasi])]]])
+       [saioa-hasi kon])]]])
 
-(defn main [saioa]
+(defn main [saio-kon saioa]
   [:div {:class "row"}
    [:div {:class "large-12 columns"}
-    [goiko-barra saioa]]])
+    [goiko-barra saio-kon saioa]]])

@@ -1,5 +1,5 @@
 (ns magnet.core
-  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require-macros [cljs.core.async.macros :refer [go go-loop]])
   (:require [cljs.core.async :refer [chan put! <! >! timeout]]
             [ajax.core :refer [GET POST PUT DELETE]]
             [reagent.core :as reagent :refer [atom]]
@@ -113,12 +113,20 @@
     kan))
 #_(go (println (<! (egile-guztiak-lortu))))
 
-(defn errendatu []
-  (reagent/render-component [bistak/main saioa]
+(defn saio-kud [[mota bal]]
+  "Saioaren gertaerekin zer egin erabakitzen du"
+  (case mota
+    :saioa-hasi (saioa-hasi (:era bal) (:pas bal))
+    nil))
+
+(defn errendatu [saio-kon]
+  (reagent/render-component [bistak/main saio-kon saioa]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []
-  (errendatu)
-  (GET (str aurriz "erabiltzaileak")
-       {:handler #(println %)
-        :error-handler #(println %)}))
+  (let [saio-kon (chan)]
+    (errendatu saio-kon)
+    (go-loop [b (<! saio-kon)]
+      (when b
+        (saio-kud b)
+        (recur (<! saio-kon))))))
