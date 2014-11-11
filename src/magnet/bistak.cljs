@@ -20,6 +20,12 @@
     (if (:hasita @saioa)
       [:ul.right
        [:li.divider]
+       [:li [:a {:href "#" :on-click #(println "todo")}
+             "Liburua gehitu"]]
+       [:li.divider]
+       [:li [:a {:href "#" :on-click #(println "todo")}
+             "Nire liburuak"]]
+       [:li.divider]
        [:li [:a {:href "#" :on-click #(put! kon [:saioa-amaitu])}
              (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
       [:ul.right
