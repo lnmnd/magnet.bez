@@ -9,6 +9,9 @@
 
 (secretary/set-config! :prefix "#")
 
+(defroute "/" []
+  (put! kan [:index nil]))
+
 (defroute "/liburua-gehitu" []
   (put! kan [:liburua-gehitu nil]))
 
