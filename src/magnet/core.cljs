@@ -2,7 +2,9 @@
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [cljs.core.async :refer [chan put! <! >! timeout]]
             [ajax.core :refer [GET POST PUT DELETE]]
-            [magnet.config :refer [azken-iruzkin-kopurua azken-liburu-kopurua]]))
+            [reagent.core :as reagent :refer [atom]]
+            [magnet.config :refer [azken-iruzkin-kopurua azken-liburu-kopurua]]
+            [magnet.bistak :as bistak]))
 
 (def aurriz "http://localhost:3000/v1/")
 
@@ -106,6 +108,12 @@
     kan))
 #_(go (println (<! (egile-guztiak-lortu))))
 
-(GET (str aurriz "erabiltzaileak")
-     {:handler #(println %)
-      :error-handler #(println %)})
+(defn errendatu []
+  (reagent/render-component [bistak/main azken-iruzkinak]
+                            (.querySelector js/document "#app")))
+
+(defn ^:export run []
+  (errendatu)
+  (GET (str aurriz "erabiltzaileak")
+       {:handler #(println %)
+        :error-handler #(println %)}))
