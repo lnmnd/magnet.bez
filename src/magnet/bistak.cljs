@@ -1,10 +1,12 @@
 (ns magnet.bistak)
 
-(defn saioa-hasi-modal []
-  [:div {:id "saioaHasiModal" :class "reveal-modal" "remove-whitespace" :data-reveal}
-   "TODO"])
+(defn saioa-hasi []
+  [:li
+   [:a {:href "#" :data-reveal-id "saioaHasiModal"} "Saioa hasi"]
+   [:div {:id "saioaHasiModal" :class "reveal-modal" "remove-whitespace" :data-reveal}
+    "TODO"]])
 
-(defn goiko-barra []
+(defn goiko-barra [saioa]
   [:nav {:class "top-bar" :data-topbar true}
    [:ul.title-area
     [:li.name
@@ -14,11 +16,11 @@
    [:section.top-bar-section
     [:ul.right
      [:li.divider]
-     [:li
-      [:a {:href "#" :data-reveal-id "saioaHasiModal"} "Saioa hasi"]]]]
-   [saioa-hasi-modal]])
+     (if (:hasita @saioa)
+       [:li [:a {:href "#"} "Saioa amaitu"]]
+       [saioa-hasi])]]])
 
-(defn main []
+(defn main [saioa]
   [:div {:class "row"}
    [:div {:class "large-12 columns"}
-    [goiko-barra]]])
+    [goiko-barra saioa]]])

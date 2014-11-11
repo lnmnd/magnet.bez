@@ -114,7 +114,7 @@
 #_(go (println (<! (egile-guztiak-lortu))))
 
 (defn errendatu []
-  (reagent/render-component [bistak/main azken-iruzkinak]
+  (reagent/render-component [bistak/main saioa]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []
