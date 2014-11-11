@@ -120,13 +120,17 @@
     nil))
 
 (defn errendatu [saio-kon]
-  (reagent/render-component [bistak/main saio-kon saioa]
+  (reagent/render-component [bistak/main saio-kon saioa azken-iruzkinak]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []
   (let [saio-kon (chan)]
+    
     (errendatu saio-kon)
+    
     (go-loop [b (<! saio-kon)]
       (when b
         (saio-kud b)
-        (recur (<! saio-kon))))))
+        (recur (<! saio-kon))))
+
+    (azken-iruzkinak-lortu)))

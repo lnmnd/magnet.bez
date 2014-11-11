@@ -50,30 +50,34 @@
        [:li.divider]
        [saioa-hasi kon]])]])
 
-(defn azken-iruzkinak []
+(defn azken-iruzkina [ir]
+  [:a {:href (str "#/liburuak/" (:liburua ir))}
+   [:div.panel.radius
+    [:h5 "Liburu titulua"]
+    [:blockquote (:edukia ir) [:cite (:erabiltzailea ir) " - " (:data ir)]]]])
+
+(defn azken-iruzkinak [iruzkinak]
   [:div
    [:h3 "Azken iruzkinak"
-    [:a {:href "#"}
-     [:div.panel.radius
-      [:h5 "Liburu titulua"]
-      [:blockquote "Iruzkina hemen" [:cite "Erabiltzailea - Data"]]]]]])
+    (for [ir @iruzkinak]
+      ^{:key ir} [azken-iruzkina ir])]])
 
-(defn alboko-barra []
+(defn alboko-barra [iruzkinak]
   [:div.large-4.small-12.columns
    [:img {:src "http://placehold.it/500x500&text=Azala"}]
    [:div.hide-for-small.panel
     [:h3 "Titulua"]
     [:h5 {:class "subheader"} "Liburu garrantzitsu baten datuak."]]
-   [azken-iruzkinak]])
+   [azken-iruzkinak iruzkinak]])
 
 (defn nagusia []
   [:div.large-8.columns
    [:div.row
     "todo"]])
 
-(defn erdia []
+(defn erdia [azken-iruzkinak]
   [:div.row
-   [alboko-barra]
+   [alboko-barra azken-iruzkinak]
    [nagusia]])
 
 (defn oina []
@@ -88,9 +92,9 @@
        [:li [:a {:href "#"} "Lotura 2"]]
        [:li [:a {:href "#"} "Lotura 3"]]]]]]])
 
-(defn main [saio-kon saioa]
+(defn main [saio-kon saioa azken-iruzkinak]
   [:div {:class "row"}
    [:div {:class "large-12 columns"}
     [goiko-barra saio-kon saioa]
-    [erdia]
+    [erdia azken-iruzkinak]
     [oina]]])
