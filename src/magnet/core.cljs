@@ -20,6 +20,17 @@
 (defonce azken-iruzkinak (atom []))
 (defonce azken-liburuak (atom []))
 
+(defn entzun
+  "Helbidea entzuten du eta erantzunari funtzioa aplikatzen dio.
+   Emaitza duen kanala itzultzen du"
+  [helbidea f]
+  (let [kan (chan)]
+    (GET helbidea
+         {:response-format :json
+          :keywords? true
+          :handler #(put! kan (f %))})
+    kan))
+
 (defn erabiltzailea-gehitu
   "Erabiltzaile berri bat gehitzen du."
   ([era pas izen]
@@ -106,12 +117,7 @@
 (defn egile-guztiak-lortu
   "Egile guztien zerrenda lortzen du"
   []
-  (let [kan (chan)]
-    (GET (str aurriz "egileak?muga=0")
-         {:response-format :json
-          :keywords? true
-          :handler #(put! kan (:egileak %))})
-    kan))
+  (entzun (str aurriz "egileak?muga=0") :egileak))
 #_(go (println (<! (egile-guztiak-lortu))))
 
 (defn saio-kud [[mota bal]]
