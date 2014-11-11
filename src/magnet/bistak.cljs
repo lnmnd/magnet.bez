@@ -17,12 +17,14 @@
     [:li {:class "toggle-topbar menu-icon"}
      [:a {:href "#"} [:span "menu"]]]]
    [:section.top-bar-section
-    [:ul.right
-     [:li.divider]
-     (if (:hasita @saioa)
+    (if (:hasita @saioa)
+      [:ul.right
+       [:li.divider]
        [:li [:a {:href "#" :on-click #(put! kon [:saioa-amaitu])}
-             (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]
-       [saioa-hasi kon])]]])
+             (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
+      [:ul.right
+       [:li.divider]
+       [saioa-hasi kon]])]])
 
 (defn main [saio-kon saioa]
   [:div {:class "row"}
