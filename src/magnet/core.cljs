@@ -82,6 +82,12 @@
            :error-handler #(println %)}))
 #_(erabiltzailea-ezabatu)
 
+(defn iruzkin-liburu-titulua
+  [ir]
+  (entzun (str aurriz "liburuak/" (:liburua ir))
+          (fn [x]
+            (assoc ir :liburu_titulua (:titulua (:liburua x))))))
+
 (defn azken-iruzkinak-lortu
   "Azken iruzkinak lortzen ditu"
   ([]
@@ -95,7 +101,8 @@
      (GET (str aurriz "iruzkinak?desplazamendua=" desp "&muga=" azken-iruzkin-kopurua)
           {:response-format :json
            :keywords? true
-           :handler #(reset! azken-iruzkinak (reverse (:iruzkinak %)))})))
+           :handler #(do (go (println (<! (iruzkin-liburu-titulua {:liburua 1}))))
+                         (reset! azken-iruzkinak (reverse (:iruzkinak %))))})))
 #_(azken-iruzkinak-lortu)
 
 (defn azken-liburuak-lortu
