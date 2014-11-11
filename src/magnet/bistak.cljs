@@ -1,6 +1,9 @@
 (ns magnet.bistak
   (:require [cljs.core.async :refer [put!]]))
 
+(defn erregistratu []
+  [:li [:a {:href "#"} "Erregistratu"]])
+
 ; TODO saioa hasteko formu
 (defn saioa-hasi [kon]
   [:li
@@ -29,6 +32,8 @@
        [:li [:a {:href "#" :on-click #(put! kon [:saioa-amaitu])}
              (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
       [:ul.right
+       [:li.divider]
+       [erregistratu]
        [:li.divider]
        [saioa-hasi kon]])]])
 
