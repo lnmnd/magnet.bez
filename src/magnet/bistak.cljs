@@ -63,9 +63,9 @@
       ^{:key ir} [azken-iruzkina ir])]])
 
 (defn alboko-barra [iruzkinak]
-  [:div.medium-4.small-12.columns
+  [:div.medium-4.small-12.hide-for-small.columns
    [:img {:src "http://placehold.it/500x500&text=Azala"}]
-   [:div.hide-for-small.panel
+   [:div.panel
     [:h3 "Titulua"]
     [:h5 {:class "subheader"} "Liburu garrantzitsu baten datuak."]]
    [azken-iruzkinak iruzkinak]])
