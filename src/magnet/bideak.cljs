@@ -10,7 +10,7 @@
 (secretary/set-config! :prefix "#")
 
 (defroute "/liburuak/:id" {:as params}
-  (put! kan [:liburuak (:id params)]))
+  (put! kan [:liburua (:id params)]))
 
 (let [history (History.)]
   (events/listen history EventType/NAVIGATE

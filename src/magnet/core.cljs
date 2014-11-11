@@ -124,11 +124,12 @@
 (defn bide-kud [[mota bal]]
   "Bidearen gertaerekin zer egin erabakitzen du."
   (case mota
-    :liburuak (reset! bidea [:liburuak bal])
+    :index (reset! bidea [:index nil])
+    :liburua (reset! bidea [:liburua bal])
     nil))
 
 (defn errendatu [saio-kon]
-  (reagent/render-component [bistak/main saio-kon saioa azken-iruzkinak]
+  (reagent/render-component [bistak/main saio-kon saioa bidea azken-iruzkinak]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []
@@ -146,5 +147,6 @@
       (when b
         (bide-kud b)
         (recur (<! bideak/kan))))
-        
+
+    (put! bideak/kan [:index nil])
     (azken-iruzkinak-lortu)))

@@ -70,15 +70,19 @@
     [:h5 {:class "subheader"} "Liburu garrantzitsu baten datuak."]]
    [azken-iruzkinak iruzkinak]])
 
-(defn nagusia []
-  [:div.large-8.columns
-   [:div.row
-    "todo"]])
+(defn nagusia [bidea]
+  (let [[bid bal] @bidea]
+    [:div.large-8.columns
+     [:div.row
+      (case bid
+        :index "todo index"
+        :liburua "todo lib"
+        nil)]]))
 
-(defn erdia [azken-iruzkinak]
+(defn erdia [bidea azken-iruzkinak]
   [:div.row
    [alboko-barra azken-iruzkinak]
-   [nagusia]])
+   [nagusia bidea]])
 
 (defn oina []
   [:footer.row
@@ -92,9 +96,9 @@
        [:li [:a {:href "#"} "Lotura 2"]]
        [:li [:a {:href "#"} "Lotura 3"]]]]]]])
 
-(defn main [saio-kon saioa azken-iruzkinak]
+(defn main [saio-kon saioa bidea azken-iruzkinak]
   [:div {:class "row"}
    [:div {:class "large-12 columns"}
     [goiko-barra saio-kon saioa]
-    [erdia azken-iruzkinak]
+    [erdia bidea azken-iruzkinak]
     [oina]]])
