@@ -5,7 +5,14 @@
   [:li [:a {:href "#" :data-reveal-id "erregistratuModal"} "Erregistratu"]
    [:div.reveal-modal {:id "erregistratuModal" :data-reveal true}
     [:h2 "Erregistratu"]
-    [:p "TODO"]
+    [:form
+     [:label "Erabiltzaile izena"
+      [:input {:type "text"}]]
+     [:label "Pasahitza"
+      [:input {:type "password"}]]
+     [:label "Izena"
+      [:input {:type "text"}]]
+     [:a.button {:href "#"} "Erregistratu"]]
     [:a.close-reveal-modal "X"]]])
 
 ; TODO saioa hasteko formu
