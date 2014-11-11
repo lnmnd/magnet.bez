@@ -10,7 +10,8 @@
 
 (def aurriz "http://localhost:3000/v1/")
 
-(defonce saioa (atom {:erabiltzailea nil
+(defonce saioa (atom {:hasita false
+                      :erabiltzailea nil
                       :izena nil
                       :token nil
                       :iraungitze_data nil}))
@@ -42,6 +43,7 @@
          :response-format :json
          :keywords? true
          :handler #(swap! saioa assoc
+                          :hasita true
                           :erabiltzailea era
                           :token (:token %)
                           :iraungitze_data (:iraungitze_data %))
@@ -52,7 +54,8 @@
   "Saioa amaitzen du."
   []
   (DELETE (str aurriz "saioak/" (:token @saioa))
-          {:handler #(reset! saioa {:erabiltzailea nil
+          {:handler #(reset! saioa {:hasita false
+                                    :erabiltzailea nil
                                     :izena nil
                                     :token nil
                                     :iraungitze_data nil})
