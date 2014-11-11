@@ -117,6 +117,7 @@
   "Saioaren gertaerekin zer egin erabakitzen du"
   (case mota
     :saioa-hasi (saioa-hasi (:era bal) (:pas bal))
+    :saioa-amaitu (saioa-amaitu)
     nil))
 
 (defn errendatu [saio-kon]

@@ -20,7 +20,7 @@
     [:ul.right
      [:li.divider]
      (if (:hasita @saioa)
-       [:li [:a {:href "#"} "Saioa amaitu"]]
+       [:li [:a {:href "#" :on-click #(put! kon [:saioa-amaitu])} "Saioa amaitu"]]
        [saioa-hasi kon])]]])
 
 (defn main [saio-kon saioa]
