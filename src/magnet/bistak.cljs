@@ -2,15 +2,21 @@
   (:require [cljs.core.async :refer [put!]]))
 
 (defn erregistratu []
-  [:li [:a {:href "#"} "Erregistratu"]])
+  [:li [:a {:href "#" :data-reveal-id "erregistratuModal"} "Erregistratu"]
+   [:div.reveal-modal {:id "erregistratuModal" :data-reveal true}
+    [:h2 "Erregistratu"]
+    [:p "TODO"]
+    [:a.close-reveal-modal "X"]]])
 
 ; TODO saioa hasteko formu
 (defn saioa-hasi [kon]
   [:li
    [:a {:href "#" :data-reveal-id-ez-erabili "saioaHasiModal"
         :on-click #(put! kon [:saioa-hasi {:era "era" :pas "1234"}])} "Saioa hasi"]
-   [:div {:id "saioaHasiModal" :class "reveal-modal" "remove-whitespace" :data-reveal}
-    "TODO"]])
+   [:div.reveal-modal.remove-whitespace {:id "saioaHasiModal" :data-reveal true}
+    [:h2 "Saioa hasi"]
+    "TODO"
+    [:a.close-reveal-modal "X"]]])
 
 (defn goiko-barra [kon saioa]
   [:nav {:class "top-bar" :data-topbar true}
