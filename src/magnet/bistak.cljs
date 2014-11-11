@@ -64,7 +64,7 @@
 
 (defn alboko-barra [iruzkinak]
   [:div.medium-4.small-12.hide-for-small.columns
-   [:img {:src "http://placehold.it/500x500&text=Azala"}]
+   [:img {:src "http://placehold.it/256x256&text=Azala"}]
    [:div.panel
     [:h3 "Titulua"]
     [:h5 {:class "subheader"} "Liburu garrantzitsu baten datuak."]]
@@ -75,7 +75,7 @@
    (for [li @libuk]
      ^{:key li} [:a {:href (str "#/liburuak/" (:id li))}
                  [:div.small-6.medium-4.columns
-                  [:img {:src "http://placehold.it/500x500&text=Azala"}]
+                  [:img {:src "http://placehold.it/256x256&text=Azala"}]
                   [:div.panel
                    [:h5 (:titulua li)]
                    [:h6.subheader "Datuak"]]]])])
