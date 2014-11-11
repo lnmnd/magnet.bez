@@ -53,13 +53,12 @@
 (defn saioa-amaitu
   "Saioa amaitzen du."
   []
-  (DELETE (str aurriz "saioak/" (:token @saioa))
-          {:handler #(reset! saioa {:hasita false
-                                    :erabiltzailea nil
-                                    :izena nil
-                                    :token nil
-                                    :iraungitze_data nil})
-           :error-handler #(println %)}))
+  (DELETE (str aurriz "saioak/" (:token @saioa)))
+  (reset! saioa {:hasita false
+                 :erabiltzailea nil
+                 :izena nil
+                 :token nil
+                 :iraungitze_data nil}))
 #_(saioa-amaitu)
 
 (defn erabiltzailea-ezabatu
