@@ -123,12 +123,14 @@
 
 (defn bide-kud [[mota bal]]
   "Bidearen gertaerekin zer egin erabakitzen du."
+  (if (= :index mota)
+    (azken-liburuak-lortu))
   (when (contains? #{:index :liburua-gehitu :nire-liburuak :liburua}
                    mota)
     (reset! bidea [mota bal])))
 
 (defn errendatu [saio-kon]
-  (reagent/render-component [bistak/main saio-kon saioa bidea azken-iruzkinak]
+  (reagent/render-component [bistak/main saio-kon saioa bidea azken-iruzkinak azken-liburuak]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []
