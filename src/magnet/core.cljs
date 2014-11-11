@@ -4,6 +4,7 @@
             [ajax.core :refer [GET POST PUT DELETE]]
             [reagent.core :as reagent :refer [atom]]
             [magnet.config :refer [azken-iruzkin-kopurua azken-liburu-kopurua]]
+            [magnet.bideak :as bideak]
             [magnet.bistak :as bistak]))
 
 (enable-console-print!)
@@ -15,6 +16,7 @@
                       :izena nil
                       :token nil
                       :iraungitze_data nil}))
+(defonce bidea (atom []))
 (defonce azken-iruzkinak (atom []))
 (defonce azken-liburuak (atom []))
 
@@ -119,18 +121,30 @@
     :saioa-amaitu (saioa-amaitu)
     nil))
 
+(defn bide-kud [[mota bal]]
+  "Bidearen gertaerekin zer egin erabakitzen du."
+  (case mota
+    :liburuak (reset! bidea [:liburuak bal])
+    nil))
+
 (defn errendatu [saio-kon]
   (reagent/render-component [bistak/main saio-kon saioa azken-iruzkinak]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []
-  (let [saio-kon (chan)]
+  (let [saio-kon (chan)
+        bide-kan (chan)]
     
     (errendatu saio-kon)
-    
+        
     (go-loop [b (<! saio-kon)]
       (when b
         (saio-kud b)
         (recur (<! saio-kon))))
 
+    (go-loop [b (<! bideak/kan)]
+      (when b
+        (bide-kud b)
+        (recur (<! bideak/kan))))
+        
     (azken-iruzkinak-lortu)))
