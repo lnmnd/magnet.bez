@@ -4,7 +4,7 @@
 ; TODO saioa hasteko formu
 (defn saioa-hasi [kon]
   [:li
-   [:a {:href "#" :data-reveal-id "saioaHasiModal"
+   [:a {:href "#" :data-reveal-id-ez-erabili "saioaHasiModal"
         :on-click #(put! kon [:saioa-hasi {:era "era" :pas "1234"}])} "Saioa hasi"]
    [:div {:id "saioaHasiModal" :class "reveal-modal" "remove-whitespace" :data-reveal}
     "TODO"]])
