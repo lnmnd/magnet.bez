@@ -26,7 +26,7 @@
     "TODO"
     [:a.close-reveal-modal "X"]]])
 
-(defn goiko-barra [kan saioa]
+(defn goiko-barra [{:keys [saio-kan saioa]}]
   [:nav {:class "top-bar" :data-topbar true}
    [:ul.title-area
     [:li.name
@@ -43,14 +43,14 @@
        [:li [:a {:href "#/nire-liburuak"}
              "Nire liburuak"]]
        [:li.divider]
-       [:li [:a {:href "#" :on-click #(do (put! kan [:saioa-amaitu])
+       [:li [:a {:href "#" :on-click #(do (put! saio-kan [:saioa-amaitu])
                                           false)}
              (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
       [:ul.right
        [:li.divider]
        [erregistratu]
        [:li.divider]
-       [saioa-hasi kan]])]])
+       [saioa-hasi saio-kan]])]])
 
 (defn azken-iruzkina [ir]
   [:a {:href (str "#/liburuak/" (:liburua ir))}
@@ -161,6 +161,7 @@
 (defn main [saio-kan iruzkin-kan saioa bidea azken-iruzkinak aliburuak liburua lib-irak]
   [:div {:class "row"}
    [:div {:class "medium-12 columns"}
-    [goiko-barra saio-kan saioa]
+    [goiko-barra {:saio-kan saio-kan
+                  :saioa saioa}]
     [erdia iruzkin-kan bidea azken-iruzkinak aliburuak liburua lib-irak]
     [oina]]])
