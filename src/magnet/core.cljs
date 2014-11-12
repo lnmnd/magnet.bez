@@ -26,6 +26,8 @@
   azken-liburuak (atom []))
 (defonce ^{:doc "Liburuaren datuak"}
   liburua (atom {}))
+(defonce ^{:doc "Uneko liburuaren iruzkinak"}
+  liburuaren-iruzkinak (atom {}))
 
 (defn entzun
   "Helbidea entzuten du eta erantzunari funtzioa aplikatzen dio.
@@ -137,6 +139,15 @@
         :handler #(reset! liburua (:liburua %))}))
 #_(liburua-lortu 1)
 
+(defn liburuaren-iruzkinak-lortu
+  "id duen libururen iruzkinak lortzen ditu."
+  [id]
+  (println id " lortu")
+  (GET (str aurriz "liburuak/" id "/iruzkinak?muga=0")
+       {:response-format :json
+        :keywords? true
+        :handler #(reset! liburuaren-iruzkinak (:iruzkinak %))}))
+
 (defn egile-guztiak-lortu
   "Egile guztien zerrenda lortzen du"
   []
@@ -154,14 +165,15 @@
   "Bidearen gertaerekin zer egin erabakitzen du."
   (if (= :index mota)
     (azken-liburuak-lortu))
-  (if (= :liburua mota)
-    (liburua-lortu bal))
+  (when (= :liburua mota)
+    (liburua-lortu bal)
+    (liburuaren-iruzkinak-lortu bal))
   (when (contains? #{:index :liburua-gehitu :nire-liburuak :liburua}
                    mota)
     (reset! bidea [mota bal])))
 
 (defn errendatu [saio-kan]
-  (reagent/render-component [bistak/main saio-kan saioa bidea azken-iruzkinak azken-liburuak liburua]
+  (reagent/render-component [bistak/main saio-kan saioa bidea azken-iruzkinak azken-liburuak liburua liburuaren-iruzkinak]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []
