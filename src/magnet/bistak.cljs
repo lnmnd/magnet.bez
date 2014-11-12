@@ -87,7 +87,8 @@
   [:div
    [:h2 "Iruzkinak"]
    (for [i @irak]
-     ^{:key i} [:div (:erabiltzailea i) ": " (:edukia i)])])
+     ^{:key i}
+     [:div.panel (:erabiltzailea i) " data" [:br] (:edukia i)])])
 
 (defn liburua [lib irak]
   [:div
