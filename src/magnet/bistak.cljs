@@ -90,9 +90,9 @@
       [:form
        [:label "Edukia"]
        [:input {:type "text" :on-change #(reset! edukia (-> % .-target .-value))}]
-       [:button {:on-click #(do (put! iruzkin-kan [:iruzkina-gehitu {:id libid
-                                                                     :edukia {:edukia @edukia}}])
-                                false)} "Bidali"]])))
+       [:button {:on-click #(put! iruzkin-kan [:iruzkina-gehitu {:id libid
+                                                                 :edukia {:edukia @edukia}}])}
+        "Bidali"]])))
 
 (defn liburuaren-iruzkinak [irak]
   [:div
