@@ -184,9 +184,16 @@
     :iruzkina-gehitu (do (swap! liburuaren-iruzkinak conj (:edukia bal))
                          (iruzkina-gehitu (:id bal) (:edukia bal)))
     nil))
-
+[]
 (defn errendatu [saio-kan iruzkin-kan]
-  (reagent/render-component [bistak/main saio-kan iruzkin-kan saioa bidea azken-iruzkinak azken-liburuak liburua liburuaren-iruzkinak]
+  (reagent/render-component [bistak/main {:saio-kan saio-kan
+                                          :iruzkin-kan iruzkin-kan
+                                          :saioa saioa
+                                          :bidea bidea
+                                          :azken-iruzkinak azken-iruzkinak
+                                          :aliburuak azken-liburuak
+                                          :liburua liburua
+                                          :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []

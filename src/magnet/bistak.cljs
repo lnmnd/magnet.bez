@@ -84,9 +84,9 @@
                    [:p.right (:iruzkin_kopurua li) " iruzkin"]]]])])
 
 ; TODO saioa hasita?
-(defn iruzkin-form [iruzkin-kan libid]
+(defn iruzkin-form [{:keys [iruzkin-kan libid]}]
   (let [edukia (atom "")]
-    (fn [iruzkin-kan libid]
+    (fn [{:keys [iruzkin-kan libid]}]
       [:form
        [:label "Edukia"]
        [:input {:type "text" :on-change #(reset! edukia (-> % .-target .-value))}]
@@ -101,7 +101,7 @@
      ^{:key i}
      [:div.panel (:erabiltzailea i) " data" [:br] (:edukia i)])])
 
-(defn liburua [iruzkin-kan lib irak]
+(defn liburua [{:keys [iruzkin-kan lib irak]}]
   [:div
    [:div.small-12.medium-6.columns
     [:h1 (:titulua @lib)]
@@ -114,7 +114,8 @@
     [:img {:src "img/liburua.jpg"}]]
    [:div.small-12.medium-12.columns
     [liburuaren-iruzkinak irak]
-    [iruzkin-form iruzkin-kan (:id @lib)]]])
+    [iruzkin-form {:iruzkin-kan iruzkin-kan
+                   :libid (:id @lib)}]]])
 
 (defn liburua-gehitu []
   (let [titulua (atom "")
@@ -130,7 +131,7 @@
         [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]
 ])))
 
-(defn nagusia [iruzkin-kan bidea aliburuak lib lib-irak]
+(defn nagusia [{:keys [iruzkin-kan bidea aliburuak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
@@ -138,13 +139,19 @@
         :index [azken-liburuak aliburuak]
         :liburua-gehitu [liburua-gehitu]
         :nire-liburuak "todo nire liburuak"
-        :liburua [liburua iruzkin-kan lib lib-irak]
+        :liburua [liburua {:iruzkin-kan iruzkin-kan
+                           :lib lib
+                           :irak lib-irak}]
         nil)]]))
 
-(defn erdia [iruzkin-kan bidea azken-iruzkinak aliburuak liburua lib-irak]
+(defn erdia [{:keys [iruzkin-kan bidea azken-iruzkinak aliburuak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-iruzkinak]
-   [nagusia iruzkin-kan bidea aliburuak liburua lib-irak]])
+   [nagusia {:iruzkin-kan iruzkin-kan
+             :bidea bidea
+             :aliburuak aliburuak
+             :lib liburua
+             :lib-irak lib-irak}]])
 
 (defn oina []
   [:footer.row
@@ -158,10 +165,15 @@
        [:li [:a {:href "#"} "Lotura 2"]]
        [:li [:a {:href "#"} "Lotura 3"]]]]]]])
 
-(defn main [saio-kan iruzkin-kan saioa bidea azken-iruzkinak aliburuak liburua lib-irak]
+(defn main [{:keys [saio-kan iruzkin-kan saioa bidea azken-iruzkinak aliburuak liburua lib-irak]}]
   [:div {:class "row"}
    [:div {:class "medium-12 columns"}
     [goiko-barra {:saio-kan saio-kan
                   :saioa saioa}]
-    [erdia iruzkin-kan bidea azken-iruzkinak aliburuak liburua lib-irak]
+    [erdia {:iruzkin-kan iruzkin-kan
+            :bidea bidea
+            :azken-iruzkinak azken-iruzkinak
+            :aliburuak aliburuak
+            :liburua liburua
+            :lib-irak lib-irak}]
     [oina]]])
