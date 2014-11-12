@@ -9,16 +9,21 @@
 
 (enable-console-print!)
 
-(def aurriz "http://localhost:3000/v1/")
+(def ^{:doc "APIaren aurrizkia"}
+  aurriz "http://localhost:3000/v1/")
 
-(defonce saioa (atom {:hasita false
-                      :erabiltzailea nil
-                      :izena nil
-                      :token nil
-                      :iraungitze_data nil}))
-(defonce bidea (atom []))
-(defonce azken-iruzkinak (atom []))
-(defonce azken-liburuak (atom []))
+(defonce ^{:doc "Erabiltzailearen saioa"}
+  saioa (atom {:hasita false
+               :erabiltzailea nil
+               :izena nil
+               :token nil
+               :iraungitze_data nil}))
+(defonce ^{:doc "Uneko bidea"}
+  bidea (atom []))
+(defonce ^{:doc "Azken iruzkinen zerrenda"}
+  azken-iruzkinak (atom []))
+(defonce ^{:doc "Azken liburuen zerrenda"}
+  azken-liburuak (atom []))
 
 (defn entzun
   "Helbidea entzuten du eta erantzunari funtzioa aplikatzen dio.
