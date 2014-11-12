@@ -80,7 +80,8 @@
                   [:img {:src "http://placehold.it/256x256&text=Azala"}]
                   [:div.panel
                    [:h5 (:titulua li)]
-                   [:h6.subheader "Datuak"]]]])])
+                   [:h6.subheader (interpose ", " (:egileak li))]
+                   [:p.right (:iruzkin_kopurua li) " iruzkin"]]]])])
 
 (defn liburuaren-iruzkinak [irak]
   [:div
