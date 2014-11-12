@@ -1,6 +1,6 @@
 (ns magnet.core
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
-  (:require [cljs.core.async :refer [chan put! <! >! timeout]]
+  (:require [cljs.core.async :as async :refer [chan put! <! >! timeout]]
             [ajax.core :refer [GET POST PUT DELETE]]
             [reagent.core :as reagent :refer [atom]]
             [magnet.config :refer [azken-iruzkin-kopurua azken-liburu-kopurua]]
