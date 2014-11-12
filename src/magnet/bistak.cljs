@@ -80,7 +80,21 @@
                    [:h5 (:titulua li)]
                    [:h6.subheader "Datuak"]]]])])
 
-(defn nagusia [bidea aliburuak]
+(defn liburua [lib]
+  [:div.row
+   [:div.small-12.medium-6.columns
+    [:h1 (:titulua @lib)]
+    [:a {:href (:magnet @lib)} (:magnet @lib)]
+    [:p "Egileak: "(for [e (:egileak @lib)]
+                     [:span e " "])]
+    [:p "Urtea" (:urtea @lib)]
+    [:p (:sinopsia @lib)]]
+   [:div.small-12.medium-6.columns
+    [:img.right {:src "http://placehold.it/256x256&text=Azala"}]]
+   [:h2 "Iruzkinak"]])
+
+(defn nagusia [bidea aliburuak lib]
+  (println @bidea)
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
@@ -88,13 +102,13 @@
         :index [azken-liburuak aliburuak]
         :liburua-gehitu "todo liburua gehitu"
         :nire-liburuak "todo nire liburuak"
-        :liburua "todo lib"
+        :liburua [liburua lib]
         nil)]]))
 
-(defn erdia [bidea azken-iruzkinak aliburuak]
+(defn erdia [bidea azken-iruzkinak aliburuak liburua]
   [:div.row
    [alboko-barra azken-iruzkinak]
-   [nagusia bidea aliburuak]])
+   [nagusia bidea aliburuak liburua]])
 
 (defn oina []
   [:footer.row
@@ -108,9 +122,9 @@
        [:li [:a {:href "#"} "Lotura 2"]]
        [:li [:a {:href "#"} "Lotura 3"]]]]]]])
 
-(defn main [saio-kan saioa bidea azken-iruzkinak aliburuak]
+(defn main [saio-kan saioa bidea azken-iruzkinak aliburuak liburua]
   [:div {:class "row"}
    [:div {:class "medium-12 columns"}
     [goiko-barra saio-kan saioa]
-    [erdia bidea azken-iruzkinak aliburuak]
+    [erdia bidea azken-iruzkinak aliburuak liburua]
     [oina]]])

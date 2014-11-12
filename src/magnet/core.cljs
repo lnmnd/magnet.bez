@@ -24,6 +24,8 @@
   azken-iruzkinak (atom []))
 (defonce ^{:doc "Azken liburuen zerrenda"}
   azken-liburuak (atom []))
+(defonce ^{:doc "Liburuaren datuak"}
+  liburua (atom {}))
 
 (defn entzun
   "Helbidea entzuten du eta erantzunari funtzioa aplikatzen dio.
@@ -126,6 +128,15 @@
            :handler #(reset! azken-liburuak (reverse (:liburuak %)))})))
 #_(azken-liburuak-lortu)
 
+(defn liburua-lortu
+  "id duen liburua lortzen du."
+  [id]
+  (GET (str aurriz "liburuak/" id)
+       {:response-format :json
+        :keywords? true
+        :handler #(reset! liburua (:liburua %))}))
+#_(liburua-lortu 1)
+
 (defn egile-guztiak-lortu
   "Egile guztien zerrenda lortzen du"
   []
@@ -143,12 +154,14 @@
   "Bidearen gertaerekin zer egin erabakitzen du."
   (if (= :index mota)
     (azken-liburuak-lortu))
+  (if (= :liburua mota)
+    (liburua-lortu bal))
   (when (contains? #{:index :liburua-gehitu :nire-liburuak :liburua}
                    mota)
     (reset! bidea [mota bal])))
 
 (defn errendatu [saio-kan]
-  (reagent/render-component [bistak/main saio-kan saioa bidea azken-iruzkinak azken-liburuak]
+  (reagent/render-component [bistak/main saio-kan saioa bidea azken-iruzkinak azken-liburuak liburua]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []
