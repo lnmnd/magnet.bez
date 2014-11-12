@@ -19,7 +19,8 @@
 (defn saioa-hasi [kan]
   [:li
    [:a {:href "#" :data-reveal-id-ez-erabili "saioaHasiModal"
-        :on-click #(put! kan [:saioa-hasi {:era "era" :pas "1234"}])} "Saioa hasi"]
+        :on-click #(do (put! kan [:saioa-hasi {:era "era" :pas "1234"}])
+                       false)} "Saioa hasi"]
    [:div.reveal-modal.remove-whitespace {:id "saioaHasiModal" :data-reveal true}
     [:h2 "Saioa hasi"]
     "TODO"
@@ -42,7 +43,8 @@
        [:li [:a {:href "#/nire-liburuak"}
              "Nire liburuak"]]
        [:li.divider]
-       [:li [:a {:href "#" :on-click #(put! kan [:saioa-amaitu])}
+       [:li [:a {:href "#" :on-click #(do (put! kan [:saioa-amaitu])
+                                          false)}
              (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
       [:ul.right
        [:li.divider]
