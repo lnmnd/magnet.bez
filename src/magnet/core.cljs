@@ -110,8 +110,7 @@
      (GET (str aurriz "iruzkinak?desplazamendua=" desp "&muga=" azken-iruzkin-kopurua)
           {:response-format :json
            :keywords? true
-           :handler #(do (go (println (<! (iruzkin-liburu-titulua {:liburua 1}))))
-                         (reset! azken-iruzkinak (reverse (:iruzkinak %))))})))
+           :handler #(do (reset! azken-iruzkinak (reverse (:iruzkinak %))))})))
 #_(azken-iruzkinak-lortu)
 
 (defn azken-liburuak-lortu
