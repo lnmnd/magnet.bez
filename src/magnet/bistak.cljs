@@ -116,13 +116,27 @@
     [liburuaren-iruzkinak irak]
     [iruzkin-form iruzkin-kan (:id @lib)]]])
 
+(defn liburua-gehitu []
+  (let [titulua (atom "")
+        sinopsia (atom "")]
+    (fn []
+      [:div
+       [:h1 "Liburua gehitu"]
+       [:form
+        [:label "Titulua"]
+        [:input {:type "text" :on-change #(reset! titulua (-> % .-target .-value))}]
+        [:label "Sinopsia"]
+        [:textarea {:type "text" :rows "4" :on-change #(reset! sinopsia (-> % .-target .-value))}]
+        [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]
+])))
+
 (defn nagusia [iruzkin-kan bidea aliburuak lib lib-irak]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
       (case bid
         :index [azken-liburuak aliburuak]
-        :liburua-gehitu "todo liburua gehitu"
+        :liburua-gehitu [liburua-gehitu]
         :nire-liburuak "todo nire liburuak"
         :liburua [liburua iruzkin-kan lib lib-irak]
         nil)]]))
