@@ -16,16 +16,16 @@
     [:a.close-reveal-modal "X"]]])
 
 ; TODO saioa hasteko formu
-(defn saioa-hasi [kon]
+(defn saioa-hasi [kan]
   [:li
    [:a {:href "#" :data-reveal-id-ez-erabili "saioaHasiModal"
-        :on-click #(put! kon [:saioa-hasi {:era "era" :pas "1234"}])} "Saioa hasi"]
+        :on-click #(put! kan [:saioa-hasi {:era "era" :pas "1234"}])} "Saioa hasi"]
    [:div.reveal-modal.remove-whitespace {:id "saioaHasiModal" :data-reveal true}
     [:h2 "Saioa hasi"]
     "TODO"
     [:a.close-reveal-modal "X"]]])
 
-(defn goiko-barra [kon saioa]
+(defn goiko-barra [kan saioa]
   [:nav {:class "top-bar" :data-topbar true}
    [:ul.title-area
     [:li.name
@@ -42,13 +42,13 @@
        [:li [:a {:href "#/nire-liburuak"}
              "Nire liburuak"]]
        [:li.divider]
-       [:li [:a {:href "#" :on-click #(put! kon [:saioa-amaitu])}
+       [:li [:a {:href "#" :on-click #(put! kan [:saioa-amaitu])}
              (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
       [:ul.right
        [:li.divider]
        [erregistratu]
        [:li.divider]
-       [saioa-hasi kon]])]])
+       [saioa-hasi kan]])]])
 
 (defn azken-iruzkina [ir]
   [:a {:href (str "#/liburuak/" (:liburua ir))}
@@ -108,9 +108,9 @@
        [:li [:a {:href "#"} "Lotura 2"]]
        [:li [:a {:href "#"} "Lotura 3"]]]]]]])
 
-(defn main [saio-kon saioa bidea azken-iruzkinak aliburuak]
+(defn main [saio-kan saioa bidea azken-iruzkinak aliburuak]
   [:div {:class "row"}
    [:div {:class "medium-12 columns"}
-    [goiko-barra saio-kon saioa]
+    [goiko-barra saio-kan saioa]
     [erdia bidea azken-iruzkinak aliburuak]
     [oina]]])

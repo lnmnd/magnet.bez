@@ -142,20 +142,20 @@
                    mota)
     (reset! bidea [mota bal])))
 
-(defn errendatu [saio-kon]
-  (reagent/render-component [bistak/main saio-kon saioa bidea azken-iruzkinak azken-liburuak]
+(defn errendatu [saio-kan]
+  (reagent/render-component [bistak/main saio-kan saioa bidea azken-iruzkinak azken-liburuak]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []
-  (let [saio-kon (chan)
+  (let [saio-kan (chan)
         bide-kan (chan)]
     
-    (errendatu saio-kon)
+    (errendatu saio-kan)
         
-    (go-loop [b (<! saio-kon)]
+    (go-loop [b (<! saio-kan)]
       (when b
         (saio-kud b)
-        (recur (<! saio-kon))))
+        (recur (<! saio-kan))))
 
     (go-loop [b (<! bideak/kan)]
       (when b
