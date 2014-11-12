@@ -147,6 +147,13 @@
         :keywords? true
         :handler #(reset! liburuaren-iruzkinak (:iruzkinak %))}))
 
+(defn iruzkina-gehitu
+  "id liburuari erantzuten dion iruzkina gehitzen du."
+  [id edukia]
+  (POST (str aurriz "liburuak/" id "/iruzkinak?token=" (:token @saioa))
+        {:params edukia
+         :format :json}))
+
 (defn egile-guztiak-lortu
   "Egile guztien zerrenda lortzen du"
   []
@@ -171,15 +178,23 @@
                    mota)
     (reset! bidea [mota bal])))
 
-(defn errendatu [saio-kan]
-  (reagent/render-component [bistak/main saio-kan saioa bidea azken-iruzkinak azken-liburuak liburua liburuaren-iruzkinak]
+(defn iruzkin-kud [[mota bal]]
+  "Iruzkinekin lotutako kudeatzailea."
+  (case mota
+    :iruzkina-gehitu (do (iruzkina-gehitu (:id bal) (:edukia bal))
+                         (liburuaren-iruzkinak-lortu (:id bal)))
+    nil))
+
+(defn errendatu [saio-kan iruzkin-kan]
+  (reagent/render-component [bistak/main saio-kan iruzkin-kan saioa bidea azken-iruzkinak azken-liburuak liburua liburuaren-iruzkinak]
                             (.querySelector js/document "#app")))
 
 (defn ^:export run []
   (let [saio-kan (chan)
-        bide-kan (chan)]
+        bide-kan (chan)
+        iruzkin-kan (chan)]
     
-    (errendatu saio-kan)
+    (errendatu saio-kan iruzkin-kan)
         
     (go-loop [b (<! saio-kan)]
       (when b
@@ -190,6 +205,11 @@
       (when b
         (bide-kud b)
         (recur (<! bideak/kan))))
+
+    (go-loop [b (<! iruzkin-kan)]
+      (when b
+        (iruzkin-kud b)
+        (recur (<! iruzkin-kan))))
 
     (put! bideak/kan [:index nil])
     (azken-iruzkinak-lortu))
