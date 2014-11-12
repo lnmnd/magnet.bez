@@ -8,11 +8,13 @@
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [cljs-ajax "0.3.3"]
                  [reagent "0.4.3"]
-                 [secretary "1.2.1"]]
+                 [secretary "1.2.1"]
+                 [figwheel "0.1.5-SNAPSHOT"]]
   :plugins [[cider/cider-nrepl "0.7.0"]
             [com.cemerick/austin "0.1.5"]
             [codox "0.8.10"]
-            [lein-cljsbuild "1.0.3"]]
+            [lein-cljsbuild "1.0.3"]
+            [lein-figwheel "0.1.5-SNAPSHOT"]]
   :codox {:language :clojurescript
           :include ["magnet.core"]
           :src-dir-uri "http://github.com/lnmnd/magnet.bez/blob/master/"
@@ -21,7 +23,10 @@
               :builds [{
                         :source-paths ["src"]
                         :compiler {
-                                   :output-to "magnet.js"
-                                   :source-map "magnet.js.map"
-                                   :output-dir "out"
-                                   :optimizations :none}}]})
+                                   :output-to "resources/public/magnet.js"
+                                   :source-map "resources/public/magnet.js.map"
+                                   :output-dir "resources/public/out"
+                                   :optimizations :none}}]}
+  :figwheel {
+             :http-server-root "public"
+             :server-port 8080})
