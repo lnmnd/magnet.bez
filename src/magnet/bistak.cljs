@@ -102,7 +102,6 @@
     [iruzkinak]]])
 
 (defn nagusia [bidea aliburuak lib]
-  (println @bidea)
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
