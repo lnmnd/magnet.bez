@@ -83,6 +83,16 @@
                    [:h6.subheader (interpose ", " (:egileak li))]
                    [:p.right (:iruzkin_kopurua li) " iruzkin"]]]])])
 
+; TODO saioa hasita?
+(defn iruzkin-form []
+  (let [edukia (atom "")]
+    (fn []
+      [:form
+       [:label "Edukia"]
+       [:input {:type "text" :on-change #(reset! edukia (-> % .-target .-value))}]
+       [:button {:on-click #(do (println "bidali " @edukia)
+                                false)} "Bidali"]])))
+
 (defn liburuaren-iruzkinak [irak]
   [:div
    [:h2 "Iruzkinak"]
@@ -102,7 +112,8 @@
    [:div.small-12.medium-6.columns
     [:img {:src "http://placehold.it/256x256&text=Azala"}]]
    [:div.small-12.medium-12.columns
-    [liburuaren-iruzkinak irak]]])
+    [liburuaren-iruzkinak irak]
+    [iruzkin-form]]])
 
 (defn nagusia [bidea aliburuak lib lib-irak]
   (let [[bid bal] @bidea]
