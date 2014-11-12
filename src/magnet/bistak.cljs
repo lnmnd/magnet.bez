@@ -82,8 +82,13 @@
                    [:h5 (:titulua li)]
                    [:h6.subheader "Datuak"]]]])])
 
+(defn iruzkinak []
+  [:div
+   [:h2 "Iruzkinak"]
+   [:p "todo"]])
+
 (defn liburua [lib]
-  [:div.row
+  [:div
    [:div.small-12.medium-6.columns
     [:h1 (:titulua @lib)]
     [:a {:href (:magnet @lib)} (:magnet @lib)]
@@ -92,8 +97,9 @@
     [:p "Urtea" (:urtea @lib)]
     [:p (:sinopsia @lib)]]
    [:div.small-12.medium-6.columns
-    [:img.right {:src "http://placehold.it/256x256&text=Azala"}]]
-   [:h2 "Iruzkinak"]])
+    [:img {:src "http://placehold.it/256x256&text=Azala"}]]
+   [:div.small-12.medium-12.columns
+    [iruzkinak]]])
 
 (defn nagusia [bidea aliburuak lib]
   (println @bidea)
