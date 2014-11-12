@@ -181,8 +181,8 @@
 (defn iruzkin-kud [[mota bal]]
   "Iruzkinekin lotutako kudeatzailea."
   (case mota
-    :iruzkina-gehitu (do (iruzkina-gehitu (:id bal) (:edukia bal))
-                         (liburuaren-iruzkinak-lortu (:id bal)))
+    :iruzkina-gehitu (do (swap! liburuaren-iruzkinak conj (:edukia bal))
+                         (iruzkina-gehitu (:id bal) (:edukia bal)))
     nil))
 
 (defn errendatu [saio-kan iruzkin-kan]
