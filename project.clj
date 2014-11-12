@@ -29,4 +29,5 @@
                                    :optimizations :none}}]}
   :figwheel {
              :http-server-root "public"
-             :server-port 8080})
+             :server-port 8080
+             :css-dirs ["resources/public/css"]})
