@@ -141,7 +141,6 @@
 (defn liburuaren-iruzkinak-lortu
   "id duen libururen iruzkinak lortzen ditu."
   [id]
-  (println id " lortu")
   (GET (str aurriz "liburuak/" id "/iruzkinak?muga=0")
        {:response-format :json
         :keywords? true
