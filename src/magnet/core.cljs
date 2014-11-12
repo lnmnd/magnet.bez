@@ -3,6 +3,7 @@
   (:require [cljs.core.async :as async :refer [chan put! <! >! timeout]]
             [ajax.core :refer [GET POST PUT DELETE]]
             [reagent.core :as reagent :refer [atom]]
+            [figwheel.client :as fw]
             [magnet.config :refer [azken-iruzkin-kopurua azken-liburu-kopurua]]
             [magnet.bideak :as bideak]
             [magnet.bistak :as bistak]))
@@ -191,4 +192,6 @@
         (recur (<! bideak/kan))))
 
     (put! bideak/kan [:index nil])
-    (azken-iruzkinak-lortu)))
+    (azken-iruzkinak-lortu))
+
+  (fw/watch-and-reload :jsload-callback reagent/force-update-all))
