@@ -8,7 +8,7 @@ pom.xml.asc
 /.lein-*
 /.nrepl-port
 /.repl/
-/out/
 /doc/
-/magnet.js
-/magnet.js.map
+/resources/public/out/
+/resources/public/magnet.js
+/resources/public//magnet.js.map
