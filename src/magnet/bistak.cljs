@@ -58,17 +58,24 @@
     [:h5 {:class "subheader"} "Liburu garrantzitsu baten datuak."]]
    [azken-iruzkinak iruzkinak]])
 
-(defn erregistratu []
-  [:div
-   [:h2 "Erregistratu"]
-   [:form
-    [:label "Erabiltzaile izena"
-     [:input {:type "text"}]]
-    [:label "Pasahitza"
-     [:input {:type "password"}]]
-    [:label "Izena"
-     [:input {:type "text"}]]
-    [:a.button {:href "#"} "Erregistratu"]]])
+(defn erregistratu [kan]
+  (let [erabiltzailea (atom "")
+        pasahitza (atom "")
+        izena (atom "")]
+    (fn [kan]
+      [:div
+       [:h2 "Erregistratu"]
+       [:form
+        [:label "Erabiltzaile izena"
+         [:input {:type "text" :on-change #(reset! erabiltzailea (-> % .-target .-value))}]]
+        [:label "Pasahitza"
+         [:input {:type "password" :on-change #(reset! pasahitza (-> % .-target .-value))}]]
+        [:label "Izena"
+         [:input {:type "text" :on-change #(reset! izena (-> % .-target .-value))}]]
+        [:a.button {:href "#" :on-click #(put! kan :erregistratu {:erabiltzailea @erabiltzailea
+                                                                  :pasahitza @pasahitza
+                                                                  :izena @izena})}
+         "Erregistratu"]]])))
 
 (defn azken-liburuak [libuk]
   [:div
@@ -135,7 +142,7 @@
      [:div.row
       (case bid
         :index [azken-liburuak aliburuak]
-        :erregistratu [erregistratu]
+        :erregistratu [erregistratu nil]
         :liburua-gehitu [liburua-gehitu]
         :nire-liburuak "todo nire liburuak"
         :liburua [liburua {:saioa saioa
