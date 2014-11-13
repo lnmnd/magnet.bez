@@ -136,13 +136,13 @@
         [:textarea {:type "text" :rows "4" :on-change #(reset! sinopsia (-> % .-target .-value))}]
         [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]])))
 
-(defn nagusia [{:keys [saioa iruzkin-kan bidea aliburuak lib lib-irak]}]
+(defn nagusia [{:keys [saio-kan saioa iruzkin-kan bidea aliburuak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
       (case bid
         :index [azken-liburuak aliburuak]
-        :erregistratu [erregistratu nil]
+        :erregistratu [erregistratu saio-kan]
         :liburua-gehitu [liburua-gehitu]
         :nire-liburuak "todo nire liburuak"
         :liburua [liburua {:saioa saioa
@@ -151,10 +151,11 @@
                            :irak lib-irak}]
         nil)]]))
 
-(defn erdia [{:keys [saioa iruzkin-kan bidea azken-iruzkinak aliburuak liburua lib-irak]}]
+(defn erdia [{:keys [saio-kan saioa iruzkin-kan bidea azken-iruzkinak aliburuak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-iruzkinak]
-   [nagusia {:saioa saioa
+   [nagusia {:saio-kan saio-kan
+             :saioa saioa
              :iruzkin-kan iruzkin-kan
              :bidea bidea
              :aliburuak aliburuak
@@ -178,7 +179,8 @@
    [:div {:class "medium-12 columns"}
     [goiko-barra {:saio-kan saio-kan
                   :saioa saioa}]
-    [erdia {:saioa saioa
+    [erdia {:saio-kan saio-kan
+            :saioa saioa
             :iruzkin-kan iruzkin-kan
             :bidea bidea
             :azken-iruzkinak azken-iruzkinak
