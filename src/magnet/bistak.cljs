@@ -91,7 +91,7 @@
   (let [era (atom "")
         izen (atom "")
         ezab (atom "")]
-    (fn [kan]
+    (fn [{:keys [saio-kan saioa]}]
       [:div
        [:h2 "Nire profila"]
        [:div.small-12.medium-6.columns
@@ -112,7 +112,7 @@
         [:p "Kontua ezabatu nahi baduzu idatzi \"Bai, ezabatu nahi dut.\" ondorengo eremuan:"]
         [:input {:type "text" :on-change #(reset! ezab (-> % .-target .-value))}]
         [:a.button {:href "#" :on-click #(if (= @ezab "Bai, ezabatu nahi dut.")
-                                           (println "ezabatu")
+                                           (put! saio-kan [:erabiltzailea-ezabatu])
                                            false)}
           "Ezabatu"]]])))
 

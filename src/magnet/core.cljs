@@ -174,6 +174,7 @@
   (case mota
     :erregistratu (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal)))
                       (saioa-hasi (:erabiltzailea bal) (:pasahitza bal)))
+    :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
     :saioa-hasi (saioa-hasi (:era bal) (:pas bal))
     :saioa-amaitu (saioa-amaitu)
     nil))
