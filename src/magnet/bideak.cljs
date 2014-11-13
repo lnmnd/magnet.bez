@@ -15,6 +15,9 @@
 (defroute "/erregistratu" []
   (put! kan [:erregistratu nil]))
 
+(defroute "/saioa-hasi" []
+  (put! kan [:saioa-hasi nil]))
+
 (defroute "/liburua-gehitu" []
   (put! kan [:liburua-gehitu nil]))
 

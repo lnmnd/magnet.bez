@@ -1,17 +1,6 @@
 (ns magnet.bistak
   (:require [cljs.core.async :refer [put!]]))
 
-; TODO saioa hasteko formu
-(defn saioa-hasi [kan]
-  [:li
-   [:a {:href "#" :data-reveal-id-ez-erabili "saioaHasiModal"
-        :on-click #(do (put! kan [:saioa-hasi {:era "era" :pas "1234"}])
-                       false)} "Saioa hasi"]
-   [:div.reveal-modal.remove-whitespace {:id "saioaHasiModal" :data-reveal true}
-    [:h2 "Saioa hasi"]
-    "TODO"
-    [:a.close-reveal-modal "X"]]])
-
 (defn goiko-barra [{:keys [saio-kan saioa]}]
   [:nav {:class "top-bar" :data-topbar true}
    [:ul.title-area
@@ -40,7 +29,7 @@
        [:li.divider]
        [:li [:a {:href "#/erregistratu"} "Erregistratu"]]
        [:li.divider]
-       [saioa-hasi saio-kan]])]])
+       [:li [:a {:href "#/saioa-hasi"} "Saioa hasi"]]])]])
 
 (defn azken-iruzkina [ir]
   [:a {:href (str "#/liburuak/" (:liburua ir))}
@@ -80,6 +69,20 @@
                                                                    :pasahitza @pasahitza
                                                                    :izena @izena}])}
          "Erregistratu"]]])))
+
+(defn saioa-hasi [kan]
+  (let [era (atom "")
+        pas (atom "")]
+    (fn [kan]
+      [:div
+       [:h2 "Saioa hasi"]
+       [:form
+        [:label "Erabiltzaile izena"
+         [:input {:type "text" :on-change #(reset! era (-> % .-target .-value))}]]
+        [:label "Pasahitza"
+         [:input {:type "password" :on-change #(reset! pas (-> % .-target .-value))}]]
+        [:a.button {:href "#" :on-click #(put! kan [:saioa-hasi {:era @era :pas @pas}])}
+         "Saioa hasi"]]])))
 
 (defn azken-liburuak [libuk]
   [:div
@@ -152,6 +155,7 @@
       (case bid
         :index [azken-liburuak aliburuak]
         :erregistratu [erregistratu saio-kan]
+        :saioa-hasi [saioa-hasi saio-kan]
         :liburua-gehitu [liburua-gehitu]
         :nire-liburuak "todo nire liburuak"
         :liburua [liburua {:saioa saioa
