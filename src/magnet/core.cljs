@@ -163,6 +163,9 @@
 (defn saio-kud [[mota bal]]
   "Saioaren gertaerekin zer egin erabakitzen du"
   (case mota
+    :erregistratu (go (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal))
+                      (<! (timeout 1000))
+                      (saioa-hasi (:erabiltzailea bal) (:pasahitza bal)))
     :saioa-hasi (saioa-hasi (:era bal) (:pas bal))
     :saioa-amaitu (saioa-amaitu)
     nil))
