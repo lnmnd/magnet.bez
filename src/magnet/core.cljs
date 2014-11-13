@@ -60,11 +60,9 @@
      (let [param {:erabiltzailea era
                   :pasahitza pas
                   :izena izen}]
-       (POST (str aurriz "erabiltzaileak")
-             {:params (if (empty? desk) param (assoc param :deskribapena desk)) 
-              :format :json
-              :handler #(println %)
-              :error-handler #(println %)}))))
+       (bidali-eta-entzun (str aurriz "erabiltzaileak")
+                          (if (empty? desk) param (assoc param :deskribapena desk))
+                          identity))))
 #_(erabiltzailea-gehitu "era" "1234" "era")
 
 (defn saioa-hasi
@@ -174,8 +172,7 @@
 (defn saio-kud [[mota bal]]
   "Saioaren gertaerekin zer egin erabakitzen du"
   (case mota
-    :erregistratu (go (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal))
-                      (<! (timeout 1000))
+    :erregistratu (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal)))
                       (saioa-hasi (:erabiltzailea bal) (:pasahitza bal)))
     :saioa-hasi (saioa-hasi (:era bal) (:pas bal))
     :saioa-amaitu (saioa-amaitu)
