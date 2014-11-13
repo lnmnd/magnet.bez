@@ -175,16 +175,40 @@
                      :libid (:id @lib)}])]])
 
 (defn liburua-gehitu []
-  (let [titulua (atom "")
-        sinopsia (atom "")]
+  (let [epub (atom "")
+        titulua (atom "")
+        egileak (atom "")
+        hizkuntza (atom "")
+        sinopsia (atom "")
+        argitaletxea (atom "")
+        urtea (atom "")
+        generoa (atom "")
+        etiketak (atom "")
+        azala (atom "")]
     (fn []
       [:div
        [:h1 "Liburua gehitu"]
        [:form
+        [:label "Epub"]
+        [:input {:type "text" :on-change #(reset! epub (-> % .-target .-value))}]        
         [:label "Titulua"]
         [:input {:type "text" :on-change #(reset! titulua (-> % .-target .-value))}]
+        [:label "Egileak"]
+        [:input {:type "text" :on-change #(reset! egileak (-> % .-target .-value))}]
+        [:label "Hizkuntza"]
+        [:input {:type "text" :on-change #(reset! hizkuntza (-> % .-target .-value))}]        
         [:label "Sinopsia"]
-        [:textarea {:type "text" :rows "4" :on-change #(reset! sinopsia (-> % .-target .-value))}]
+        [:textarea {:type "text" :rows "4" :on-change #(reset! sinopsia (-> % .-target .-value))}]        
+        [:label "Argitaletxea"]
+        [:input {:type "text" :on-change #(reset! argitaletxea (-> % .-target .-value))}]
+        [:label "Urtea"]
+        [:input {:type "text" :on-change #(reset! urtea (-> % .-target .-value))}]
+        [:label "Generoa"]
+        [:input {:type "text" :on-change #(reset! generoa (-> % .-target .-value))}]
+        [:label "Etiketak"]        
+        [:input {:type "text" :on-change #(reset! etiketak (-> % .-target .-value))}]
+        [:label "Azala"]        
+        [:input {:type "text" :on-change #(reset! azala (-> % .-target .-value))}]        
         [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]])))
 
 (defn bilatu []
