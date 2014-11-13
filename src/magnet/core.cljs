@@ -76,6 +76,10 @@
                           identity))))
 #_(erabiltzailea-gehitu "era" "1234" "era")
 
+(defn erabiltzailea-lortu [era]
+  (entzun (str aurriz "erabiltzaileak/" era)
+          :erabiltzailea))
+
 (defn erabiltzailea-aldatu
   "Erabiltzaile berri bat gehitzen du."
   ([era pas izen]
@@ -97,11 +101,13 @@
          :format :json
          :response-format :json
          :keywords? true
-         :handler #(swap! saioa assoc
-                          :hasita true
-                          :erabiltzailea era
-                          :token (:token %)
-                          :iraungitze_data (:iraungitze_data %))
+         :handler #(go (let [dat (<! (erabiltzailea-lortu era))]
+                         (swap! saioa assoc
+                                :hasita true
+                                :erabiltzailea era
+                                :izena (:izena dat)
+                                :token (:token %)
+                                :iraungitze_data (:iraungitze_data %))))
          :error-handler #(println %)}))
 #_(saioa-hasi "era" "1234")
 
