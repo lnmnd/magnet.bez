@@ -41,6 +41,17 @@
           :handler #(put! kan (f %))})
     kan))
 
+(defn bidali-eta-entzun
+  "Helbidera datuak bidaltzen ditu eta erantzunari funtzioa aplikatzen dio.
+  Emaitza duen kanala itzultzen du"
+  [helbidea dat f]
+  (let [kan (chan)]
+    (POST helbidea
+          {:params dat
+           :format :json
+           :handler #(put! kan (f %))})
+    kan))
+
 (defn erabiltzailea-gehitu
   "Erabiltzaile berri bat gehitzen du."
   ([era pas izen]
