@@ -24,6 +24,9 @@
 (defroute "/liburuak/:id" {:as params}
   (put! kan [:liburua (:id params)]))
 
+(defroute "/bilatu" []
+  (put! kan [:bilatu nil]))
+
 (let [history (History.)]
   (events/listen history EventType/NAVIGATE
                  #(secretary/dispatch! (.-token %)))

@@ -23,6 +23,8 @@
     (if (:hasita @saioa)
       [:ul.right
        [:li.divider]
+       [:li [:a {:href "#/bilatu"} "Bilatu"]]
+       [:li.divider]
        [:li [:a {:href "#/liburua-gehitu"}
              "Liburua gehitu"]]
        [:li.divider]
@@ -33,6 +35,8 @@
                                           false)}
              (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
       [:ul.right
+       [:li.divider]
+       [:li [:a {:href "#/bilatu"} "Bilatu"]]
        [:li.divider]
        [:li [:a {:href "#/erregistratu"} "Erregistratu"]]
        [:li.divider]
@@ -136,6 +140,11 @@
         [:textarea {:type "text" :rows "4" :on-change #(reset! sinopsia (-> % .-target .-value))}]
         [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]])))
 
+(defn bilatu []
+  [:div
+   [:h1 "Bilatu"]
+   [:p "todo"]])
+
 (defn nagusia [{:keys [saio-kan saioa iruzkin-kan bidea aliburuak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
@@ -149,6 +158,7 @@
                            :iruzkin-kan iruzkin-kan
                            :lib lib
                            :irak lib-irak}]
+        :bilatu [bilatu]
         nil)]]))
 
 (defn erdia [{:keys [saio-kan saioa iruzkin-kan bidea azken-iruzkinak aliburuak liburua lib-irak]}]
