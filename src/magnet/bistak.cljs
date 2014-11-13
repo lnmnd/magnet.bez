@@ -129,8 +129,7 @@
         [:input {:type "text" :on-change #(reset! titulua (-> % .-target .-value))}]
         [:label "Sinopsia"]
         [:textarea {:type "text" :rows "4" :on-change #(reset! sinopsia (-> % .-target .-value))}]
-        [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]
-])))
+        [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]])))
 
 (defn nagusia [{:keys [saioa iruzkin-kan bidea aliburuak lib lib-irak]}]
   (let [[bid bal] @bidea]
