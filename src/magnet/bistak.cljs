@@ -72,9 +72,9 @@
          [:input {:type "password" :on-change #(reset! pasahitza (-> % .-target .-value))}]]
         [:label "Izena"
          [:input {:type "text" :on-change #(reset! izena (-> % .-target .-value))}]]
-        [:a.button {:href "#" :on-click #(put! kan :erregistratu {:erabiltzailea @erabiltzailea
-                                                                  :pasahitza @pasahitza
-                                                                  :izena @izena})}
+        [:a.button {:href "#" :on-click #(put! kan [:erregistratu {:erabiltzailea @erabiltzailea
+                                                                   :pasahitza @pasahitza
+                                                                   :izena @izena}])}
          "Erregistratu"]]])))
 
 (defn azken-liburuak [libuk]
