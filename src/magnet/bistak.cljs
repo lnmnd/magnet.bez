@@ -1,20 +1,6 @@
 (ns magnet.bistak
   (:require [cljs.core.async :refer [put!]]))
 
-(defn erregistratu []
-  [:li [:a {:href "#" :data-reveal-id "erregistratuModal"} "Erregistratu"]
-   [:div.reveal-modal {:id "erregistratuModal" :data-reveal true}
-    [:h2 "Erregistratu"]
-    [:form
-     [:label "Erabiltzaile izena"
-      [:input {:type "text"}]]
-     [:label "Pasahitza"
-      [:input {:type "password"}]]
-     [:label "Izena"
-      [:input {:type "text"}]]
-     [:a.button {:href "#"} "Erregistratu"]]
-    [:a.close-reveal-modal "X"]]])
-
 ; TODO saioa hasteko formu
 (defn saioa-hasi [kan]
   [:li
@@ -48,7 +34,7 @@
              (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
       [:ul.right
        [:li.divider]
-       [erregistratu]
+       [:li [:a {:href "#/erregistratu"} "Erregistratu"]]
        [:li.divider]
        [saioa-hasi saio-kan]])]])
 
@@ -71,6 +57,18 @@
     [:h3 "Titulua"]
     [:h5 {:class "subheader"} "Liburu garrantzitsu baten datuak."]]
    [azken-iruzkinak iruzkinak]])
+
+(defn erregistratu []
+  [:div
+   [:h2 "Erregistratu"]
+   [:form
+    [:label "Erabiltzaile izena"
+     [:input {:type "text"}]]
+    [:label "Pasahitza"
+     [:input {:type "password"}]]
+    [:label "Izena"
+     [:input {:type "text"}]]
+    [:a.button {:href "#"} "Erregistratu"]]])
 
 (defn azken-liburuak [libuk]
   [:div
@@ -137,6 +135,7 @@
      [:div.row
       (case bid
         :index [azken-liburuak aliburuak]
+        :erregistratu [erregistratu]
         :liburua-gehitu [liburua-gehitu]
         :nire-liburuak "todo nire liburuak"
         :liburua [liburua {:saioa saioa

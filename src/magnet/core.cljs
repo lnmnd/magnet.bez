@@ -174,7 +174,7 @@
   (when (= :liburua mota)
     (liburua-lortu bal)
     (liburuaren-iruzkinak-lortu bal))
-  (when (contains? #{:index :liburua-gehitu :nire-liburuak :liburua}
+  (when (contains? #{:index :erregistratu :liburua-gehitu :nire-liburuak :liburua}
                    mota)
     (reset! bidea [mota bal])))
 
