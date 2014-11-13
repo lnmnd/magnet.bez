@@ -184,7 +184,7 @@
     :iruzkina-gehitu (do (swap! liburuaren-iruzkinak conj (:edukia bal))
                          (iruzkina-gehitu (:id bal) (:edukia bal)))
     nil))
-[]
+
 (defn errendatu [saio-kan iruzkin-kan]
   (reagent/render-component [bistak/main {:saio-kan saio-kan
                                           :iruzkin-kan iruzkin-kan
