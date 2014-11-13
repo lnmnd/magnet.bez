@@ -90,6 +90,7 @@
 (defn profila [{:keys [saio-kan saioa]}]
   (let [pas (atom "")
         izen (atom "")
+        des (atom "")
         ezab (atom "")]
     (fn [{:keys [saio-kan saioa]}]
       [:div
@@ -97,7 +98,8 @@
        [:div.small-12.medium-6.columns
         [:h3 "Oraingo datuak"]
         [:p "Erabiltzailea: " (:erabiltzailea @saioa)]
-        [:p "Izena: " (:izena @saioa)]]
+        [:p "Izena: " (:izena @saioa)]
+        [:p "Deskribapena: " (:deskribapena @saioa)]]
        [:div.small-12.medium-6.columns
         [:h3 "Datu berriak"]
         [:form
@@ -105,9 +107,12 @@
           [:input {:type "password" :on-change #(reset! pas (-> % .-target .-value))}]]
          [:label "Izena"
           [:input {:type "text" :on-change #(reset! izen (-> % .-target .-value))}]]
+         [:label "Deskribapena"
+          [:textarea {:rows "4" :on-change #(reset! des (-> % .-target .-value))}]]
          [:a.button {:href "#" :on-click #(do (put! saio-kan [:erabiltzailea-aldatu {:era (:erabiltzailea @saioa)
                                                                                      :pas @pas
-                                                                                     :izen @izen}])
+                                                                                     :izen @izen
+                                                                                     :des @des}])
                                               false)}
           "Aldatu"]]
         [:h3 "Ezabatu"]

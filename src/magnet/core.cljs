@@ -17,6 +17,7 @@
   saioa (atom {:hasita false
                :erabiltzailea nil
                :izena nil
+               :deskribapena nil
                :token nil
                :iraungitze_data nil}))
 (defonce ^{:doc "Uneko bidea"}
@@ -86,6 +87,7 @@
      (erabiltzailea-aldatu era pas izen ""))
   ([era pas izen desk]
      (swap! saioa assoc :izena izen)
+     (swap! saioa assoc :deskribapena desk)
      (let [param {:pasahitza pas
                   :izena izen}]
        (aldatu-eta-entzun (str aurriz "erabiltzaileak/" era "?token=" (:token @saioa))
@@ -106,6 +108,7 @@
                                 :hasita true
                                 :erabiltzailea era
                                 :izena (:izena dat)
+                                :deskribapena (:deskribapena dat)
                                 :token (:token %)
                                 :iraungitze_data (:iraungitze_data %))))
          :error-handler #(println %)}))
@@ -203,7 +206,7 @@
   (case mota
     :erregistratu (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal)))
                       (saioa-hasi (:erabiltzailea bal) (:pasahitza bal)))
-    :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal))
+    :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal) (:des bal))
     :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
     :saioa-hasi (saioa-hasi (:era bal) (:pas bal))
     :saioa-amaitu (saioa-amaitu)
