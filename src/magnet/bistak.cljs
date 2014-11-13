@@ -89,7 +89,8 @@
 
 (defn profila [{:keys [saio-kan saioa]}]
   (let [era (atom "")
-        izen (atom "")]
+        izen (atom "")
+        ezab (atom "")]
     (fn [kan]
       [:div
        [:h2 "Nire profila"]
@@ -106,7 +107,14 @@
           [:input {:type "text" :on-change #(reset! izen (-> % .-target .-value))}]]
          [:a.button {:href "#" :on-click #(do (println "TODO " (:erabiltzailea @saioa) " erabiltzailea aldatu")
                                               false)}
-          "Aldatu"]]]])))
+          "Aldatu"]]
+        [:h3 "Ezabatu"]
+        [:p "Kontua ezabatu nahi baduzu idatzi \"Bai, ezabatu nahi dut.\" ondorengo eremuan:"]
+        [:input {:type "text" :on-change #(reset! ezab (-> % .-target .-value))}]
+        [:a.button {:href "#" :on-click #(if (= @ezab "Bai, ezabatu nahi dut.")
+                                           (println "ezabatu")
+                                           false)}
+          "Ezabatu"]]])))
 
 (defn azken-liburuak [libuk]
   [:div
