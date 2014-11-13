@@ -57,7 +57,8 @@
 (defn erregistratu [kan]
   (let [erabiltzailea (atom "")
         pasahitza (atom "")
-        izena (atom "")]
+        izena (atom "")
+        deskribapena (atom "")]
     (fn [kan]
       [:div
        [:h2 "Erregistratu"]
@@ -68,9 +69,12 @@
          [:input {:type "password" :on-change #(reset! pasahitza (-> % .-target .-value))}]]
         [:label "Izena"
          [:input {:type "text" :on-change #(reset! izena (-> % .-target .-value))}]]
+        [:label "Deskribapena"
+         [:textarea {:rows "4" :on-change #(reset! deskribapena (-> % .-target .-value))}]]
         [:a.button {:href "#" :on-click #(put! kan [:erregistratu {:erabiltzailea @erabiltzailea
                                                                    :pasahitza @pasahitza
-                                                                   :izena @izena}])}
+                                                                   :izena @izena
+                                                                   :deskribapena @deskribapena}])}
          "Erregistratu"]]])))
 
 (defn saioa-hasi [kan]
