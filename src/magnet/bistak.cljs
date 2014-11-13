@@ -125,6 +125,7 @@
                   [:div.panel
                    [:h5 (:titulua li)]
                    [:h6.subheader (interpose ", " (:egileak li))]
+                   [:p.left (:gogoko_kopurua li) " gogoko"]
                    [:p.right (:iruzkin_kopurua li) " iruzkin"]]]])])
 
 ; TODO saioa hasita?
