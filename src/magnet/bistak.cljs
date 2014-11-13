@@ -20,6 +20,9 @@
        [:li [:a {:href "#/nire-liburuak"}
              "Nire liburuak"]]
        [:li.divider]
+       [:li [:a {:href "#/profila"}
+             "Nire profila"]]
+       [:li.divider]
        [:li [:a {:href "#" :on-click #(do (put! saio-kan [:saioa-amaitu])
                                           false)}
              (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
@@ -83,6 +86,27 @@
          [:input {:type "password" :on-change #(reset! pas (-> % .-target .-value))}]]
         [:a.button {:href "#" :on-click #(put! kan [:saioa-hasi {:era @era :pas @pas}])}
          "Saioa hasi"]]])))
+
+(defn profila [{:keys [saio-kan saioa]}]
+  (let [era (atom "")
+        izen (atom "")]
+    (fn [kan]
+      [:div
+       [:h2 "Nire profila"]
+       [:div.small-12.medium-6.columns
+        [:h3 "Oraingo datuak"]
+        [:p "Erabiltzailea: " (:erabiltzailea @saioa)]
+        [:p "Izena: " (:izena @saioa)]]
+       [:div.small-12.medium-6.columns
+        [:h3 "Datu berriak"]
+        [:form
+         [:label "Pasahitza"
+          [:input {:type "password" :on-change #(reset! pas (-> % .-target .-value))}]]
+         [:label "Izena"
+          [:input {:type "text" :on-change #(reset! izen (-> % .-target .-value))}]]
+         [:a.button {:href "#" :on-click #(do (println "TODO " (:erabiltzailea @saioa) " erabiltzailea aldatu")
+                                              false)}
+          "Aldatu"]]]])))
 
 (defn azken-liburuak [libuk]
   [:div
@@ -156,6 +180,8 @@
         :index [azken-liburuak aliburuak]
         :erregistratu [erregistratu saio-kan]
         :saioa-hasi [saioa-hasi saio-kan]
+        :profila [profila {:saio-kan saio-kan
+                           :saioa saioa}]
         :liburua-gehitu [liburua-gehitu]
         :nire-liburuak "todo nire liburuak"
         :liburua [liburua {:saioa saioa

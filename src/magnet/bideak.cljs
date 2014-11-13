@@ -24,6 +24,9 @@
 (defroute "/nire-liburuak" []
   (put! kan [:nire-liburuak nil]))
 
+(defroute "/profila" []
+  (put! kan [:profila nil]))
+
 (defroute "/liburuak/:id" {:as params}
   (put! kan [:liburua (:id params)]))
 
