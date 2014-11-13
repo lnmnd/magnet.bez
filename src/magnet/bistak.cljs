@@ -88,7 +88,7 @@
          "Saioa hasi"]]])))
 
 (defn profila [{:keys [saio-kan saioa]}]
-  (let [era (atom "")
+  (let [pas (atom "")
         izen (atom "")
         ezab (atom "")]
     (fn [{:keys [saio-kan saioa]}]
@@ -105,7 +105,9 @@
           [:input {:type "password" :on-change #(reset! pas (-> % .-target .-value))}]]
          [:label "Izena"
           [:input {:type "text" :on-change #(reset! izen (-> % .-target .-value))}]]
-         [:a.button {:href "#" :on-click #(do (println "TODO " (:erabiltzailea @saioa) " erabiltzailea aldatu")
+         [:a.button {:href "#" :on-click #(do (put! saio-kan [:erabiltzailea-aldatu {:era (:erabiltzailea @saioa)
+                                                                                     :pas @pas
+                                                                                     :izen @izen}])
                                               false)}
           "Aldatu"]]
         [:h3 "Ezabatu"]

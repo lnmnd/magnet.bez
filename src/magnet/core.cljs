@@ -52,6 +52,17 @@
            :handler #(put! kan (f %))})
     kan))
 
+(defn aldatu-eta-entzun
+  "Helbidera aldatzeko datuak bidaltzen ditu eta erantzunari funtzioa aplikatzen dio.
+  Emaitza duen kanala itzultzen du"
+  [helbidea dat f]
+  (let [kan (chan)]
+    (PUT helbidea
+         {:params dat
+          :format :json
+          :handler #(put! kan (f %))})
+    kan))
+
 (defn erabiltzailea-gehitu
   "Erabiltzaile berri bat gehitzen du."
   ([era pas izen]
@@ -64,6 +75,18 @@
                           (if (empty? desk) param (assoc param :deskribapena desk))
                           identity))))
 #_(erabiltzailea-gehitu "era" "1234" "era")
+
+(defn erabiltzailea-aldatu
+  "Erabiltzaile berri bat gehitzen du."
+  ([era pas izen]
+     (erabiltzailea-aldatu era pas izen ""))
+  ([era pas izen desk]
+     (swap! saioa assoc :izena izen)
+     (let [param {:pasahitza pas
+                  :izena izen}]
+       (aldatu-eta-entzun (str aurriz "erabiltzaileak/" era "?token=" (:token @saioa))
+                          (if (empty? desk) param (assoc param :deskribapena desk))
+                          identity))))
 
 (defn saioa-hasi
   "Saioa hasten du."
@@ -174,6 +197,7 @@
   (case mota
     :erregistratu (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal)))
                       (saioa-hasi (:erabiltzailea bal) (:pasahitza bal)))
+    :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal))
     :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
     :saioa-hasi (saioa-hasi (:era bal) (:pas bal))
     :saioa-amaitu (saioa-amaitu)
