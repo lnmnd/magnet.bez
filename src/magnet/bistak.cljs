@@ -101,7 +101,7 @@
      ^{:key i}
      [:div.panel (:erabiltzailea i) " data" [:br] (:edukia i)])])
 
-(defn liburua [{:keys [iruzkin-kan lib irak]}]
+(defn liburua [{:keys [saioa iruzkin-kan lib irak]}]
   [:div
    [:div.small-12.medium-6.columns
     [:h1 (:titulua @lib)]
@@ -114,8 +114,9 @@
     [:img {:src "img/liburua.jpg"}]]
    [:div.small-12.medium-12.columns
     [liburuaren-iruzkinak irak]
-    [iruzkin-form {:iruzkin-kan iruzkin-kan
-                   :libid (:id @lib)}]]])
+    (when (:hasita @saioa)
+      [iruzkin-form {:iruzkin-kan iruzkin-kan
+                     :libid (:id @lib)}])]])
 
 (defn liburua-gehitu []
   (let [titulua (atom "")
@@ -131,7 +132,7 @@
         [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]
 ])))
 
-(defn nagusia [{:keys [iruzkin-kan bidea aliburuak lib lib-irak]}]
+(defn nagusia [{:keys [saioa iruzkin-kan bidea aliburuak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
@@ -139,15 +140,17 @@
         :index [azken-liburuak aliburuak]
         :liburua-gehitu [liburua-gehitu]
         :nire-liburuak "todo nire liburuak"
-        :liburua [liburua {:iruzkin-kan iruzkin-kan
+        :liburua [liburua {:saioa saioa
+                           :iruzkin-kan iruzkin-kan
                            :lib lib
                            :irak lib-irak}]
         nil)]]))
 
-(defn erdia [{:keys [iruzkin-kan bidea azken-iruzkinak aliburuak liburua lib-irak]}]
+(defn erdia [{:keys [saioa iruzkin-kan bidea azken-iruzkinak aliburuak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-iruzkinak]
-   [nagusia {:iruzkin-kan iruzkin-kan
+   [nagusia {:saioa saioa
+             :iruzkin-kan iruzkin-kan
              :bidea bidea
              :aliburuak aliburuak
              :lib liburua
@@ -170,7 +173,8 @@
    [:div {:class "medium-12 columns"}
     [goiko-barra {:saio-kan saio-kan
                   :saioa saioa}]
-    [erdia {:iruzkin-kan iruzkin-kan
+    [erdia {:saioa saioa
+            :iruzkin-kan iruzkin-kan
             :bidea bidea
             :azken-iruzkinak azken-iruzkinak
             :aliburuak aliburuak
