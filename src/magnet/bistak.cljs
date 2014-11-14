@@ -185,14 +185,13 @@
         generoa (atom "")
         etiketak (atom "")
         azala (atom "")
-        azala-src (atom "img/liburua.jpg")
         azala-img-aldatu (fn [f]
                            (let [fr (js/FileReader.)]
                              (js/console.log fr)
                              (set! (.-onload fr)
                                    (fn [ger]
-                                     (js/console.log (.-result (.-target ger)))
-                                     (reset! azala-src (.-result (.-target ger)))))
+                                     (set! (.-src (js/document.getElementById "liburua-gehitu-azala-img"))
+                                           (.-result (.-target ger)))))
                              (.readAsDataURL fr f)))
         azala-lortu (fn [tar]
                       (let [fitx (.item (.-files tar) 0)]
@@ -221,7 +220,7 @@
         [:label "Etiketak"]        
         [:input {:type "text" :on-change #(reset! etiketak (-> % .-target .-value))}]
         [:label "Azala"]
-        [:img {:src @azala-src :width "256" :height "256"}]
+        [:img {:src "img/liburua.jpg" :id "liburua-gehitu-azala-img" :width "256" :height "256"}]
         [:input {:type "file" :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]
         [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]])))
 
