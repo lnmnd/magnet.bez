@@ -3,16 +3,17 @@
             [goog.events :as events]
             [goog.history.EventType :as EventType]
             [cljs.core.async :refer [chan put!]]
-            [magnet.bideak.makroak :as makroak :refer-macros [bidea]])
+            [magnet.bideak.makroak :as makroak :refer-macros [bideak-definitu]])
   (:import goog.History))
 
 (def kan (chan))
 
 (secretary/set-config! :prefix "#")
 
-(bidea :index "/" [] nil)
-(bidea :bilatu "/bilatu" [] nil)
-(bidea :erregistratu "/erregistratu" [] nil)
+(bideak-definitu
+ [:index "/" [] nil]
+ [:bilatu "/bilatu" [] nil]
+ [:erregistratu "/erregistratu" [] nil])
 
 (defroute "/saioa-hasi" []
   (put! kan [:saioa-hasi nil]))
