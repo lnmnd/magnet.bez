@@ -184,7 +184,10 @@
         urtea (atom "")
         generoa (atom "")
         etiketak (atom "")
-        azala (atom "")]
+        azala (atom "")
+        azala-lortu (fn [tar]
+                      (let [fitx (.item (.-files tar) 0)]
+                        (js/console.log fitx)))]
     (fn []
       [:div
        [:h1 "Liburua gehitu"]
@@ -208,7 +211,7 @@
         [:label "Etiketak"]        
         [:input {:type "text" :on-change #(reset! etiketak (-> % .-target .-value))}]
         [:label "Azala"]        
-        [:input {:type "text" :on-change #(reset! azala (-> % .-target .-value))}]        
+        [:input {:type "file" :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]        
         [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]])))
 
 (defn bilatu []
