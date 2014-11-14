@@ -11,9 +11,9 @@
 (secretary/set-config! :prefix "#")
 
 (bideak-definitu
- [:index "/" [] nil]
- [:bilatu "/bilatu" [] nil]
- [:erregistratu "/erregistratu" [] nil])
+ [:index "/"]
+ [:bilatu "/bilatu"]
+ [:erregistratu "/erregistratu"])
 
 (defroute "/saioa-hasi" []
   (put! kan [:saioa-hasi nil]))
