@@ -187,7 +187,8 @@
         azala (atom "")
         azala-lortu (fn [tar]
                       (let [fitx (.item (.-files tar) 0)]
-                        (js/console.log fitx)))]
+                        (js/console.log fitx)))
+        azala-src (atom "img/liburua.jpg")]
     (fn []
       [:div
        [:h1 "Liburua gehitu"]
@@ -210,8 +211,9 @@
         [:input {:type "text" :on-change #(reset! generoa (-> % .-target .-value))}]
         [:label "Etiketak"]        
         [:input {:type "text" :on-change #(reset! etiketak (-> % .-target .-value))}]
-        [:label "Azala"]        
-        [:input {:type "file" :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]        
+        [:label "Azala"]
+        [:img {:src @azala-src :width "256" :height "256"}]
+        [:input {:type "file" :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]
         [:button {:on-click #(println @titulua " liburua gehitu")} "Gehitu"]]])))
 
 (defn bilatu []
