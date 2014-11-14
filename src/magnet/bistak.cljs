@@ -185,10 +185,19 @@
         generoa (atom "")
         etiketak (atom "")
         azala (atom "")
+        azala-src (atom "img/liburua.jpg")
+        azala-img-aldatu (fn [f]
+                           (let [fr (js/FileReader.)]
+                             (js/console.log fr)
+                             (set! (.-onload fr)
+                                   (fn [ger]
+                                     (js/console.log (.-result (.-target ger)))
+                                     (reset! azala-src (.-result (.-target ger)))))
+                             (.readAsDataURL fr f)))
         azala-lortu (fn [tar]
                       (let [fitx (.item (.-files tar) 0)]
-                        (js/console.log fitx)))
-        azala-src (atom "img/liburua.jpg")]
+                        (js/console.log fitx)
+                        (azala-img-aldatu fitx)))]
     (fn []
       [:div
        [:h1 "Liburua gehitu"]
