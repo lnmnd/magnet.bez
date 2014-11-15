@@ -2,18 +2,21 @@
   (:require [secretary.core :as secretary :refer-macros [defroute]]
             [goog.events :as events]
             [goog.history.EventType :as EventType]
-            [cljs.core.async :refer [chan put!]]
-            [magnet.bideak.makroak :as makroak :refer-macros [bideak-definitu]])
+            [cljs.core.async :refer [chan put!]])
   (:import goog.History))
 
 (def kan (chan))
 
 (secretary/set-config! :prefix "#")
 
-(bideak-definitu
- [:index "/"]
- [:bilatu "/bilatu"]
- [:erregistratu "/erregistratu"])
+(defroute "/" []
+  (put! kan [:index nil]))
+
+(defroute "/bilatu" []
+  (put! kan [:bilatu nil]))
+
+(defroute "/erregistratu" []
+  (put! kan [:erregistratu nil]))
 
 (defroute "/saioa-hasi" []
   (put! kan [:saioa-hasi nil]))
