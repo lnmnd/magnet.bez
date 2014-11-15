@@ -243,7 +243,7 @@
 
 (defn ^:export run []
   (let [saio-kan (chan)
-        bide-kan (chan)
+        bide-kan (bideak/bideak-definitu)
         iruzkin-kan (chan)]
     
     (errendatu saio-kan iruzkin-kan)
@@ -253,17 +253,17 @@
         (saio-kud b)
         (recur (<! saio-kan))))
 
-    (go-loop [b (<! bideak/kan)]
+    (go-loop [b (<! bide-kan)]
       (when b
         (bide-kud b)
-        (recur (<! bideak/kan))))
+        (recur (<! bide-kan))))
 
     (go-loop [b (<! iruzkin-kan)]
       (when b
         (iruzkin-kud b)
         (recur (<! iruzkin-kan))))
 
-    (put! bideak/kan [:index nil])
+    (put! bide-kan [:index nil])
     (azken-iruzkinak-lortu))
 
   (fw/watch-and-reload :jsload-callback reagent/force-update-all))
