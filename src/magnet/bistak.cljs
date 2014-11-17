@@ -135,7 +135,7 @@
    (for [li @libuk]
      ^{:key li} [:a {:href (str "#/liburuak/" (:id li))}
                  [:div.small-6.medium-4.columns
-                  [:img {:src "img/liburua.jpg"}]
+                  [:img {:src (:azala li)}]
                   [:div.panel
                    [:h5 (:titulua li)]
                    [:h6.subheader (interpose ", " (:egileak li))]
@@ -170,7 +170,7 @@
     [:p "Urtea" (:urtea @lib)]
     [:p (:sinopsia @lib)]]
    [:div.small-12.medium-6.columns
-    [:img {:src "img/liburua.jpg"}]]
+    [:img {:src (:azala @lib)}]]
    [:div.small-12.medium-12.columns
     [liburuaren-iruzkinak irak]
     (when (:hasita @saioa)
