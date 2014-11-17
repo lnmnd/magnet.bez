@@ -133,21 +133,18 @@
 (defn saioa-hasi
   "Saioa hasten du."
   [era pas]
-  (POST (str aurriz "saioak")
-        {:params {:erabiltzailea era
-                  :pasahitza pas}
-         :format :json
-         :response-format :json
-         :keywords? true
-         :handler #(go (let [dat (<! (erabiltzailea-lortu era))]
-                         (swap! saioa assoc
-                                :hasita true
-                                :erabiltzailea era
-                                :izena (:izena dat)
-                                :deskribapena (:deskribapena dat)
-                                :token (:token %)
-                                :iraungitze_data (:iraungitze_data %))))
-         :error-handler #(println %)}))
+  (bidali-eta-entzun
+   (str aurriz "saioak")
+   {:erabiltzailea era
+    :pasahitza pas}
+   #(go (let [dat (<! (erabiltzailea-lortu era))]
+          (swap! saioa assoc
+                 :hasita true
+                 :erabiltzailea era
+                 :izena (:izena dat)
+                 :deskribapena (:deskribapena dat)
+                 :token (:token %)
+                 :iraungitze_data (:iraungitze_data %))))))
 #_(saioa-hasi "era" "1234")
 
 (defn saioa-amaitu
