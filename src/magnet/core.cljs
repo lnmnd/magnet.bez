@@ -198,8 +198,9 @@
 #_(azken-iruzkinak-lortu)
 
 (defn nire-liburuak-lortu []
-  (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/liburuak")
-          #(reset! nire-liburuak (reverse (:liburuak %)))))
+  (go (let [libk (<! (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/liburuak")
+                             :liburuak))]
+        (reset! nire-liburuak (rseq libk)))))
 
 (defn azken-liburuak-lortu
   "Azken liburuak lortzen ditu"
