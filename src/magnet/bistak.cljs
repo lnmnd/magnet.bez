@@ -190,6 +190,7 @@
                              (js/console.log fr)
                              (set! (.-onload fr)
                                    (fn [ger]
+                                     (reset! azala (subs (.-result (.-target ger)) (count "data:image/jpeg;base64,")))
                                      (set! (.-src (js/document.getElementById "liburua-gehitu-azala-img"))
                                            (.-result (.-target ger)))))
                              (.readAsDataURL fr f)))
