@@ -60,6 +60,8 @@
        (POST helbidea
              {:params dat
               :format :json
+              :response-format :json
+              :keywords? true
               :handler #(put! kan (f %))})
        kan))
   ([helbidea dat f ef]
@@ -67,6 +69,8 @@
        (POST helbidea
              {:params dat
               :format :json
+              :response-format :json
+              :keywords? true
               :handler #(put! kan (f %))
               :error-handler #(put! kan (ef %))})
        kan)))
@@ -79,6 +83,8 @@
        (PUT helbidea
             {:params dat
              :format :json
+             :response-format :json
+             :keywords? true
              :handler #(put! kan (f %))})
        kan))
   ([helbidea dat f ef]
@@ -86,6 +92,8 @@
        (PUT helbidea
             {:params dat
              :format :json
+             :response-format :json
+             :keywords? true
              :handler #(put! kan (f %))
              :error-handler #(put! kan (ef %))})
        kan)))
