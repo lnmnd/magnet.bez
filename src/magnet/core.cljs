@@ -223,19 +223,15 @@
 (defn liburua-lortu
   "id duen liburua lortzen du."
   [id]
-  (GET (str aurriz "liburuak/" id)
-       {:response-format :json
-        :keywords? true
-        :handler #(reset! liburua (:liburua %))}))
+  (entzun (str aurriz "liburuak/" id)
+          #(reset! liburua (:liburua %))))
 #_(liburua-lortu 1)
 
 (defn liburuaren-iruzkinak-lortu
   "id duen libururen iruzkinak lortzen ditu."
   [id]
-  (GET (str aurriz "liburuak/" id "/iruzkinak?muga=0")
-       {:response-format :json
-        :keywords? true
-        :handler #(reset! liburuaren-iruzkinak (:iruzkinak %))}))
+  (entzun (str aurriz "liburuak/" id "/iruzkinak?muga=0")
+          #(reset! liburuaren-iruzkinak (:iruzkinak %))))
 
 (defn iruzkina-gehitu
   "id liburuari erantzuten dion iruzkina gehitzen du."
