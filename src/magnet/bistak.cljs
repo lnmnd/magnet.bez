@@ -239,7 +239,10 @@
   [:div
    [:h1 "Nire liburuak"]
    [:ul (for [l @liburuak]
-          ^{:key l} [:li (:titulua l)])]])
+          ^{:key l} [:li [:a {:href "#" :on-click #(do (when (js/confirm "Seguru liburua ezabatu nahi duzula?")
+                                                         (put! kan [:liburua-ezabatu (:id l)]))
+                                                       false)} "X"]
+                     " " (:titulua l)])]])
 
 (defn bilatu []
   [:div

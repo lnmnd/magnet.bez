@@ -164,6 +164,9 @@
                      edukia
                      identity))
 
+(defn liburua-ezabatu [id]
+  (DELETE (str aurriz "liburuak/" id "?token=" (:token @saioa))))
+
 (defn iruzkin-liburu-titulua
   [ir]
   (entzun (str aurriz "liburuak/" (:liburua ir))
@@ -264,6 +267,8 @@
   "Liburuekin lotutako kudeatzailea."
   (case mota
     :liburua-gehitu (liburua-gehitu bal)
+    :liburua-ezabatu (do (swap! nire-liburuak (fn [lk] (remove #(= bal (:id %)) lk)))
+                         (liburua-ezabatu bal))
     nil))
 
 (defn iruzkin-kud [[mota bal]]
