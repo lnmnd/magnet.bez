@@ -33,36 +33,60 @@
 
 (defn entzun
   "Helbidea entzuten du eta erantzunari funtzioa aplikatzen dio.
-   Emaitza duen kanala itzultzen du"
-  [helbidea f]
-  (let [kan (chan)]
-    (GET helbidea
-         {:response-format :json
-          :keywords? true
-          :handler #(put! kan (f %))})
-    kan))
+  Emaitza duen kanala itzultzen du"
+  ([helbidea f ef]
+     (let [kan (chan)]
+       (GET helbidea
+            {:response-format :json
+             :keywords? true
+             :handler #(put! kan (f %))
+             :error-handler #(put! kan (ef %))})
+       kan))
+  ([helbidea f]
+     (let [kan (chan)]
+       (GET helbidea
+            {:response-format :json
+             :keywords? true
+             :handler #(put! kan (f %))})
+       kan)))
 
 (defn bidali-eta-entzun
   "Helbidera datuak bidaltzen ditu eta erantzunari funtzioa aplikatzen dio.
   Emaitza duen kanala itzultzen du"
-  [helbidea dat f]
-  (let [kan (chan)]
-    (POST helbidea
-          {:params dat
-           :format :json
-           :handler #(put! kan (f %))})
-    kan))
+  ([helbidea dat f]
+     (let [kan (chan)]
+       (POST helbidea
+             {:params dat
+              :format :json
+              :handler #(put! kan (f %))})
+       kan))
+  ([helbidea dat f ef]
+     (let [kan (chan)]
+       (POST helbidea
+             {:params dat
+              :format :json
+              :handler #(put! kan (f %))
+              :error-handler #(put! kan (ef %))})
+       kan)))
 
 (defn aldatu-eta-entzun
   "Helbidera aldatzeko datuak bidaltzen ditu eta erantzunari funtzioa aplikatzen dio.
   Emaitza duen kanala itzultzen du"
-  [helbidea dat f]
-  (let [kan (chan)]
-    (PUT helbidea
-         {:params dat
-          :format :json
-          :handler #(put! kan (f %))})
-    kan))
+  ([helbidea dat f]
+     (let [kan (chan)]
+       (PUT helbidea
+            {:params dat
+             :format :json
+             :handler #(put! kan (f %))})
+       kan))
+  ([helbidea dat f ef]
+     (let [kan (chan)]
+       (PUT helbidea
+            {:params dat
+             :format :json
+             :handler #(put! kan (f %))
+             :error-handler #(put! kan (ef %))})
+       kan)))
 
 (defn erabiltzailea-gehitu
   "Erabiltzaile berri bat gehitzen du."
