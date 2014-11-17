@@ -170,7 +170,7 @@
 (defn liburua-gehitu [edukia]
   (bidali-eta-entzun (str aurriz "liburuak?token=" (:token @saioa))
                      edukia
-                     identity))
+                     :liburua))
 
 (defn liburua-ezabatu [id]
   (DELETE (str aurriz "liburuak/" id "?token=" (:token @saioa))))
@@ -271,10 +271,11 @@
                    mota)
     (reset! bidea [mota bal])))
 
-(defn liburu-kud [[mota bal]]
+(defn liburu-kud [[mota bal] bide-kan]
   "Liburuekin lotutako kudeatzailea."
   (case mota
-    :liburua-gehitu (liburua-gehitu bal)
+    :liburua-gehitu (go (let [li (<! (liburua-gehitu bal))]
+                          (>! bide-kan [:liburua (:id li)])))
     :liburua-ezabatu (do (swap! nire-liburuak (fn [lk] (remove #(= bal (:id %)) lk)))
                          (liburua-ezabatu bal))
     nil))
@@ -321,7 +322,7 @@
 
     (go-loop [b (<! liburu-kan)]
       (when b
-        (liburu-kud b)
+        (liburu-kud b bide-kan)
         (recur (<! liburu-kan))))
         
     (go-loop [b (<! iruzkin-kan)]
