@@ -342,7 +342,9 @@
         (iruzkin-kud b)
         (recur (<! iruzkin-kan))))
 
-    (put! bide-kan [:index nil])
+    (azken-liburuak-lortu)
+    (reset! bidea [:index nil])
+    
     (azken-iruzkinak-lortu))
 
   (fw/watch-and-reload :jsload-callback reagent/force-update-all))
