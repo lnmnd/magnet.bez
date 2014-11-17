@@ -246,7 +246,7 @@
    [:h1 "Bilatu"]
    [:p "todo"]])
 
-(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea aliburuak lib lib-irak]}]
+(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea aliburuak nliburuak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
@@ -257,7 +257,7 @@
         :profila [profila {:saio-kan saio-kan
                            :saioa saioa}]
         :liburua-gehitu [liburua-gehitu liburu-kan]
-        :nire-liburuak [nire-liburuak liburu-kan (atom [])]
+        :nire-liburuak [nire-liburuak liburu-kan nliburuak]
         :liburua [liburua {:saioa saioa
                            :iruzkin-kan iruzkin-kan
                            :lib lib
@@ -265,7 +265,7 @@
         :bilatu [bilatu]
         nil)]]))
 
-(defn erdia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak aliburuak liburua lib-irak]}]
+(defn erdia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak aliburuak nliburuak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-iruzkinak]
    [nagusia {:saio-kan saio-kan
@@ -274,6 +274,7 @@
              :iruzkin-kan iruzkin-kan
              :bidea bidea
              :aliburuak aliburuak
+             :nliburuak nliburuak             
              :lib liburua
              :lib-irak lib-irak}]])
 
@@ -289,7 +290,7 @@
        [:li [:a {:href "#"} "Lotura 2"]]
        [:li [:a {:href "#"} "Lotura 3"]]]]]]])
 
-(defn main [{:keys [saio-kan liburu-kan iruzkin-kan saioa bidea azken-iruzkinak aliburuak liburua lib-irak]}]
+(defn main [{:keys [saio-kan liburu-kan iruzkin-kan saioa bidea azken-iruzkinak aliburuak nliburuak liburua lib-irak]}]
   [:div {:class "row"}
    [:div {:class "medium-12 columns"}
     [goiko-barra {:saio-kan saio-kan
@@ -301,6 +302,7 @@
             :bidea bidea
             :azken-iruzkinak azken-iruzkinak
             :aliburuak aliburuak
+            :nliburuak nliburuak            
             :liburua liburua
             :lib-irak lib-irak}]
     [oina]]])

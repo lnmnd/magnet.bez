@@ -24,6 +24,8 @@
   bidea (atom []))
 (defonce ^{:doc "Azken iruzkinen zerrenda"}
   azken-iruzkinak (atom []))
+(defonce ^{:doc "Nire liburuen zerrenda"}
+  nire-liburuak (atom []))
 (defonce ^{:doc "Azken liburuen zerrenda"}
   azken-liburuak (atom []))
 (defonce ^{:doc "Liburuaren datuak"}
@@ -184,6 +186,10 @@
            :handler #(do (reset! azken-iruzkinak (reverse (:iruzkinak %))))})))
 #_(azken-iruzkinak-lortu)
 
+(defn nire-liburuak-lortu []
+  (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/liburuak")
+          #(reset! nire-liburuak (reverse (:liburuak %)))))
+
 (defn azken-liburuak-lortu
   "Azken liburuak lortzen ditu"
   ([]
@@ -248,6 +254,8 @@
   (when (= :liburua mota)
     (liburua-lortu bal)
     (liburuaren-iruzkinak-lortu bal))
+  (when (= :nire-liburuak mota)
+    (nire-liburuak-lortu))
   (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :profila :liburua :bilatu}
                    mota)
     (reset! bidea [mota bal])))
@@ -273,6 +281,7 @@
                                           :bidea bidea
                                           :azken-iruzkinak azken-iruzkinak
                                           :aliburuak azken-liburuak
+                                          :nliburuak nire-liburuak
                                           :liburua liburua
                                           :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))
