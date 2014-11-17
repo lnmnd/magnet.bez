@@ -157,6 +157,11 @@
            :error-handler #(println %)}))
 #_(erabiltzailea-ezabatu)
 
+(defn liburua-gehitu [edukia]
+  (bidali-eta-entzun (str aurriz "liburuak?token=" (:token @saioa))
+                     edukia
+                     identity))
+
 (defn iruzkin-liburu-titulua
   [ir]
   (entzun (str aurriz "liburuak/" (:liburua ir))
@@ -247,6 +252,12 @@
                    mota)
     (reset! bidea [mota bal])))
 
+(defn liburu-kud [[mota bal]]
+  "Liburuekin lotutako kudeatzailea."
+  (case mota
+    :liburua-gehitu (liburua-gehitu bal)
+    nil))
+
 (defn iruzkin-kud [[mota bal]]
   "Iruzkinekin lotutako kudeatzailea."
   (case mota
@@ -254,8 +265,9 @@
                          (iruzkina-gehitu (:id bal) (:edukia bal)))
     nil))
 
-(defn errendatu [saio-kan iruzkin-kan]
+(defn errendatu [{:keys [saio-kan liburu-kan iruzkin-kan]}]
   (reagent/render-component [bistak/main {:saio-kan saio-kan
+                                          :liburu-kan liburu-kan
                                           :iruzkin-kan iruzkin-kan
                                           :saioa saioa
                                           :bidea bidea
@@ -268,9 +280,12 @@
 (defn ^:export run []
   (let [saio-kan (chan)
         bide-kan (bideak/bideak-definitu)
+        liburu-kan (chan)
         iruzkin-kan (chan)]
     
-    (errendatu saio-kan iruzkin-kan)
+    (errendatu {:saio-kan saio-kan
+                :liburu-kan liburu-kan
+                :iruzkin-kan iruzkin-kan})
         
     (go-loop [b (<! saio-kan)]
       (when b
@@ -282,6 +297,11 @@
         (bide-kud b)
         (recur (<! bide-kan))))
 
+    (go-loop [b (<! liburu-kan)]
+      (when b
+        (liburu-kud b)
+        (recur (<! liburu-kan))))
+        
     (go-loop [b (<! iruzkin-kan)]
       (when b
         (iruzkin-kud b)
