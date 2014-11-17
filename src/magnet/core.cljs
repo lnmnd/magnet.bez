@@ -26,6 +26,8 @@
   azken-iruzkinak (atom []))
 (defonce ^{:doc "Nire liburuen zerrenda"}
   nire-liburuak (atom []))
+(defonce ^{:doc "Nik idatzitako iruzkinen zerrenda"}
+  nire-iruzkinak (atom []))
 (defonce ^{:doc "Azken liburuen zerrenda"}
   azken-liburuak (atom []))
 (defonce ^{:doc "Liburuaren datuak"}
@@ -202,6 +204,11 @@
                              :liburuak))]
         (reset! nire-liburuak (rseq libk)))))
 
+(defn nire-iruzkinak-lortu []
+  (go (let [irk (<! (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/iruzkinak?muga=0")
+                            :iruzkinak))]
+        (reset! nire-iruzkinak (rseq irk)))))
+
 (defn azken-liburuak-lortu
   "Azken liburuak lortzen ditu"
   ([]
@@ -268,7 +275,9 @@
     (liburuaren-iruzkinak-lortu bal))
   (when (= :nire-liburuak mota)
     (nire-liburuak-lortu))
-  (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :profila :liburua :bilatu}
+  (when (= :nire-iruzkinak mota)
+    (nire-iruzkinak-lortu))
+  (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :profila :liburua :bilatu}
                    mota)
     (reset! bidea [mota bal])))
 
@@ -297,6 +306,7 @@
                                           :azken-iruzkinak azken-iruzkinak
                                           :aliburuak azken-liburuak
                                           :nliburuak nire-liburuak
+                                          :niruzkinak nire-iruzkinak
                                           :liburua liburua
                                           :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))

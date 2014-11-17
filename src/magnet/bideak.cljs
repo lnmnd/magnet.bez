@@ -28,6 +28,9 @@
     (defroute "/nire-liburuak" []
       (put! kan [:nire-liburuak nil]))
 
+    (defroute "/nire-iruzkinak" []
+      (put! kan [:nire-iruzkinak nil]))
+        
     (defroute "/profila" []
       (put! kan [:profila nil]))
 
