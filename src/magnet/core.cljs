@@ -211,17 +211,13 @@
 (defn azken-liburuak-lortu
   "Azken liburuak lortzen ditu"
   ([]
-     (GET (str aurriz "liburuak")
-          {:response-format :json
-           :keywords? true
-           :handler #(azken-liburuak-lortu (if (> (:guztira %) azken-liburu-kopurua)
-                                              (- (:guztira %) azken-liburu-kopurua)
-                                              0))}))
+     (entzun (str aurriz "liburuak")
+             #(azken-liburuak-lortu (if (> (:guztira %) azken-liburu-kopurua)
+                                      (- (:guztira %) azken-liburu-kopurua)
+                                      0))))
   ([desp]
-     (GET (str aurriz "liburuak?desplazamendua=" desp "&muga=" azken-liburu-kopurua)
-          {:response-format :json
-           :keywords? true
-           :handler #(reset! azken-liburuak (reverse (:liburuak %)))})))
+     (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" azken-liburu-kopurua)
+             #(reset! azken-liburuak (reverse (:liburuak %))))))
 #_(azken-liburuak-lortu)
 
 (defn liburua-lortu
@@ -342,9 +338,8 @@
         (iruzkin-kud b)
         (recur (<! iruzkin-kan))))
 
-    (azken-liburuak-lortu)
-    (reset! bidea [:index nil])
-    
+    (go (<! (azken-liburuak-lortu))
+        (reset! bidea [:index nil]))
     (azken-iruzkinak-lortu))
 
   (fw/watch-and-reload :jsload-callback reagent/force-update-all))
