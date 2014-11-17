@@ -244,7 +244,7 @@
             ^{:key l} [:li [:a {:href "#" :on-click #(do (when (js/confirm "Seguru liburua ezabatu nahi duzula?")
                                                            (put! kan [:liburua-ezabatu (:id l)]))
                                                          false)} "X"]
-                       " " (:titulua l)])])])
+                       " " [:a {:href (str "#/liburuak/" (:id l))} (:titulua l)]])])])
 
 (defn bilatu []
   [:div
