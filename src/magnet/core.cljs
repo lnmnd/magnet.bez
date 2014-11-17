@@ -233,9 +233,10 @@
 (defn iruzkina-gehitu
   "id liburuari erantzuten dion iruzkina gehitzen du."
   [id edukia]
-  (POST (str aurriz "liburuak/" id "/iruzkinak?token=" (:token @saioa))
-        {:params edukia
-         :format :json}))
+  (bidali-eta-entzun
+   (str aurriz "liburuak/" id "/iruzkinak?token=" (:token @saioa))
+   edukia
+   identity))
 
 (defn egile-guztiak-lortu
   "Egile guztien zerrenda lortzen du"
