@@ -222,7 +222,17 @@
         [:label "Azala"]
         [:img {:src "img/liburua.jpg" :id "liburua-gehitu-azala-img" :width "256" :height "256"}]
         [:input {:type "file" :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]
-        [:button {:on-click #(put! kan [:liburua-gehitu {:epub "todo"}])} "Gehitu"]]])))
+        [:button {:on-click #(put! kan [:liburua-gehitu {:epub @epub
+                                                         :titulua @titulua
+                                                         :egileak ["todo" "egileak"]
+                                                         :hizkuntza @hizkuntza
+                                                         :sinopsia @sinopsia
+                                                         :argitaletxea @argitaletxea
+                                                         :urtea @urtea
+                                                         :generoa @generoa
+                                                         :etiketak ["todo" "etiketak"]
+                                                         :azala @azala}])}
+         "Gehitu"]]])))
 
 (defn bilatu []
   [:div
