@@ -189,17 +189,13 @@
 (defn azken-iruzkinak-lortu
   "Azken iruzkinak lortzen ditu"
   ([]
-     (GET (str aurriz "iruzkinak")
-          {:response-format :json
-           :keywords? true
-           :handler #(azken-iruzkinak-lortu (if (> (:guztira %) azken-iruzkin-kopurua)
-                                              (- (:guztira %) azken-iruzkin-kopurua)
-                                              0))}))
+     (entzun (str aurriz "iruzkinak")
+             #(azken-iruzkinak-lortu (if (> (:guztira %) azken-iruzkin-kopurua)
+                                       (- (:guztira %) azken-iruzkin-kopurua)
+                                       0))))
   ([desp]
-     (GET (str aurriz "iruzkinak?desplazamendua=" desp "&muga=" azken-iruzkin-kopurua)
-          {:response-format :json
-           :keywords? true
-           :handler #(do (reset! azken-iruzkinak (reverse (:iruzkinak %))))})))
+     (entzun (str aurriz "iruzkinak?desplazamendua=" desp "&muga=" azken-iruzkin-kopurua)
+             #(do (reset! azken-iruzkinak (reverse (:iruzkinak %)))))))
 #_(azken-iruzkinak-lortu)
 
 (defn nire-liburuak-lortu []
