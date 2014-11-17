@@ -177,6 +177,9 @@
 (defn liburua-ezabatu [id]
   (DELETE (str aurriz "liburuak/" id "?token=" (:token @saioa))))
 
+(defn iruzkina-ezabatu [id]
+  (DELETE (str aurriz "iruzkinak/" id "?token=" (:token @saioa))))
+
 (defn iruzkin-liburu-titulua
   [ir]
   (entzun (str aurriz "liburuak/" (:liburua ir))
@@ -295,6 +298,8 @@
   (case mota
     :iruzkina-gehitu (do (swap! liburuaren-iruzkinak conj (:edukia bal))
                          (iruzkina-gehitu (:id bal) (:edukia bal)))
+    :iruzkina-ezabatu (do (swap! nire-iruzkinak (fn [lk] (remove #(= bal (:id %)) lk)))
+                          (iruzkina-ezabatu bal))
     nil))
 
 (defn errendatu [{:keys [saio-kan liburu-kan iruzkin-kan]}]
