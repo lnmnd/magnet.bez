@@ -235,6 +235,12 @@
                                                          :azala @azala}])}
          "Gehitu"]]])))
 
+(defn nire-liburuak [kan liburuak]
+  [:div
+   [:h1 "Nire liburuak"]
+   [:ul (for [l @liburuak]
+          ^{:key l} [:li (:titulua l)])]])
+
 (defn bilatu []
   [:div
    [:h1 "Bilatu"]
@@ -251,7 +257,7 @@
         :profila [profila {:saio-kan saio-kan
                            :saioa saioa}]
         :liburua-gehitu [liburua-gehitu liburu-kan]
-        :nire-liburuak "todo nire liburuak"
+        :nire-liburuak [nire-liburuak liburu-kan (atom [])]
         :liburua [liburua {:saioa saioa
                            :iruzkin-kan iruzkin-kan
                            :lib lib
