@@ -179,6 +179,15 @@
 
 (defn liburua-gehitu [kan]
   (let [epub (atom "")
+        epub-edukia-aldatu (fn [f]
+                             (let [fr (js/FileReader.)]
+                               (set! (.-onload fr)
+                                     (fn [ger]
+                                       (reset! epub (subs (.-result (.-target ger)) (count "data:application/epub+zip;base64,")))))
+                               (.readAsDataURL fr f)))
+        epub-lortu (fn [tar]
+                     (let [fitx (.item (.-files tar) 0)]
+                       (epub-edukia-aldatu fitx)))
         titulua (atom "")
         egileak (atom "")
         hizkuntza (atom "")
@@ -204,7 +213,7 @@
        [:h1 "Liburua gehitu"]
        [:form
         [:label "Epub"]
-        [:input {:type "text" :on-change #(reset! epub (-> % .-target .-value))}]        
+        [:input {:type "file" :on-change #(epub-lortu (-> % .-target))}]
         [:label "Titulua"]
         [:input {:type "text" :on-change #(reset! titulua (-> % .-target .-value))}]
         [:label "Egileak"]
