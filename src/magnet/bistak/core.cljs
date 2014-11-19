@@ -1,6 +1,7 @@
 (ns magnet.bistak.core
   (:require [cljs.core.async :refer [put!]]
-            [magnet.bistak.goiko-barra :as goiko-barra]))
+            [magnet.bistak.goiko-barra :as goiko-barra]
+            [magnet.bistak.oina :as oina]))
 
 (defn azken-iruzkina [ir]
   [:a {:href (str "#/liburuak/" (:liburua ir))}
@@ -276,18 +277,6 @@
              :lib liburua
              :lib-irak lib-irak}]])
 
-(defn oina []
-  [:footer.row
-   [:div.medium-12.columns
-    [:div.row
-     [:div.medium-6.columns
-      [:p "Oineko mezua"]]
-     [:div.medium-6.columns
-      [:ul.inline-list.right
-       [:li [:a {:href "#"} "Lotura 1"]]
-       [:li [:a {:href "#"} "Lotura 2"]]
-       [:li [:a {:href "#"} "Lotura 3"]]]]]]])
-
 (defn main [{:keys [saio-kan liburu-kan iruzkin-kan saioa bidea azken-iruzkinak aliburuak nliburuak niruzkinak liburua lib-irak]}]
   [:div {:class "row"}
    [:div {:class "medium-12 columns"}
@@ -304,4 +293,4 @@
             :niruzkinak niruzkinak
             :liburua liburua
             :lib-irak lib-irak}]
-    [oina]]])
+    [oina/main]]])
