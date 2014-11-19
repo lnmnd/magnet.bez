@@ -1,41 +1,6 @@
 (ns magnet.bistak.core
-  (:require [cljs.core.async :refer [put!]]))
-
-(defn goiko-barra [{:keys [saio-kan saioa]}]
-  [:nav {:class "top-bar" :data-topbar true}
-   [:ul.title-area
-    [:li.name
-     [:h1 [:a {:href "#"} "Liburuak"]]]
-    [:li {:class "toggle-topbar menu-icon"}
-     [:a {:href "#"} [:span "menu"]]]]
-   [:section.top-bar-section
-    (if (:hasita @saioa)
-      [:ul.right
-       [:li.divider]
-       [:li [:a {:href "#/bilatu"} "Bilatu"]]
-       [:li.divider]
-       [:li [:a {:href "#/liburua-gehitu"}
-             "Liburua gehitu"]]
-       [:li.divider]
-       [:li [:a {:href "#/nire-liburuak"}
-             "Nire liburuak"]]
-       [:li.divider]
-       [:li [:a {:href "#/nire-iruzkinak"}
-             "Nire iruzkinak"]]       
-       [:li.divider]
-       [:li [:a {:href "#/profila"}
-             "Nire profila"]]
-       [:li.divider]
-       [:li [:a {:href "#" :on-click #(do (put! saio-kan [:saioa-amaitu])
-                                          false)}
-             (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
-      [:ul.right
-       [:li.divider]
-       [:li [:a {:href "#/bilatu"} "Bilatu"]]
-       [:li.divider]
-       [:li [:a {:href "#/erregistratu"} "Erregistratu"]]
-       [:li.divider]
-       [:li [:a {:href "#/saioa-hasi"} "Saioa hasi"]]])]])
+  (:require [cljs.core.async :refer [put!]]
+            [magnet.bistak.goiko-barra :as goiko-barra]))
 
 (defn azken-iruzkina [ir]
   [:a {:href (str "#/liburuak/" (:liburua ir))}
@@ -326,8 +291,8 @@
 (defn main [{:keys [saio-kan liburu-kan iruzkin-kan saioa bidea azken-iruzkinak aliburuak nliburuak niruzkinak liburua lib-irak]}]
   [:div {:class "row"}
    [:div {:class "medium-12 columns"}
-    [goiko-barra {:saio-kan saio-kan
-                  :saioa saioa}]
+    [goiko-barra/main {:saio-kan saio-kan
+                       :saioa saioa}]
     [erdia {:saio-kan saio-kan
             :saioa saioa
             :liburu-kan liburu-kan
