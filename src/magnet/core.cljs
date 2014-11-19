@@ -6,7 +6,7 @@
             [figwheel.client :as fw]
             [magnet.config :refer [azken-iruzkin-kopurua azken-liburu-kopurua]]
             [magnet.bideak :as bideak]
-            [magnet.bistak :as bistak]))
+            [magnet.bistak.core :as bistak]))
 
 (enable-console-print!)
 

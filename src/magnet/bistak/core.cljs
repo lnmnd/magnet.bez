@@ -1,4 +1,4 @@
-(ns magnet.bistak
+(ns magnet.bistak.core
   (:require [cljs.core.async :refer [put!]]))
 
 (defn goiko-barra [{:keys [saio-kan saioa]}]
