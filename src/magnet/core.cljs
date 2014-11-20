@@ -252,11 +252,12 @@
   (entzun (str aurriz "egileak?muga=0") :egileak))
 #_(go (println (<! (egile-guztiak-lortu))))
 
-(defn saio-kud [[mota bal]]
+(defn saio-kud [[mota bal] bide-kan]
   "Saioaren gertaerekin zer egin erabakitzen du"
   (case mota
     :erregistratu (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal) (:deskribapena bal)))
-                      (saioa-hasi (:erabiltzailea bal) (:pasahitza bal)))
+                      (saioa-hasi (:erabiltzailea bal) (:pasahitza bal))
+                      (>! bide-kan [:profila nil]))
     :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal) (:des bal))
     :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
     :saioa-hasi (saioa-hasi (:era bal) (:pas bal))
@@ -325,7 +326,7 @@
         
     (go-loop [b (<! saio-kan)]
       (when b
-        (saio-kud b)
+        (saio-kud b bide-kan)
         (recur (<! saio-kan))))
 
     (go-loop [b (<! bide-kan)]
