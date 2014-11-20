@@ -126,16 +126,17 @@
                    [:p.left (:gogoko_kopurua li) " gogoko"]
                    [:p.right (:iruzkin_kopurua li) " iruzkin"]]]])])
 
-                                        ; TODO saioa hasita?
+; TODO saioa hasita?
 (defn iruzkin-form [{:keys [iruzkin-kan libid]}]
   (let [edukia (atom "")]
     (fn [{:keys [iruzkin-kan libid]}]
-      [:form
+      [:form {:id "iruzkin-form"}
        [:label "Edukia"]
-       [:input {:type "text" :on-change #(reset! edukia (-> % .-target .-value))}]
-       [:button {:on-click #(put! iruzkin-kan [:iruzkina-gehitu {:id libid
-                                                                 :edukia {:edukia @edukia}}])}
-        "Bidali"]])))
+       [:input {:type "text" :required true :on-change #(reset! edukia (-> % .-target .-value))}]
+       [:input.button {:type "submit" :value "Bidali"
+                       :on-click (fn [] (formu-tratatu "#iruzkin-form"
+                                                       #(put! iruzkin-kan [:iruzkina-gehitu {:id libid
+                                                                                             :edukia {:edukia @edukia}}])))}]])))
 
 (defn liburuaren-iruzkinak [irak]
   [:div
