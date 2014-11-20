@@ -38,18 +38,20 @@
     [:h5 {:class "subheader"} "Liburu garrantzitsu baten datuak."]]
    [azken-iruzkinak iruzkinak]])
 
-(defn erregistratu [kan erabiltzaileak]
+(defn erregistratu [kan erak]
   (let [erabiltzailea (atom "")
         pasahitza (atom "")
         izena (atom "")
         deskribapena (atom "")]
-    (fn [kan erabiltzaileak]
-      (println @erabiltzaileak)
+    (fn [kan erak]
       [:div
        [:h2 "Erregistratu"]
        [:form {:id "erregistratu"}
         [:label "Erabiltzaile izena"
-         [:input {:type "text" :required true :on-change #(reset! erabiltzailea (-> % .-target .-value))}]]
+         [:input {:type "text" :required true
+                  :on-blur #(when (contains? (set @erak) @erabiltzailea)
+                              (js/alert (str @erabiltzailea " erabiltzailea existitzen da.")))
+                  :on-change #(reset! erabiltzailea (-> % .-target .-value))}]]
         [:label "Pasahitza"
          [:input {:type "password" :required true :on-change #(reset! pasahitza (-> % .-target .-value))}]]
         [:label "Izena"
