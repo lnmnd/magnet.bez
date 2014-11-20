@@ -255,9 +255,9 @@
 (defn saio-kud [[mota bal] bide-kan]
   "Saioaren gertaerekin zer egin erabakitzen du"
   (case mota
-    :erregistratu (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal) (:deskribapena bal)))
-                      (saioa-hasi (:erabiltzailea bal) (:pasahitza bal))
-                      (>! bide-kan [:profila nil]))
+    :erregistratu (do (put! bide-kan [:profila nil])
+                      (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal) (:deskribapena bal)))
+                          (saioa-hasi (:erabiltzailea bal) (:pasahitza bal))))
     :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal) (:des bal))
     :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
     :saioa-hasi (do (put! bide-kan [:index nil])
