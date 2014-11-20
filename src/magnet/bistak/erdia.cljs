@@ -183,7 +183,11 @@
                      (let [fitx (.item (.-files tar) 0)]
                        (epub-edukia-aldatu fitx)))
         titulua (atom "")
-        egileak (atom "")
+        egileak (atom (sorted-map))
+        egile-kop (atom 0)
+        egilea-gehitu (fn [egilea]
+                        (let [id (swap! egile-kop inc)]
+                          (swap! egileak assoc id {:id id :egilea egilea})))
         hizkuntza (atom "")
         sinopsia (atom "")
         argitaletxea (atom "")
@@ -211,7 +215,12 @@
         [:label "Titulua"]
         [:input {:type "text" :required true :max-length "256" :on-change #(reset! titulua (-> % .-target .-value))}]
         [:label "Egileak"]
-        [:input {:type "text" :required true :on-change #(reset! egileak (-> % .-target .-value))}]
+        [:input {:type "text" :required true :on-change #(do (println @egileak)
+                                                             (egilea-gehitu (-> % .-target .-value)))}]
+
+        [:ul
+         (for [e @egileak]
+           [:li (:egilea (second e))])]
         [:label "Hizkuntza"]
         [:input {:type "text" :required true :max-length "256" :list "liburua-gehitu-hizkuntzak" :on-change #(reset! hizkuntza (-> % .-target .-value))}]
         [:datalist {:id "liburua-gehitu-hizkuntzak"}
