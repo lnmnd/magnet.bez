@@ -260,7 +260,8 @@
                       (>! bide-kan [:profila nil]))
     :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal) (:des bal))
     :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
-    :saioa-hasi (saioa-hasi (:era bal) (:pas bal))
+    :saioa-hasi (do (put! bide-kan [:index nil])
+                    (saioa-hasi (:era bal) (:pas bal)))
     :saioa-amaitu (saioa-amaitu)
     nil))
 
