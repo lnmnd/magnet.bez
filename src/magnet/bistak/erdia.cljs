@@ -218,7 +218,7 @@
         [:label "Egileak"]
         [:div.row.collapse
          [:div.small-10.columns
-          [:input {:type "text" :id "egilea" :required true}]]
+          [:input {:type "text" :id "egilea"}]]
          [:div.small-2.columns
           [:a.button.postfix {:on-click #(do (egilea-gehitu (.-value (.querySelector js/document "#egilea")))
                                              (set! (.-value (.querySelector js/document "#egilea")) ""))}
