@@ -43,16 +43,18 @@
   (let [erabiltzailea (atom "")
         pasahitza (atom "")
         izena (atom "")
-        deskribapena (atom "")]
+        deskribapena (atom "")
+        era-badago (atom false)]
     (fn [kan erak]
       [:div
        [:h2 "Erregistratu"]
        [:form {:id "erregistratu"}
         [:label "Erabiltzaile izena"
          [:input {:type "text" :required true
-                  :on-blur #(when (contains? (set @erak) @erabiltzailea)
-                              (js/alert (str @erabiltzailea " erabiltzailea existitzen da.")))
-                  :on-change #(reset! erabiltzailea (-> % .-target .-value))}]]
+                  :on-change #(do (reset! erabiltzailea (-> % .-target .-value))
+                                  (reset! era-badago (contains? (set @erak) @erabiltzailea))p)}]]
+        (when @era-badago
+          [:small.error (str @erabiltzailea " erabiltzailea existitzen da.")])
         [:label "Pasahitza"
          [:input {:type "password" :required true :on-change #(reset! pasahitza (-> % .-target .-value))}]]
         [:label "Izena"
