@@ -260,19 +260,6 @@
   (entzun (str aurriz "egileak?muga=0") :egileak))
 #_(go (println (<! (egile-guztiak-lortu))))
 
-(defn saio-kud [[mota bal] bide-kan]
-  "Saioaren gertaerekin zer egin erabakitzen du"
-  (case mota
-    :erregistratu (do (put! bide-kan [:profila nil])
-                      (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal) (:deskribapena bal)))
-                          (saioa-hasi (:erabiltzailea bal) (:pasahitza bal))))
-    :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal) (:des bal))
-    :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
-    :saioa-hasi (do (put! bide-kan [:index nil])
-                    (saioa-hasi (:era bal) (:pas bal)))
-    :saioa-amaitu (saioa-amaitu)
-    nil))
-
 (defn bide-kud [[mota bal]]
   "Bidearen gertaerekin zer egin erabakitzen du."
   (if (= :index mota)
@@ -291,6 +278,19 @@
   (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :profila :liburua :bilatu}
                    mota)
     (reset! bidea [mota bal])))
+
+(defn saio-kud [[mota bal] bide-kan]
+  "Saioaren gertaerekin zer egin erabakitzen du"
+  (case mota
+    :erregistratu (do (put! bide-kan [:profila nil])
+                      (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal) (:deskribapena bal)))
+                          (saioa-hasi (:erabiltzailea bal) (:pasahitza bal))))
+    :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal) (:des bal))
+    :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
+    :saioa-hasi (do (put! bide-kan [:index nil])
+                    (saioa-hasi (:era bal) (:pas bal)))
+    :saioa-amaitu (saioa-amaitu)
+    nil))
 
 (defn liburu-kud [[mota bal] bide-kan]
   "Liburuekin lotutako kudeatzailea."
