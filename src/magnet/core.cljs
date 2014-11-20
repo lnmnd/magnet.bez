@@ -14,7 +14,8 @@
   aurriz "http://localhost:3000/v1/")
 
 (defonce ^{:doc "Erabiltzailearen saioa"}
-  saioa (atom {:hasita false
+  saioa (atom {:hasiera-okerra false
+               :hasita false
                :erabiltzailea nil
                :izena nil
                :deskribapena nil
@@ -143,13 +144,16 @@
     :pasahitza pas}
    #(go (let [dat (<! (erabiltzailea-lortu era))]
           (swap! saioa assoc
+                 :hasiera-okerra false
                  :hasita true
                  :erabiltzailea era
                  :izena (:izena dat)
                  :deskribapena (:deskribapena dat)
                  :token (:token %)
-                 :iraungitze_data (:iraungitze_data %))))))
-#_(saioa-hasi "era" "1234")
+                 :iraungitze_data (:iraungitze_data %)))
+        true)
+   #(do (swap! saioa assoc :hasiera-okerra true)
+        false)))
 
 (defn saioa-amaitu
   "Saioa amaitzen du."
@@ -287,8 +291,8 @@
                           (saioa-hasi (:erabiltzailea bal) (:pasahitza bal))))
     :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal) (:des bal))
     :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
-    :saioa-hasi (do (put! bide-kan [:index nil])
-                    (saioa-hasi (:era bal) (:pas bal)))
+    :saioa-hasi (go (when (<! (saioa-hasi (:era bal) (:pas bal)))
+                      (put! bide-kan [:index nil])))
     :saioa-amaitu (saioa-amaitu)
     nil))
 

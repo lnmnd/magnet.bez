@@ -66,10 +66,10 @@
                                                                               :izena @izena
                                                                               :deskribapena @deskribapena}])))}]]])))
 
-(defn saioa-hasi [kan]
+(defn saioa-hasi [kan saioa]
   (let [era (atom "")
         pas (atom "")]
-    (fn [kan]
+    (fn [kan saioa]
       [:div
        [:h2 "Saioa hasi"]
        [:form {:id "saioa-hasi" :method "POST"}
@@ -77,6 +77,8 @@
          [:input {:type "text" :required true :on-change #(reset! era (-> % .-target .-value))}]]
         [:label "Pasahitza"
          [:input {:type "password" :required true :on-change #(reset! pas (-> % .-target .-value))}]]
+        (when (:hasiera-okerra @saioa)
+          [:small.error "Erabiltzaile edo pasahitz okerra."])
         [:input.button {:type "submit" :value "Saioa hasi"
                         :on-click #(formu-tratatu "#saioa-hasi"
                                                   (fn [] (put! kan [:saioa-hasi {:era @era :pas @pas}])))}]]])))
@@ -282,7 +284,7 @@
       (case bid
         :index [azken-liburuak aliburuak]
         :erregistratu [erregistratu saio-kan erabiltzaileak]
-        :saioa-hasi [saioa-hasi saio-kan]
+        :saioa-hasi [saioa-hasi saio-kan saioa]
         :profila [profila {:saio-kan saio-kan
                            :saioa saioa}]
         :liburua-gehitu [liburua-gehitu liburu-kan argitaletxeak]
