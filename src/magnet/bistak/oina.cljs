@@ -1,5 +1,6 @@
 (ns magnet.bistak.oina
-  (:require [cljs.core.async :refer [put!]]))
+  (:require [cljs.core.async :refer [put!]]
+            [reagent.core :as reagent :refer [atom]]))
 
 (defn main []
   [:footer.row

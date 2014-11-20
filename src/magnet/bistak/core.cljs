@@ -1,5 +1,6 @@
 (ns magnet.bistak.core
   (:require [cljs.core.async :refer [put!]]
+            [reagent.core :as reagent :refer [atom]]
             [magnet.bistak.goiko-barra :as goiko-barra]
             [magnet.bistak.erdia :as erdia]            
             [magnet.bistak.oina :as oina]))

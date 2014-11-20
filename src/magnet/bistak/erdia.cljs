@@ -1,5 +1,6 @@
 (ns magnet.bistak.erdia
-  (:require [cljs.core.async :refer [put!]]))
+  (:require [cljs.core.async :refer [put!]]
+            [reagent.core :as reagent :refer [atom]]))
 
 (defn formu-ez-bidali [formu]
   (.addEventListener formu "submit"

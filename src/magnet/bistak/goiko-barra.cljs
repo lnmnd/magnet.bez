@@ -1,5 +1,6 @@
 (ns magnet.bistak.goiko-barra
-  (:require [cljs.core.async :refer [put!]]))
+  (:require [cljs.core.async :refer [put!]]
+            [reagent.core :as reagent :refer [atom]]))
 
 (defn main [{:keys [saio-kan saioa]}]
   [:nav {:class "top-bar" :data-topbar true}
