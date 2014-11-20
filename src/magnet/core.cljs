@@ -34,6 +34,8 @@
   liburua (atom {}))
 (defonce ^{:doc "Uneko liburuaren iruzkinak"}
   liburuaren-iruzkinak (atom {}))
+(defonce ^{:doc "Erabiltzaileen zerrenda"}
+  erabiltzaileak (atom []))
 (defonce ^{:doc "Argitaletxeen zerrenda"}
   argitaletxeak (atom []))
 
@@ -232,6 +234,12 @@
   (entzun (str aurriz "liburuak/" id "/iruzkinak?muga=0")
           #(reset! liburuaren-iruzkinak (:iruzkinak %))))
 
+(defn erabiltzaileak-lortu
+  "Erabiltzaile guztiak lortzen ditu."
+  []
+  (entzun (str aurriz "erabiltzaileak?muga=0")
+          #(reset! erabiltzaileak (map :erabiltzailea (:erabiltzaileak %)))))
+
 (defn argitaletxeak-lortu
   "Argitaletxe guztiak lortzen ditu."
   [id]
@@ -269,6 +277,8 @@
   "Bidearen gertaerekin zer egin erabakitzen du."
   (if (= :index mota)
     (azken-liburuak-lortu))
+  (when (= :erregistratu mota)
+    (erabiltzaileak-lortu))    
   (when (= :liburua mota)
     (liburua-lortu bal)
     (liburuaren-iruzkinak-lortu bal))
@@ -307,6 +317,7 @@
                                           :saioa saioa
                                           :bidea bidea
                                           :azken-iruzkinak azken-iruzkinak
+                                          :erabiltzaileak erabiltzaileak
                                           :argitaletxeak argitaletxeak
                                           :aliburuak azken-liburuak
                                           :nliburuak nire-liburuak

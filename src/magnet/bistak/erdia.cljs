@@ -38,12 +38,13 @@
     [:h5 {:class "subheader"} "Liburu garrantzitsu baten datuak."]]
    [azken-iruzkinak iruzkinak]])
 
-(defn erregistratu [kan]
+(defn erregistratu [kan erabiltzaileak]
   (let [erabiltzailea (atom "")
         pasahitza (atom "")
         izena (atom "")
         deskribapena (atom "")]
-    (fn [kan]
+    (fn [kan erabiltzaileak]
+      (println @erabiltzaileak)
       [:div
        [:h2 "Erregistratu"]
        [:form {:id "erregistratu"}
@@ -272,13 +273,13 @@
    [:h1 "Bilatu"]
    [:p "todo"]])
 
-(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea argitaletxeak aliburuak nliburuak niruzkinak lib lib-irak]}]
+(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak argitaletxeak aliburuak nliburuak niruzkinak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
       (case bid
         :index [azken-liburuak aliburuak]
-        :erregistratu [erregistratu saio-kan]
+        :erregistratu [erregistratu saio-kan erabiltzaileak]
         :saioa-hasi [saioa-hasi saio-kan]
         :profila [profila {:saio-kan saio-kan
                            :saioa saioa}]
@@ -292,7 +293,7 @@
         :bilatu [bilatu]
         nil)]]))
 
-(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak argitaletxeak aliburuak nliburuak niruzkinak liburua lib-irak]}]
+(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak erabiltzaileak argitaletxeak aliburuak nliburuak niruzkinak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-iruzkinak]
    [nagusia {:saio-kan saio-kan
@@ -300,6 +301,7 @@
              :liburu-kan liburu-kan
              :iruzkin-kan iruzkin-kan
              :bidea bidea
+             :erabiltzaileak erabiltzaileak
              :argitaletxeak argitaletxeak
              :aliburuak aliburuak
              :nliburuak nliburuak
