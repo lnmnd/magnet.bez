@@ -246,7 +246,7 @@
 
 (defn argitaletxeak-lortu
   "Argitaletxe guztiak lortzen ditu."
-  [id]
+  []
   (entzun (str aurriz "argitaletxeak?muga=0")
           #(reset! argitaletxeak (:argitaletxeak %))))
 
