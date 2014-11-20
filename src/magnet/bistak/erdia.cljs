@@ -189,6 +189,8 @@
                         (let [id (swap! egile-kop inc)]
                           (swap! egileak assoc id {:id id :egilea egilea})))
         egilea-ezabatu #(swap! egileak dissoc %)
+        egile-zerrenda (fn [egak]
+                         (map #(:egilea (second %)) egak))
         hizkuntza (atom "")
         sinopsia (atom "")
         argitaletxea (atom "")
@@ -253,7 +255,7 @@
                         :on-click (fn [] (formu-tratatu "#liburua-gehitu"
                                                         #(put! kan [:liburua-gehitu {:epub @epub
                                                                                      :titulua @titulua
-                                                                                     :egileak ["todo" "egileak"]
+                                                                                     :egileak (egile-zerrenda @egileak)
                                                                                      :hizkuntza @hizkuntza
                                                                                      :sinopsia @sinopsia
                                                                                      :argitaletxea @argitaletxea
