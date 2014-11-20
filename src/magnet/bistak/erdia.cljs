@@ -215,9 +215,13 @@
         [:label "Titulua"]
         [:input {:type "text" :required true :max-length "256" :on-change #(reset! titulua (-> % .-target .-value))}]
         [:label "Egileak"]
-        [:input {:type "text" :required true :on-change #(do (println @egileak)
-                                                             (egilea-gehitu (-> % .-target .-value)))}]
-
+        [:div.row.collapse
+         [:div.small-10.columns
+          [:input {:type "text" :id "egilea" :required true}]]
+         [:div.small-2.columns
+          [:a.button.postfix {:on-click #(do (egilea-gehitu (.-value (.querySelector js/document "#egilea")))
+                                             (set! (.-value (.querySelector js/document "#egilea")) ""))}
+           "Gehitu"]]]
         [:ul
          (for [e @egileak]
            [:li (:egilea (second e))])]
