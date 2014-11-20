@@ -183,7 +183,12 @@
         [:label "Egileak"]
         [:input {:type "text" :on-change #(reset! egileak (-> % .-target .-value))}]
         [:label "Hizkuntza"]
-        [:input {:type "text" :max-length "256" :on-change #(reset! hizkuntza (-> % .-target .-value))}]        
+        [:input {:type "text" :max-length "256" :list "liburua-gehitu-hizkuntzak" :on-change #(reset! hizkuntza (-> % .-target .-value))}]
+        [:datalist {:id "liburua-gehitu-hizkuntzak"}
+         [:option {:value "Euskara"}]
+         [:option {:value "Gaztelania"}]
+         [:option {:value "Frantsesa"}]
+         [:option {:value "Ingelesa"}]]
         [:label "Sinopsia"]
         [:textarea {:type "text" :rows "4" :max-length "256" :on-change #(reset! sinopsia (-> % .-target .-value))}]        
         [:label "Argitaletxea"]
