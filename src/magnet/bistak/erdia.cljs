@@ -197,44 +197,45 @@
     (fn [kan]
       [:div
        [:h1 "Liburua gehitu"]
-       [:form
+       [:form {:id "liburua-gehitu"}
         [:label "Epub"]
-        [:input {:type "file" :on-change #(epub-lortu (-> % .-target))}]
+        [:input {:type "file" :required true :on-change #(epub-lortu (-> % .-target))}]
         [:label "Titulua"]
-        [:input {:type "text" :max-length "256" :on-change #(reset! titulua (-> % .-target .-value))}]
+        [:input {:type "text" :required true :max-length "256" :on-change #(reset! titulua (-> % .-target .-value))}]
         [:label "Egileak"]
-        [:input {:type "text" :on-change #(reset! egileak (-> % .-target .-value))}]
+        [:input {:type "text" :required true :on-change #(reset! egileak (-> % .-target .-value))}]
         [:label "Hizkuntza"]
-        [:input {:type "text" :max-length "256" :list "liburua-gehitu-hizkuntzak" :on-change #(reset! hizkuntza (-> % .-target .-value))}]
+        [:input {:type "text" :required true :max-length "256" :list "liburua-gehitu-hizkuntzak" :on-change #(reset! hizkuntza (-> % .-target .-value))}]
         [:datalist {:id "liburua-gehitu-hizkuntzak"}
          [:option {:value "Euskara"}]
          [:option {:value "Gaztelania"}]
          [:option {:value "Frantsesa"}]
          [:option {:value "Ingelesa"}]]
         [:label "Sinopsia"]
-        [:textarea {:type "text" :rows "4" :max-length "256" :on-change #(reset! sinopsia (-> % .-target .-value))}]        
+        [:textarea {:type "text" :required true :rows "4" :max-length "256" :on-change #(reset! sinopsia (-> % .-target .-value))}]        
         [:label "Argitaletxea"]
         [:input {:type "text" :max-length "256" :on-change #(reset! argitaletxea (-> % .-target .-value))}]
         [:label "Urtea"]
-        [:input {:type "text" :max-length "4" :on-change #(reset! urtea (-> % .-target .-value))}]
+        [:input {:type "text" :required true :max-length "4" :on-change #(reset! urtea (-> % .-target .-value))}]
         [:label "Generoa"]
         [:input {:type "text" :max-length "256" :on-change #(reset! generoa (-> % .-target .-value))}]
         [:label "Etiketak"]        
-        [:input {:type "text" :on-change #(reset! etiketak (-> % .-target .-value))}]
+        [:input {:type "text" :required true :on-change #(reset! etiketak (-> % .-target .-value))}]
         [:label "Azala"]
         [:img {:src "img/liburua.jpg" :id "liburua-gehitu-azala-img" :width "256" :height "256"}]
-        [:input {:type "file" :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]
-        [:button {:on-click #(put! kan [:liburua-gehitu {:epub @epub
-                                                         :titulua @titulua
-                                                         :egileak ["todo" "egileak"]
-                                                         :hizkuntza @hizkuntza
-                                                         :sinopsia @sinopsia
-                                                         :argitaletxea @argitaletxea
-                                                         :urtea @urtea
-                                                         :generoa @generoa
-                                                         :etiketak ["todo" "etiketak"]
-                                                         :azala @azala}])}
-         "Gehitu"]]])))
+        [:input {:type "file" :required true :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]
+        [:input.button {:type "submit" :value "Gehitu"
+                        :on-click (fn [] (formu-tratatu "#liburua-gehitu"
+                                                        #(put! kan [:liburua-gehitu {:epub @epub
+                                                                                     :titulua @titulua
+                                                                                     :egileak ["todo" "egileak"]
+                                                                                     :hizkuntza @hizkuntza
+                                                                                     :sinopsia @sinopsia
+                                                                                     :argitaletxea @argitaletxea
+                                                                                     :urtea @urtea
+                                                                                     :generoa @generoa
+                                                                                     :etiketak ["todo" "etiketak"]
+                                                                                     :azala @azala}])))}]]])))
 
 (defn nire-liburuak [kan liburuak]
   [:div
