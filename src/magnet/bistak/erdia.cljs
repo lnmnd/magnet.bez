@@ -46,20 +46,22 @@
     (fn [kan]
       [:div
        [:h2 "Erregistratu"]
-       [:form
+       [:form {:id "erregistratu"}
         [:label "Erabiltzaile izena"
-         [:input {:type "text" :on-change #(reset! erabiltzailea (-> % .-target .-value))}]]
+         [:input {:type "text" :required true :on-change #(reset! erabiltzailea (-> % .-target .-value))}]]
         [:label "Pasahitza"
-         [:input {:type "password" :on-change #(reset! pasahitza (-> % .-target .-value))}]]
+         [:input {:type "password" :required true :on-change #(reset! pasahitza (-> % .-target .-value))}]]
         [:label "Izena"
-         [:input {:type "text" :on-change #(reset! izena (-> % .-target .-value))}]]
+         [:input {:type "text" :required true :on-change #(reset! izena (-> % .-target .-value))}]]
         [:label "Deskribapena"
          [:textarea {:rows "4" :on-change #(reset! deskribapena (-> % .-target .-value))}]]
-        [:a.button {:href "#" :on-click #(put! kan [:erregistratu {:erabiltzailea @erabiltzailea
-                                                                   :pasahitza @pasahitza
-                                                                   :izena @izena
-                                                                   :deskribapena @deskribapena}])}
-         "Erregistratu"]]])))
+        [:input.button {:type "submit" :value "Erregistratu"
+                        :on-click (fn [x]
+                                    (formu-tratatu "#erregistratu"
+                                                   #(put! kan [:erregistratu {:erabiltzailea @erabiltzailea
+                                                                              :pasahitza @pasahitza
+                                                                              :izena @izena
+                                                                              :deskribapena @deskribapena}])))}]]])))
 
 (defn saioa-hasi [kan]
   (let [era (atom "")
