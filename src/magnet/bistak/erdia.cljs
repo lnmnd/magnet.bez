@@ -1,6 +1,23 @@
 (ns magnet.bistak.erdia
   (:require [cljs.core.async :refer [put!]]))
 
+(defn formu-ez-bidali [formu]
+  (.addEventListener formu "submit"
+                     (fn [ger]
+                       (.preventDefault ger)
+                       false)))
+
+(defn baliozko-formu? [formu]
+  (or (not (.-checkValidity formu))
+      (.checkValidity formu)))
+
+(defn formu-tratatu [sel f]
+  (let [formu (.querySelector js/document sel)]
+    (formu-ez-bidali formu)
+    (when (baliozko-formu? formu)
+      (f))))
+
+; BISTAK
 (defn azken-iruzkina [ir]
   [:a {:href (str "#/liburuak/" (:liburua ir))}
    [:div.panel.radius
@@ -50,13 +67,14 @@
     (fn [kan]
       [:div
        [:h2 "Saioa hasi"]
-       [:form
+       [:form {:id "saioa-hasi" :method "POST"}
         [:label "Erabiltzaile izena"
-         [:input {:type "text" :on-change #(reset! era (-> % .-target .-value))}]]
+         [:input {:type "text" :required true :on-change #(reset! era (-> % .-target .-value))}]]
         [:label "Pasahitza"
-         [:input {:type "password" :on-change #(reset! pas (-> % .-target .-value))}]]
-        [:a.button {:href "#" :on-click #(put! kan [:saioa-hasi {:era @era :pas @pas}])}
-         "Saioa hasi"]]])))
+         [:input {:type "password" :required true :on-change #(reset! pas (-> % .-target .-value))}]]
+        [:input.button {:type "submit" :value "Saioa hasi"
+                        :on-click #(formu-tratatu "#saioa-hasi"
+                                                  (fn [] (put! kan [:saioa-hasi {:era @era :pas @pas}])))}]]])))
 
 (defn profila [{:keys [saio-kan saioa]}]
   (let [pas (atom "")
