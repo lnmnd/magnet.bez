@@ -293,8 +293,10 @@
                           (saioa-hasi (:erabiltzailea bal) (:pasahitza bal))))
     :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal) (:des bal))
     :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
-    :saioa-hasi (go (when (<! (saioa-hasi (:era bal) (:pas bal)))
-                      (put! bide-kan [:birbidali ""])))
+    :saioa-hasi (go (when (<! (<! (saioa-hasi (:era bal) (:pas bal))))
+                      (put! bide-kan [:birbidali ""])
+                      (nire-liburuak-lortu)
+                      (nire-iruzkinak-lortu)))
     :saioa-amaitu (saioa-amaitu)
     nil))
 
