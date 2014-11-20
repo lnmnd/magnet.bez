@@ -344,8 +344,8 @@
         (iruzkin-kud b)
         (recur (<! iruzkin-kan))))
 
-    (go (<! (azken-liburuak-lortu))
-        (reset! bidea [:index nil]))
+    (reset! bidea [:index nil])
+    (azken-liburuak-lortu)
     (azken-iruzkinak-lortu))
 
   (fw/watch-and-reload :jsload-callback reagent/force-update-all))
