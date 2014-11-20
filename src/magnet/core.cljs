@@ -266,6 +266,8 @@
 
 (defn bide-kud [[mota bal]]
   "Bidearen gertaerekin zer egin erabakitzen du."
+  (when (= :birbidali mota)
+    (set! (.-location js/window) (str "#" bal)))
   (if (= :index mota)
     (azken-liburuak-lortu))
   (when (= :erregistratu mota)
@@ -286,13 +288,13 @@
 (defn saio-kud [[mota bal] bide-kan]
   "Saioaren gertaerekin zer egin erabakitzen du"
   (case mota
-    :erregistratu (do (put! bide-kan [:profila nil])
+    :erregistratu (do (put! bide-kan [:birbidali "profila"])
                       (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal) (:deskribapena bal)))
                           (saioa-hasi (:erabiltzailea bal) (:pasahitza bal))))
     :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal) (:des bal))
     :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
     :saioa-hasi (go (when (<! (saioa-hasi (:era bal) (:pas bal)))
-                      (put! bide-kan [:index nil])))
+                      (put! bide-kan [:birbidali ""])))
     :saioa-amaitu (saioa-amaitu)
     nil))
 
@@ -300,7 +302,7 @@
   "Liburuekin lotutako kudeatzailea."
   (case mota
     :liburua-gehitu (go (let [li (<! (liburua-gehitu bal))]
-                          (>! bide-kan [:liburua (:id li)])))
+                          (>! bide-kan [:birbidali (str "/liburuak/" (:id li))])))
     :liburua-ezabatu (do (swap! nire-liburuak (fn [lk] (remove #(= bal (:id %)) lk)))
                          (liburua-ezabatu bal))
     nil))
