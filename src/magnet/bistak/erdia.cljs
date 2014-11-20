@@ -216,7 +216,7 @@
         [:label "Argitaletxea"]
         [:input {:type "text" :max-length "256" :on-change #(reset! argitaletxea (-> % .-target .-value))}]
         [:label "Urtea"]
-        [:input {:type "text" :required true :max-length "4" :on-change #(reset! urtea (-> % .-target .-value))}]
+        [:input {:type "number" :required true :max-length "4" :on-change #(reset! urtea (-> % .-target .-value))}]
         [:label "Generoa"]
         [:input {:type "text" :max-length "256" :on-change #(reset! generoa (-> % .-target .-value))}]
         [:label "Etiketak"]        
