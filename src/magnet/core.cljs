@@ -34,6 +34,8 @@
   liburua (atom {}))
 (defonce ^{:doc "Uneko liburuaren iruzkinak"}
   liburuaren-iruzkinak (atom {}))
+(defonce ^{:doc "Argitaletxeen zerrenda"}
+  argitaletxeak (atom []))
 
 (defn entzun
   "Helbidea entzuten du eta erantzunari funtzioa aplikatzen dio.
@@ -230,6 +232,12 @@
   (entzun (str aurriz "liburuak/" id "/iruzkinak?muga=0")
           #(reset! liburuaren-iruzkinak (:iruzkinak %))))
 
+(defn argitaletxeak-lortu
+  "Argitaletxe guztiak lortzen ditu."
+  [id]
+  (entzun (str aurriz "argitaletxeak?muga=0")
+          #(reset! argitaletxeak (:argitaletxeak %))))
+
 (defn iruzkina-gehitu
   "id liburuari erantzuten dion iruzkina gehitzen du."
   [id edukia]
@@ -262,6 +270,8 @@
   (when (= :liburua mota)
     (liburua-lortu bal)
     (liburuaren-iruzkinak-lortu bal))
+  (when (= :liburua-gehitu mota)
+    (argitaletxeak-lortu))  
   (when (= :nire-liburuak mota)
     (nire-liburuak-lortu))
   (when (= :nire-iruzkinak mota)
@@ -295,6 +305,7 @@
                                           :saioa saioa
                                           :bidea bidea
                                           :azken-iruzkinak azken-iruzkinak
+                                          :argitaletxeak argitaletxeak
                                           :aliburuak azken-liburuak
                                           :nliburuak nire-liburuak
                                           :niruzkinak nire-iruzkinak

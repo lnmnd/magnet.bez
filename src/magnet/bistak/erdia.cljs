@@ -163,7 +163,7 @@
       [iruzkin-form {:iruzkin-kan iruzkin-kan
                      :libid (:id @lib)}])]])
 
-(defn liburua-gehitu [kan]
+(defn liburua-gehitu [kan argitaletxeak]
   (let [epub (atom "")
         epub-edukia-aldatu (fn [f]
                              (let [fr (js/FileReader.)]
@@ -194,7 +194,7 @@
         azala-lortu (fn [tar]
                       (let [fitx (.item (.-files tar) 0)]
                         (azala-img-aldatu fitx)))]
-    (fn [kan]
+    (fn [kan argitaletxeak]
       [:div
        [:h1 "Liburua gehitu"]
        [:form {:id "liburua-gehitu"}
@@ -214,7 +214,10 @@
         [:label "Sinopsia"]
         [:textarea {:type "text" :required true :rows "4" :max-length "256" :on-change #(reset! sinopsia (-> % .-target .-value))}]        
         [:label "Argitaletxea"]
-        [:input {:type "text" :max-length "256" :on-change #(reset! argitaletxea (-> % .-target .-value))}]
+        [:input {:type "text" :max-length "256" :list "liburua-gehitu-argitaletxeak" :on-change #(reset! argitaletxea (-> % .-target .-value))}]
+        [:datalist {:id "liburua-gehitu-argitaletxeak"}
+         (for [a @argitaletxeak]
+           [:option {:value a}])]
         [:label "Urtea"]
         [:input {:type "number" :required true :max-length "4" :on-change #(reset! urtea (-> % .-target .-value))}]
         [:label "Generoa"]
@@ -269,7 +272,7 @@
    [:h1 "Bilatu"]
    [:p "todo"]])
 
-(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea aliburuak nliburuak niruzkinak lib lib-irak]}]
+(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea argitaletxeak aliburuak nliburuak niruzkinak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
@@ -279,7 +282,7 @@
         :saioa-hasi [saioa-hasi saio-kan]
         :profila [profila {:saio-kan saio-kan
                            :saioa saioa}]
-        :liburua-gehitu [liburua-gehitu liburu-kan]
+        :liburua-gehitu [liburua-gehitu liburu-kan argitaletxeak]
         :nire-liburuak [nire-liburuak liburu-kan nliburuak]
         :nire-iruzkinak [nire-iruzkinak iruzkin-kan niruzkinak]
         :liburua [liburua {:saioa saioa
@@ -289,7 +292,7 @@
         :bilatu [bilatu]
         nil)]]))
 
-(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak aliburuak nliburuak niruzkinak liburua lib-irak]}]
+(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak argitaletxeak aliburuak nliburuak niruzkinak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-iruzkinak]
    [nagusia {:saio-kan saio-kan
@@ -297,6 +300,7 @@
              :liburu-kan liburu-kan
              :iruzkin-kan iruzkin-kan
              :bidea bidea
+             :argitaletxeak argitaletxeak
              :aliburuak aliburuak
              :nliburuak nliburuak
              :niruzkinak niruzkinak
