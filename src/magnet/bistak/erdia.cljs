@@ -93,19 +93,20 @@
         [:p "Deskribapena: " (:deskribapena @saioa)]]
        [:div.small-12.medium-6.columns
         [:h3 "Datu berriak"]
-        [:form
+        [:form {:id "profila"}
          [:label "Pasahitza"
-          [:input {:type "password" :on-change #(reset! pas (-> % .-target .-value))}]]
+          [:input {:type "password" :required true :on-change #(reset! pas (-> % .-target .-value))}]]
          [:label "Izena"
-          [:input {:type "text" :on-change #(reset! izen (-> % .-target .-value))}]]
+          [:input {:type "text" :required true :on-change #(reset! izen (-> % .-target .-value))}]]
          [:label "Deskribapena"
           [:textarea {:rows "4" :on-change #(reset! des (-> % .-target .-value))}]]
-         [:a.button {:href "#" :on-click #(do (put! saio-kan [:erabiltzailea-aldatu {:era (:erabiltzailea @saioa)
-                                                                                     :pas @pas
-                                                                                     :izen @izen
-                                                                                     :des @des}])
-                                              false)}
-          "Aldatu"]]
+         [:input.button {:type "submit" :value "Aldatu"
+                         :on-click (fn [] (formu-tratatu "#profila"
+                                                         #(do (put! saio-kan [:erabiltzailea-aldatu {:era (:erabiltzailea @saioa)
+                                                                                                     :pas @pas
+                                                                                                     :izen @izen
+                                                                                                     :des @des}])
+                                                              false)))}]]
         [:h3 "Ezabatu"]
         [:p "Kontua ezabatu nahi baduzu idatzi \"Bai, ezabatu nahi dut.\" ondorengo eremuan:"]
         [:input {:type "text" :on-change #(reset! ezab (-> % .-target .-value))}]
