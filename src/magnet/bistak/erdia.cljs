@@ -196,7 +196,14 @@
         argitaletxea (atom "")
         urtea (atom "")
         generoa (atom "")
-        etiketak (atom "")
+        etiketak (atom (sorted-map))
+        etiketa-kop (atom 0)
+        etiketa-gehitu (fn [etiketa]
+                        (let [id (swap! etiketa-kop inc)]
+                          (swap! etiketak assoc id {:id id :etiketa etiketa})))
+        etiketa-ezabatu #(swap! etiketak dissoc %)
+        etiketa-zerrenda (fn [etik]
+                           (map #(:etiketa (second %)) etik))        
         azala (atom "")
         azala-img-aldatu (fn [f]
                            (let [fr (js/FileReader.)]
@@ -246,8 +253,17 @@
         [:input {:type "number" :required true :max-length "4" :on-change #(reset! urtea (-> % .-target .-value))}]
         [:label "Generoa"]
         [:input {:type "text" :max-length "256" :on-change #(reset! generoa (-> % .-target .-value))}]
-        [:label "Etiketak"]        
-        [:input {:type "text" :required true :on-change #(reset! etiketak (-> % .-target .-value))}]
+        [:label "Etiketak"]
+        [:div.row.collapse
+         [:div.small-10.columns
+          [:input {:type "text" :id "etiketa"}]]
+         [:div.small-2.columns
+          [:a.button.postfix {:on-click #(do (etiketa-gehitu (.-value (.querySelector js/document "#etiketa")))
+                                             (set! (.-value (.querySelector js/document "#etiketa")) ""))}
+           "Gehitu"]]]
+        [:ul
+         (for [e @etiketak]
+           [:li [:a {:on-click #(etiketa-ezabatu (:id (second e)))} "X"] " " (:etiketa (second e))])]        
         [:label "Azala"]
         [:img {:src "img/liburua.jpg" :id "liburua-gehitu-azala-img" :width "256" :height "256"}]
         [:input {:type "file" :required true :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]
@@ -261,7 +277,7 @@
                                                                                      :argitaletxea @argitaletxea
                                                                                      :urtea @urtea
                                                                                      :generoa @generoa
-                                                                                     :etiketak ["todo" "etiketak"]
+                                                                                     :etiketak (etiketa-zerrenda @etiketak)
                                                                                      :azala @azala}])))}]]])))
 
 (defn nire-liburuak [kan liburuak]
