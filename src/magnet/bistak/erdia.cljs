@@ -188,6 +188,7 @@
         egilea-gehitu (fn [egilea]
                         (let [id (swap! egile-kop inc)]
                           (swap! egileak assoc id {:id id :egilea egilea})))
+        egilea-ezabatu #(swap! egileak dissoc %)
         hizkuntza (atom "")
         sinopsia (atom "")
         argitaletxea (atom "")
@@ -224,7 +225,7 @@
            "Gehitu"]]]
         [:ul
          (for [e @egileak]
-           [:li (:egilea (second e))])]
+           [:li [:a {:on-click #(egilea-ezabatu (:id (second e)))} "X"] " " (:egilea (second e))])]
         [:label "Hizkuntza"]
         [:input {:type "text" :required true :max-length "256" :list "liburua-gehitu-hizkuntzak" :on-change #(reset! hizkuntza (-> % .-target .-value))}]
         [:datalist {:id "liburua-gehitu-hizkuntzak"}
