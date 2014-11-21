@@ -172,7 +172,8 @@
                      :libid (:id @lib)}])]])
 
 (defn liburua-gehitu [kan argitaletxeak]
-  (let [epub (atom "")
+  (let [bidali-klikatuta (atom false)
+        epub (atom "")
         epub-edukia-aldatu (fn [f]
                              (let [fr (js/FileReader.)]
                                (set! (.-onload fr)
@@ -191,6 +192,7 @@
         egilea-ezabatu #(swap! egileak dissoc %)
         egile-zerrenda (fn [egak]
                          (map #(:egilea (second %)) egak))
+        egilerik-gehituta #(> (count (egile-zerrenda @egileak)) 0)
         hizkuntza (atom "")
         sinopsia (atom "")
         argitaletxea (atom "")
@@ -232,6 +234,8 @@
           [:a.button.postfix {:on-click #(do (egilea-gehitu (.-value (.querySelector js/document "#egilea")))
                                              (set! (.-value (.querySelector js/document "#egilea")) ""))}
            "Gehitu"]]]
+        (when (and @bidali-klikatuta (not (egilerik-gehituta)))
+          [:small.error "Egile bat gutxienez gehitu."])
         [:ul
          (for [e @egileak]
            [:li [:a {:on-click #(egilea-ezabatu (:id (second e)))} "X"] " " (:egilea (second e))])]
@@ -268,17 +272,20 @@
         [:img {:src "img/liburua.jpg" :id "liburua-gehitu-azala-img" :width "256" :height "256"}]
         [:input {:type "file" :required true :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]
         [:input.button {:type "submit" :value "Gehitu"
-                        :on-click (fn [] (formu-tratatu "#liburua-gehitu"
-                                                        #(put! kan [:liburua-gehitu {:epub @epub
-                                                                                     :titulua @titulua
-                                                                                     :egileak (egile-zerrenda @egileak)
-                                                                                     :hizkuntza @hizkuntza
-                                                                                     :sinopsia @sinopsia
-                                                                                     :argitaletxea @argitaletxea
-                                                                                     :urtea @urtea
-                                                                                     :generoa @generoa
-                                                                                     :etiketak (etiketa-zerrenda @etiketak)
-                                                                                     :azala @azala}])))}]]])))
+                        :on-click (fn []
+                                    (reset! bidali-klikatuta true)
+                                    (when (egilerik-gehituta)
+                                      (formu-tratatu "#liburua-gehitu"
+                                                     #(put! kan [:liburua-gehitu {:epub @epub
+                                                                                  :titulua @titulua
+                                                                                  :egileak (egile-zerrenda @egileak)
+                                                                                  :hizkuntza @hizkuntza
+                                                                                  :sinopsia @sinopsia
+                                                                                  :argitaletxea @argitaletxea
+                                                                                  :urtea @urtea
+                                                                                  :generoa @generoa
+                                                                                  :etiketak (etiketa-zerrenda @etiketak)
+                                                                                  :azala @azala}]))))}]]])))
 
 (defn nire-liburuak [kan liburuak]
   [:div
