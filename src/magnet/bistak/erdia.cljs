@@ -158,9 +158,10 @@
   [:div
    [:div.small-12.medium-6.columns
     [:h1 (:titulua @lib)]
-    [:a {:href (:magnet @lib)} (:magnet @lib)]
+    [:a {:href (:magnet @lib)} [:img {:src "img/magnet.gif" :alt "magnet"}] " " [:strong "Magnet lotura"]]
     [:p "Egileak: "(for [e (:egileak @lib)]
                      [:span e " "])]
+    
     [:p "Urtea" (:urtea @lib)]
     [:p (:sinopsia @lib)]]
    [:div.small-12.medium-6.columns
