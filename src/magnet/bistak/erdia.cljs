@@ -219,18 +219,22 @@
         etiketa-zerrenda (fn [etik]
                            (map #(:etiketa (second %)) etik))        
         azala (atom "")
+        jpg-azala (atom false)
         azala-img-aldatu (fn [f]
                            (let [fr (js/FileReader.)]
                              (set! (.-onload fr)
                                    (fn [ger]
-                                     (reset! azala (subs (.-result (.-target ger)) (count "data:image/jpeg;base64,")))
-                                     (set! (.-src (js/document.getElementById "liburua-gehitu-azala-img"))
-                                           (.-result (.-target ger)))))
+                                     (let [mota "data:image/jpeg;base64,"]
+                                       (reset! jpg-azala
+                                               (= mota (clojure.string/join (take (count mota) (.-result (.-target ger))))))
+                                       (reset! azala (subs (.-result (.-target ger)) (count mota)))
+                                       (set! (.-src (js/document.getElementById "liburua-gehitu-azala-img"))
+                                             (.-result (.-target ger))))))
                              (.readAsDataURL fr f)))
         azala-lortu (fn [tar]
                       (let [fitx (.item (.-files tar) 0)]
                         (azala-img-aldatu fitx)))
-        formu-zuzena (fn [] (and @epub-fitxategia? (egilerik-gehituta)))]
+        formu-zuzena (fn [] (and @epub-fitxategia? (egilerik-gehituta) @jpg-azala))]
     (fn [kan egile-guztiak argitaletxeak generoak etiketa-guztiak]
       [:div
        [:h1 "Liburua gehitu"]
@@ -295,6 +299,8 @@
         [:label "Azala"]
         [:img {:src "img/liburua.jpg" :id "liburua-gehitu-azala-img" :width "256" :height "256"}]
         [:input {:type "file" :required true :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]
+        (when (and @bidali-klikatuta (not @jpg-azala))
+          [:small.error "Azalak JPG formatua eduki behar du."])
         [:input.button {:type "submit" :value "Gehitu"
                         :on-click (fn []
                                     (reset! bidali-klikatuta true)
