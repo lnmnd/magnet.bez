@@ -159,11 +159,30 @@
    [:div.small-12.medium-6.columns
     [:h1 (:titulua @lib)]
     [:a {:href (:magnet @lib)} [:img {:src "img/magnet.gif" :alt "magnet"}] " " [:strong "Magnet lotura"]]
-    [:p "Egileak: "(for [e (:egileak @lib)]
-                     [:span e " "])]
-    
-    [:p "Urtea" (:urtea @lib)]
-    [:p (:sinopsia @lib)]]
+    [:div.row
+     [:div.small-6.columns
+      [:dl
+       [:dt "Egileak"]
+       [:dd (for [x (interpose ", " (:egileak @lib))]
+              [:span x])]
+       [:dt "Hizkuntza"]
+       [:dd (:hizkuntza @lib)]
+       [:dt "Generoa"]
+       [:dd (:generoa @lib)]]]
+     [:div.small-6.columns
+      [:dl
+       [:dt "Erabiltzailea"]
+       [:dd (:erabiltzailea @lib)]
+       [:dt "Urtea"]
+       [:dd (:urtea @lib)]
+       [:dt "Argitaletxea"]
+       [:dd (:argitaletxea @lib)]]]]
+    [:dl
+     [:dt "Etiketak"]
+     [:dd (for [x (interpose ", " (:etiketak @lib))]
+            [:span x])]
+     [:dt "Sinposia"]
+     [:dd (:sinopsia @lib)]]]
    [:div.small-12.medium-6.columns
     [:img {:src (:azala @lib)}]]
    [:div.small-12.medium-12.columns
