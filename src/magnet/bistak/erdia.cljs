@@ -155,9 +155,11 @@
 (defn liburuaren-iruzkinak [irak]
   [:div
    [:h2 "Iruzkinak"]
-   (for [i @irak]
-     ^{:key i}
-     [:div.panel (:erabiltzailea i) " data" [:br] (:edukia i)])])
+   (if (empty? @irak)
+     [:p "Iruzkinik ez."]
+     (for [i @irak]
+       ^{:key i}
+       [:div.panel (:erabiltzailea i) " data" [:br] (:edukia i)]))])
 
 (defn liburua [{:keys [saioa iruzkin-kan lib irak]}]
   [:div
