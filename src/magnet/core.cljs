@@ -41,6 +41,8 @@
   egileak (atom []))
 (defonce ^{:doc "Argitaletxeen zerrenda"}
   argitaletxeak (atom []))
+(defonce ^{:doc "Generoen zerrenda"}
+  generoak (atom []))
 
 (defn entzun
   "Helbidea entzuten du eta erantzunari funtzioa aplikatzen dio.
@@ -258,6 +260,12 @@
   (entzun (str aurriz "argitaletxeak?muga=0")
           #(reset! argitaletxeak (:argitaletxeak %))))
 
+(defn generoak-lortu
+  "Genero guztiak lortzen ditu."
+  []
+  (entzun (str aurriz "generoak?muga=0")
+          #(reset! generoak (:generoak %))))
+
 (defn iruzkina-gehitu
   "id liburuari erantzuten dion iruzkina gehitzen du."
   [id edukia]
@@ -285,7 +293,8 @@
     (liburuaren-iruzkinak-lortu bal))
   (when (= :liburua-gehitu mota)
     (egileak-lortu)
-    (argitaletxeak-lortu))  
+    (argitaletxeak-lortu)
+    (generoak-lortu))  
   (when (= :nire-liburuak mota)
     (nire-liburuak-lortu))
   (when (= :nire-iruzkinak mota)
@@ -337,6 +346,7 @@
                                           :erabiltzaileak erabiltzaileak
                                           :egileak egileak
                                           :argitaletxeak argitaletxeak
+                                          :generoak generoak
                                           :aliburuak azken-liburuak
                                           :nliburuak nire-liburuak
                                           :niruzkinak nire-iruzkinak
