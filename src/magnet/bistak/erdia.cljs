@@ -132,8 +132,9 @@
                   [:div.panel
                    [:h5 (:titulua li)]
                    [:h6.subheader (interpose ", " (:egileak li))]
-                   [:p.left (:gogoko_kopurua li) " gogoko"]
-                   [:p.right (:iruzkin_kopurua li) " iruzkin"]]]])])
+                   [:p.left (:erabiltzailea li)]
+                   [:p.right (:iruzkin_kopurua li) " ✍"]
+                   [:p.right (:gogoko_kopurua li) " ♥ "]]]])])
 
 ; TODO saioa hasita?
 (defn iruzkin-form [{:keys [iruzkin-kan libid]}]
