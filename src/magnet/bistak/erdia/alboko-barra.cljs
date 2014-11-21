@@ -1,6 +1,4 @@
-(ns magnet.bistak.erdia.alboko-barra
-  (:require [cljs.core.async :refer [put!]]
-            [reagent.core :as reagent :refer [atom]]))
+(ns magnet.bistak.erdia.alboko-barra)
 
 (defn azken-iruzkina [ir]
   [:a {:href (str "#/liburuak/" (:liburua ir))}
