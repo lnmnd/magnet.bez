@@ -225,7 +225,8 @@
                              (.readAsDataURL fr f)))
         azala-lortu (fn [tar]
                       (let [fitx (.item (.-files tar) 0)]
-                        (azala-img-aldatu fitx)))]
+                        (azala-img-aldatu fitx)))
+        formu-zuzena (fn [] (egilerik-gehituta))]
     (fn [kan egile-guztiak argitaletxeak generoak etiketa-guztiak]
       [:div
        [:h1 "Liburua gehitu"]
@@ -291,7 +292,7 @@
         [:input.button {:type "submit" :value "Gehitu"
                         :on-click (fn []
                                     (reset! bidali-klikatuta true)
-                                    (when (egilerik-gehituta)
+                                    (when (formu-zuzena)
                                       (formu-tratatu "#liburua-gehitu"
                                                      #(put! kan [:liburua-gehitu {:epub @epub
                                                                                   :titulua @titulua
