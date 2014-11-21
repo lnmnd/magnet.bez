@@ -182,11 +182,15 @@
 (defn liburua-gehitu [kan egile-guztiak argitaletxeak generoak etiketa-guztiak]
   (let [bidali-klikatuta (atom false)
         epub (atom "")
+        epub-fitxategia? (atom false)
         epub-edukia-aldatu (fn [f]
                              (let [fr (js/FileReader.)]
                                (set! (.-onload fr)
                                      (fn [ger]
-                                       (reset! epub (subs (.-result (.-target ger)) (count "data:application/epub+zip;base64,")))))
+                                       (let [mota "data:application/epub+zip;base64,"]
+                                         (reset! epub-fitxategia?
+                                                 (= mota (clojure.string/join (take (count mota) (.-result (.-target ger))))))
+                                         (reset! epub (subs (.-result (.-target ger)) (count mota))))))
                                (.readAsDataURL fr f)))
         epub-lortu (fn [tar]
                      (let [fitx (.item (.-files tar) 0)]
@@ -226,13 +230,15 @@
         azala-lortu (fn [tar]
                       (let [fitx (.item (.-files tar) 0)]
                         (azala-img-aldatu fitx)))
-        formu-zuzena (fn [] (egilerik-gehituta))]
+        formu-zuzena (fn [] (and @epub-fitxategia? (egilerik-gehituta)))]
     (fn [kan egile-guztiak argitaletxeak generoak etiketa-guztiak]
       [:div
        [:h1 "Liburua gehitu"]
        [:form {:id "liburua-gehitu"}
         [:label "Epub"]
         [:input {:type "file" :required true :on-change #(epub-lortu (-> % .-target))}]
+        (when (and @bidali-klikatuta (not @epub-fitxategia?))
+          [:small.error "Fitxategiak epub formatua eduki behar du."])
         [:label "Titulua"]
         [:input {:type "text" :required true :max-length "256" :on-change #(reset! titulua (-> % .-target .-value))}]
         [:label "Egileak"]
