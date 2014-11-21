@@ -182,12 +182,14 @@
 (defn liburua-gehitu [kan egile-guztiak argitaletxeak generoak etiketa-guztiak]
   (let [bidali-klikatuta (atom false)
         epub (atom "")
+        epub-aukeratuta (atom false)
         epub-fitxategia? (atom false)
         epub-edukia-aldatu (fn [f]
                              (let [fr (js/FileReader.)]
                                (set! (.-onload fr)
                                      (fn [ger]
                                        (let [mota "data:application/epub+zip;base64,"]
+                                         (reset! epub-aukeratuta true)
                                          (reset! epub-fitxategia?
                                                  (= mota (clojure.string/join (take (count mota) (.-result (.-target ger))))))
                                          (reset! epub (subs (.-result (.-target ger)) (count mota))))))
@@ -219,12 +221,14 @@
         etiketa-zerrenda (fn [etik]
                            (map #(:etiketa (second %)) etik))        
         azala (atom "")
+        azala-aukeratuta (atom false)
         jpg-azala (atom false)
         azala-img-aldatu (fn [f]
                            (let [fr (js/FileReader.)]
                              (set! (.-onload fr)
                                    (fn [ger]
                                      (let [mota "data:image/jpeg;base64,"]
+                                       (reset! azala-aukeratuta true)
                                        (reset! jpg-azala
                                                (= mota (clojure.string/join (take (count mota) (.-result (.-target ger))))))
                                        (reset! azala (subs (.-result (.-target ger)) (count mota)))
@@ -241,7 +245,7 @@
        [:form {:id "liburua-gehitu"}
         [:label "Epub"]
         [:input {:type "file" :required true :on-change #(epub-lortu (-> % .-target))}]
-        (when (and @bidali-klikatuta (not @epub-fitxategia?))
+        (when (and @epub-aukeratuta (not @epub-fitxategia?))
           [:small.error "Fitxategiak epub formatua eduki behar du."])
         [:label "Titulua"]
         [:input {:type "text" :required true :max-length "256" :on-change #(reset! titulua (-> % .-target .-value))}]
@@ -299,7 +303,7 @@
         [:label "Azala"]
         [:img {:src "img/liburua.jpg" :id "liburua-gehitu-azala-img" :width "256" :height "256"}]
         [:input {:type "file" :required true :id "liburua-gehitu-azala" :on-change #(azala-lortu (-> % .-target))}]
-        (when (and @bidali-klikatuta (not @jpg-azala))
+        (when (and @azala-aukeratuta (not @jpg-azala))
           [:small.error "Azalak JPG formatua eduki behar du."])
         [:input.button {:type "submit" :value "Gehitu"
                         :on-click (fn []
