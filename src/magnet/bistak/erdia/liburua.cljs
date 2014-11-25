@@ -6,13 +6,14 @@
 (defn- iruzkin-form [{:keys [iruzkin-kan libid]}]
   (let [edukia (atom "")]
     (fn [{:keys [iruzkin-kan libid]}]
-      [:form {:id "iruzkin-form"}
-       [:label "Edukia"]
-       [:input {:type "text" :required true :on-change #(reset! edukia (-> % .-target .-value))}]
-       [:input.button {:type "submit" :value "Bidali"
-                       :on-click (fn [] (formu-tratatu "#iruzkin-form"
-                                                       #(put! iruzkin-kan [:iruzkina-gehitu {:id libid
-                                                                                             :edukia {:edukia @edukia}}])))}]])))
+      [:div.panel
+       [:form {:id "iruzkin-form"}
+        [:label "Edukia"]
+        [:input {:type "text" :required true :on-change #(reset! edukia (-> % .-target .-value))}]
+        [:input.button {:type "submit" :value "Bidali"
+                        :on-click (fn [] (formu-tratatu "#iruzkin-form"
+                                                        #(put! iruzkin-kan [:iruzkina-gehitu {:id libid
+                                                                                              :edukia {:edukia @edukia}}])))}]]])))
 
 
 (defn- liburuaren-iruzkinak [irak]
