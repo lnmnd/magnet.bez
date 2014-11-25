@@ -48,7 +48,10 @@
          (for [x (:gurasoak i)]
            [:li [:a {:href (str "#" x)} x]])]
         [:a {:href (str "#" (:id i))} "#" (:id i)] " "
-        (:erabiltzailea i) " data" [:br] (:edukia i)]))])
+        (:erabiltzailea i) " data" [:br] (:edukia i)
+        [:ul.inline-list
+         (for [x (:erantzunak i)]
+           [:li [:a {:href (str "#" x)} x]])]]))])
 
 
 (defn liburua [{:keys [saioa iruzkin-kan lib irak]}]
