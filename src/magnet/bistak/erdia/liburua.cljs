@@ -47,7 +47,8 @@
         [:ul.inline-list
          (for [x (:gurasoak i)]
            [:li [:a {:href (str "#" x)} x]])]
-        [:a {:href (str "#" (:id i))} "#" (:id i)] " "
+        (when (:id i)
+          [:a {:href (str "#" (:id i))} "#" (:id i)]) " "
         (:erabiltzailea i) " data" [:br] (:edukia i)
         [:ul.inline-list
          (for [x (:erantzunak i)]
