@@ -1,23 +1,8 @@
 (ns magnet.bistak.erdia
   (:require [cljs.core.async :refer [put!]]
             [reagent.core :as reagent :refer [atom]]
+            [magnet.bistak.lagun :refer [formu-tratatu]]
             [magnet.bistak.erdia.alboko-barra :refer [alboko-barra]]))
-
-(defn formu-ez-bidali [formu]
-  (.addEventListener formu "submit"
-                     (fn [ger]
-                       (.preventDefault ger)
-                       false)))
-
-(defn baliozko-formu? [formu]
-  (or (not (.-checkValidity formu))
-      (.checkValidity formu)))
-
-(defn formu-tratatu [sel f]
-  (let [formu (.querySelector js/document sel)]
-    (formu-ez-bidali formu)
-    (when (baliozko-formu? formu)
-      (f))))
 
 ; BISTAK
 (defn erregistratu [kan erak]
