@@ -11,7 +11,7 @@
                            (swap! gurasoak assoc id {:id id :gurasoa gu})))
         gurasoa-ezabatu #(swap! gurasoak dissoc %)
         guraso-zerrenda (fn []
-                          (map #(read-(:gurasoa (second %))) @gurasoak))
+                          (map #(:gurasoa (second %)) @gurasoak))
         edukia (atom "")]
     (fn [{:keys [iruzkin-kan libid]}]
       [:div.panel
@@ -43,7 +43,11 @@
      [:p "Iruzkinik ez."]
      (for [i @irak]
        ^{:key i}
-       [:div.panel (:erabiltzailea i) " data" [:br] (:edukia i)]))])
+       [:div.panel {:id (:id i)}
+        [:ul.inline-list
+         (for [x (:gurasoak i)]
+           [:li [:a {:href (str "#" x)} x]])]
+        (:erabiltzailea i) " data" [:br] (:edukia i)]))])
 
 
 (defn liburua [{:keys [saioa iruzkin-kan lib irak]}]
