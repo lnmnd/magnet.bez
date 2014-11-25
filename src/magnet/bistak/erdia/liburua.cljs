@@ -10,6 +10,8 @@
                          (let [id (swap! guraso-kop inc)]
                            (swap! gurasoak assoc id {:id id :gurasoa gu})))
         gurasoa-ezabatu #(swap! gurasoak dissoc %)
+        guraso-zerrenda (fn []
+                          (map #(read-(:gurasoa (second %))) @gurasoak))
         edukia (atom "")]
     (fn [{:keys [iruzkin-kan libid]}]
       [:div.panel
@@ -30,7 +32,8 @@
         [:input.button {:type "submit" :value "Bidali"
                         :on-click (fn [] (formu-tratatu "#iruzkin-form"
                                                         #(put! iruzkin-kan [:iruzkina-gehitu {:id libid
-                                                                                              :edukia {:edukia @edukia}}])))}]]])))
+                                                                                              :edukia {:gurasoak (guraso-zerrenda)
+                                                                                                       :edukia @edukia}}])))}]]])))
 
 
 (defn- liburuaren-iruzkinak [irak]
