@@ -339,9 +339,9 @@
 (defn iruzkin-kud [[mota bal]]
   "Iruzkinekin lotutako kudeatzailea."
   (case mota
-    :iruzkina-gehitu (do (swap! liburuaren-iruzkinak conj (assoc (:edukia bal) :erabiltzailea (:erabiltzailea @saioa)))
-                         (go (<! (iruzkina-gehitu (:id bal) (:edukia bal)))
-                             (liburuaren-iruzkinak-lortu (:id bal))))
+    :iruzkina-gehitu (go (let [{ir :iruzkina} (<! (iruzkina-gehitu (:id bal) (:edukia bal)))]
+                           (swap! liburuaren-iruzkinak conj ir)
+                           (liburuaren-iruzkinak-lortu (:id bal))))
     :iruzkina-ezabatu (do (swap! nire-iruzkinak (fn [lk] (remove #(= bal (:id %)) lk)))
                           (iruzkina-ezabatu bal))
     nil))
