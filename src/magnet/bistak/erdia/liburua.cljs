@@ -28,12 +28,14 @@
          (for [x @gurasoak]
            [:li [:a {:on-click #(gurasoa-ezabatu (:id (second x)))} "X"] " " (:gurasoa (second x))])]        
         [:label "Edukia"]
-        [:input {:type "text" :required true :on-change #(reset! edukia (-> % .-target .-value))}]
+        [:input {:type "text" :required true :value @edukia :on-change #(reset! edukia (-> % .-target .-value))}]
         [:input.button {:type "submit" :value "Bidali"
                         :on-click (fn [] (formu-tratatu "#iruzkin-form"
-                                                        #(put! iruzkin-kan [:iruzkina-gehitu {:id libid
-                                                                                              :edukia {:gurasoak (guraso-zerrenda)
-                                                                                                       :edukia @edukia}}])))}]]])))
+                                                        #(do (put! iruzkin-kan [:iruzkina-gehitu {:id libid
+                                                                                                  :edukia {:gurasoak (guraso-zerrenda)
+                                                                                                           :edukia @edukia}}])
+                                                             (reset! gurasoak (sorted-map))
+                                                             (reset! edukia ""))))}]]])))
 
 
 (defn- liburuaren-iruzkinak [irak]
