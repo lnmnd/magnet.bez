@@ -31,11 +31,12 @@
          [:textarea {:rows "4" :on-change #(reset! deskribapena (-> % .-target .-value))}]]
         [:input.button {:type "submit" :value "Erregistratu"
                         :on-click (fn [x]
-                                    (formu-tratatu "#erregistratu"
-                                                   #(put! kan [:erregistratu {:erabiltzailea @erabiltzailea
-                                                                              :pasahitza @pasahitza
-                                                                              :izena @izena
-                                                                              :deskribapena @deskribapena}])))}]]])))
+                                    (when (not @era-badago)
+                                      (formu-tratatu "#erregistratu"
+                                                     #(put! kan [:erregistratu {:erabiltzailea @erabiltzailea
+                                                                                :pasahitza @pasahitza
+                                                                                :izena @izena
+                                                                                :deskribapena @deskribapena}]))))}]]])))
 
 (defn saioa-hasi [kan saioa]
   (let [era (atom "")
