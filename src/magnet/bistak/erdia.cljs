@@ -20,7 +20,7 @@
         [:label "Erabiltzaile izena"
          [:input {:type "text" :required true
                   :on-change #(do (reset! erabiltzailea (-> % .-target .-value))
-                                  (reset! era-badago (contains? (set @erak) @erabiltzailea))p)}]]
+                                  (reset! era-badago (contains? (set @erak) @erabiltzailea)))}]]
         (when @era-badago
           [:small.error (str @erabiltzailea " erabiltzailea existitzen da.")])
         [:label "Pasahitza"
