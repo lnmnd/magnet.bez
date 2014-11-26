@@ -28,7 +28,7 @@
          (for [x @gurasoak]
            [:li [:a {:on-click #(gurasoa-ezabatu (:id (second x)))} "X"] " " (:gurasoa (second x))])]        
         [:label "Edukia"]
-        [:input {:type "text" :required true :value @edukia :on-change #(reset! edukia (-> % .-target .-value))}]
+        [:textarea {:rows "4" :required true :max-length "256" :value @edukia :on-change #(reset! edukia (-> % .-target .-value))}]
         [:input.button {:type "submit" :value "Bidali"
                         :on-click (fn [] (formu-tratatu "#iruzkin-form"
                                                         #(do (put! iruzkin-kan [:iruzkina-gehitu {:id libid
