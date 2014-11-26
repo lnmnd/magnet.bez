@@ -340,7 +340,8 @@
   "Iruzkinekin lotutako kudeatzailea."
   (case mota
     :iruzkina-gehitu (do (swap! liburuaren-iruzkinak conj (assoc (:edukia bal) :erabiltzailea (:erabiltzailea @saioa)))
-                         (iruzkina-gehitu (:id bal) (:edukia bal)))
+                         (go (<! (iruzkina-gehitu (:id bal) (:edukia bal)))
+                             (liburuaren-iruzkinak-lortu (:id bal))))
     :iruzkina-ezabatu (do (swap! nire-iruzkinak (fn [lk] (remove #(= bal (:id %)) lk)))
                           (iruzkina-ezabatu bal))
     nil))
