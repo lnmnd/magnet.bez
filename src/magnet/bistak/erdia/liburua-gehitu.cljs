@@ -76,12 +76,14 @@
         [:label "Egileak"]
         [:div.row.collapse
          [:div.small-10.columns
-          [:input {:type "text" :id "egilea" :list "liburua-gehitu-egileak"}]
+          [:input {:type "text" :id "egilea" :placeholder "egile1,egile2" :list "liburua-gehitu-egileak"}]
           [:datalist {:id "liburua-gehitu-egileak"}
            (for [x @egile-guztiak]
              [:option {:value x}])]]
          [:div.small-2.columns
-          [:a.button.postfix {:on-click #(do (egilea-gehitu (.-value (.querySelector js/document "#egilea")))
+          [:a.button.postfix {:on-click #(do (let [egileak (clojure.string.split (.-value (.querySelector js/document "#egilea")) #",")]
+                                               (doseq [x egileak]
+                                                 (egilea-gehitu x))) 
                                              (set! (.-value (.querySelector js/document "#egilea")) ""))}
            "Gehitu"]]]
         (when (and @bidali-klikatuta (not (egilerik-gehituta)))
@@ -113,12 +115,14 @@
         [:label "Etiketak"]
         [:div.row.collapse
          [:div.small-10.columns
-          [:input {:type "text" :id "etiketa" :list "liburua-gehitu-etiketak"}]
+          [:input {:type "text" :id "etiketa" :placeholder "etiketa1,etiketa2" :list "liburua-gehitu-etiketak"}]
           [:datalist {:id "liburua-gehitu-etiketak"}
            (for [x @etiketa-guztiak]
              [:option {:value x}])]]
          [:div.small-2.columns
-          [:a.button.postfix {:on-click #(do (etiketa-gehitu (.-value (.querySelector js/document "#etiketa")))
+          [:a.button.postfix {:on-click #(do (let [etiketak (clojure.string.split (.-value (.querySelector js/document "#etiketa")) #",")]
+                                               (doseq [x etiketak]
+                                                 (etiketa-gehitu x)))
                                              (set! (.-value (.querySelector js/document "#etiketa")) ""))}
            "Gehitu"]]]
         [:ul
