@@ -170,7 +170,8 @@
                            :liburu-kan liburu-kan
                            :iruzkin-kan iruzkin-kan
                            :lib lib
-                           :irak lib-irak}]
+                           :irak lib-irak
+                           :ngogokoak ngogokoak}]
         :bilatu [bilatu]
         nil)]]))
 
