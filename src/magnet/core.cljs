@@ -29,6 +29,8 @@
   nire-liburuak (atom []))
 (defonce ^{:doc "Nik idatzitako iruzkinen zerrenda"}
   nire-iruzkinak (atom []))
+(defonce ^{:doc "Nire gogoko liburuen zerenda"}
+  nire-gogokoak (atom []))
 (defonce ^{:doc "Azken liburuen zerrenda"}
   azken-liburuak (atom []))
 (defonce ^{:doc "Liburuaren datuak"}
@@ -223,6 +225,12 @@
                             :iruzkinak))]
         (reset! nire-iruzkinak (rseq irk)))))
 
+(defn nire-gogokoak-lortu []
+  (go (let [xs (<! (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak?muga=0")
+                            :gogoko_liburuak))]
+        (reset! nire-gogokoak (rseq xs))
+        (println @nire-gogokoak))))
+
 (defn azken-liburuak-lortu
   "Azken liburuak lortzen ditu"
   ([]
@@ -312,6 +320,8 @@
     (nire-liburuak-lortu))
   (when (= :nire-iruzkinak mota)
     (nire-iruzkinak-lortu))
+  (when (= :nire-gogokoak mota)
+    (nire-gogokoak-lortu))  
   (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua :bilatu}
                    mota)
     (reset! bidea [mota bal])))
