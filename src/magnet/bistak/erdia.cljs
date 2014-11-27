@@ -136,11 +136,16 @@
                                 edu
                                 (concat (take n edu) "...")))]])])])
 
-(defn nire-gogokoak [gogokoak]
-  (println @gogokoak)
+(defn nire-gogokoak [kan gogokoak]
   [:div
    [:h1 "Nire gogoko liburuak"]
-   [:p "todo"]])
+   (if (empty? @gogokoak)
+     [:p "Gogokorik ez."]
+     [:ul (for [x @gogokoak]
+            ^{:key x} [:li [:a {:href "#" :on-click #(do (when (js/confirm "Seguru gogokoetatik kendu nahi duzula?")
+                                                           (put! kan [:gogokoa-kendu (:id x)]))
+                                                         false)} "X"]
+                       " " [:a {:href (str "#/liburuak/" (:id x))} (:titulua x)]])])])
 
 (defn bilatu []
   [:div
@@ -160,7 +165,7 @@
         :liburua-gehitu [liburua-gehitu liburu-kan egileak argitaletxeak generoak etiketak]
         :nire-liburuak [nire-liburuak liburu-kan nliburuak]
         :nire-iruzkinak [nire-iruzkinak iruzkin-kan niruzkinak]
-        :nire-gogokoak [nire-gogokoak ngogokoak]
+        :nire-gogokoak [nire-gogokoak liburu-kan ngogokoak]
         :liburua [liburua {:saioa saioa
                            :liburu-kan liburu-kan
                            :iruzkin-kan iruzkin-kan
