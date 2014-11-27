@@ -136,12 +136,23 @@
                                 edu
                                 (concat (take n edu) "...")))]])])])
 
+(defn nire-gogokoak [kan gogokoak]
+  [:div
+   [:h1 "Nire gogoko liburuak"]
+   (if (empty? @gogokoak)
+     [:p "Gogokorik ez."]
+     [:ul (for [x @gogokoak]
+            ^{:key x} [:li [:a {:href "#" :on-click #(do (when (js/confirm "Seguru gogokoetatik kendu nahi duzula?")
+                                                           (put! kan [:gogokoetatik-kendu (:id x)]))
+                                                         false)} "X"]
+                       " " [:a {:href (str "#/liburuak/" (:id x))} (:titulua x)]])])])
+
 (defn bilatu []
   [:div
    [:h1 "Bilatu"]
    [:p "todo"]])
 
-(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak lib lib-irak]}]
+(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
@@ -154,14 +165,17 @@
         :liburua-gehitu [liburua-gehitu liburu-kan egileak argitaletxeak generoak etiketak]
         :nire-liburuak [nire-liburuak liburu-kan nliburuak]
         :nire-iruzkinak [nire-iruzkinak iruzkin-kan niruzkinak]
+        :nire-gogokoak [nire-gogokoak liburu-kan ngogokoak]
         :liburua [liburua {:saioa saioa
+                           :liburu-kan liburu-kan
                            :iruzkin-kan iruzkin-kan
                            :lib lib
-                           :irak lib-irak}]
+                           :irak lib-irak
+                           :ngogokoak ngogokoak}]
         :bilatu [bilatu]
         nil)]]))
 
-(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak erabiltzaileak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak liburua lib-irak]}]
+(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak erabiltzaileak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-iruzkinak]
    [nagusia {:saio-kan saio-kan
@@ -177,5 +191,6 @@
              :aliburuak aliburuak
              :nliburuak nliburuak
              :niruzkinak niruzkinak
+             :ngogokoak ngogokoak
              :lib liburua
              :lib-irak lib-irak}]])

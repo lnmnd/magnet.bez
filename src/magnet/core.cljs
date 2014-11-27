@@ -29,6 +29,8 @@
   nire-liburuak (atom []))
 (defonce ^{:doc "Nik idatzitako iruzkinen zerrenda"}
   nire-iruzkinak (atom []))
+(defonce ^{:doc "Nire gogoko liburuen zerenda"}
+  nire-gogokoak (atom []))
 (defonce ^{:doc "Azken liburuen zerrenda"}
   azken-liburuak (atom []))
 (defonce ^{:doc "Liburuaren datuak"}
@@ -188,6 +190,13 @@
 (defn liburua-ezabatu [id]
   (DELETE (str aurriz "liburuak/" id "?token=" (:token @saioa))))
 
+(defn gogokoetan-sartu [id]
+  (bidali-eta-entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak?token=" (:token @saioa))
+                     {:id id} identity))
+
+(defn gogokoetatik-kendu [id]
+  (DELETE (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak/" id "?token=" (:token @saioa))))
+
 (defn iruzkina-ezabatu [id]
   (DELETE (str aurriz "iruzkinak/" id "?token=" (:token @saioa))))
 
@@ -218,6 +227,11 @@
   (go (let [irk (<! (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/iruzkinak?muga=0")
                             :iruzkinak))]
         (reset! nire-iruzkinak (rseq irk)))))
+
+(defn nire-gogokoak-lortu []
+  (go (let [xs (<! (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak?muga=0")
+                            :gogoko_liburuak))]
+        (reset! nire-gogokoak (rseq xs)))))
 
 (defn azken-liburuak-lortu
   "Azken liburuak lortzen ditu"
@@ -308,7 +322,9 @@
     (nire-liburuak-lortu))
   (when (= :nire-iruzkinak mota)
     (nire-iruzkinak-lortu))
-  (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :profila :liburua :bilatu}
+  (when (= :nire-gogokoak mota)
+    (nire-gogokoak-lortu))  
+  (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua :bilatu}
                    mota)
     (reset! bidea [mota bal])))
 
@@ -334,6 +350,10 @@
                           (>! bide-kan [:birbidali (str "/liburuak/" (:id li))])))
     :liburua-ezabatu (do (swap! nire-liburuak (fn [lk] (remove #(= bal (:id %)) lk)))
                          (liburua-ezabatu bal))
+    :gogokoetan-sartu (go (<! (gogokoetan-sartu bal))
+                          (nire-gogokoak-lortu))
+    :gogokoetatik-kendu (do (swap! nire-gogokoak (fn [xs] (remove #(= bal (:id %)) xs))) 
+                            (gogokoetatik-kendu bal))
     nil))
 
 (defn iruzkin-kud [[mota bal]]
@@ -361,6 +381,7 @@
                                           :aliburuak azken-liburuak
                                           :nliburuak nire-liburuak
                                           :niruzkinak nire-iruzkinak
+                                          :ngogokoak nire-gogokoak
                                           :liburua liburua
                                           :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))

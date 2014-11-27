@@ -24,6 +24,9 @@
        [:li [:a {:href "#/nire-iruzkinak"}
              "Nire iruzkinak"]]       
        [:li.divider]
+       [:li [:a {:href "#/nire-gogokoak"}
+             "Nire gogokoak"]]
+       [:li.divider]       
        [:li [:a {:href "#/profila"}
              "Nire profila"]]
        [:li.divider]
