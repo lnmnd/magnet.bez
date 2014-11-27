@@ -89,7 +89,7 @@
    [:div.small-12.medium-6.columns
     [:img {:src (:azala @lib)}]
     [:p [:a {:href "#" :on-click #(do (put! liburu-kan [:gogokoetan-sartu (:id @lib)])
-                                      false)} "Liburua gogoko dut"]]]
+                                      false)} "Liburua gogokoetan sartu!"]]]
    [:div.small-12.medium-12.columns
     [liburuaren-iruzkinak irak]
     (when (:hasita @saioa)
