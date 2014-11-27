@@ -351,7 +351,8 @@
     :liburua-ezabatu (do (swap! nire-liburuak (fn [lk] (remove #(= bal (:id %)) lk)))
                          (liburua-ezabatu bal))
     :gogokoetan-sartu (gogokoetan-sartu bal)
-    :gogokoetatik-kendu (gogokoetatik-kendu bal)
+    :gogokoetatik-kendu (do (swap! nire-gogokoak (fn [xs] (remove #(= bal (:id %)) xs))) 
+                            (gogokoetatik-kendu bal))
     nil))
 
 (defn iruzkin-kud [[mota bal]]
