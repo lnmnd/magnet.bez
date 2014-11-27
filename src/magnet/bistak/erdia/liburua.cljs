@@ -87,7 +87,9 @@
      [:dt "Sinposia"]
      [:dd (:sinopsia @lib)]]]
    [:div.small-12.medium-6.columns
-    [:img {:src (:azala @lib)}]]
+    [:img {:src (:azala @lib)}]
+    [:p [:a {:href "#" :on-click #(do (println "todo gogoko " (:id @lib))
+                                      false)} "Liburua gogoko dut"]]]
    [:div.small-12.medium-12.columns
     [liburuaren-iruzkinak irak]
     (when (:hasita @saioa)
