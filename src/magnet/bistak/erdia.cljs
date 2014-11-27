@@ -136,6 +136,11 @@
                                 edu
                                 (concat (take n edu) "...")))]])])])
 
+(defn nire-gogokoak []
+  [:div
+   [:h1 "Nire gogoko liburuak"]
+   [:p "todo"]])
+
 (defn bilatu []
   [:div
    [:h1 "Bilatu"]
@@ -154,6 +159,7 @@
         :liburua-gehitu [liburua-gehitu liburu-kan egileak argitaletxeak generoak etiketak]
         :nire-liburuak [nire-liburuak liburu-kan nliburuak]
         :nire-iruzkinak [nire-iruzkinak iruzkin-kan niruzkinak]
+        :nire-gogokoak [nire-gogokoak]
         :liburua [liburua {:saioa saioa
                            :liburu-kan liburu-kan
                            :iruzkin-kan iruzkin-kan

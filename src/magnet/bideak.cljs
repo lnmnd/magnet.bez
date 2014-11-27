@@ -30,6 +30,9 @@
 
     (defroute "/nire-iruzkinak" []
       (put! kan [:nire-iruzkinak nil]))
+    
+    (defroute "/nire-gogokoak" []
+      (put! kan [:nire-gogokoak nil]))    
         
     (defroute "/profila" []
       (put! kan [:profila nil]))

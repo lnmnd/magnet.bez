@@ -312,7 +312,7 @@
     (nire-liburuak-lortu))
   (when (= :nire-iruzkinak mota)
     (nire-iruzkinak-lortu))
-  (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :profila :liburua :bilatu}
+  (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua :bilatu}
                    mota)
     (reset! bidea [mota bal])))
 
