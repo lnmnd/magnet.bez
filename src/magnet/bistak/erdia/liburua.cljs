@@ -89,10 +89,11 @@
        [:dd (:sinopsia @lib)]]]
      [:div.small-12.medium-6.columns
       [:img {:src (:azala @lib)}]
-      (if gogokoetan-dut?
-        [:p "Liburua gogoko dut"]
-        [:p [:a {:href "#" :on-click #(do (put! liburu-kan [:gogokoetan-sartu (:id @lib)])
-                                          false)} "Liburu hau gogoko dut!"]])]
+      (when (:hasita @saioa)
+        (if gogokoetan-dut?
+          [:p "Liburua gogoko dut"]
+          [:p [:a {:href "#" :on-click #(do (put! liburu-kan [:gogokoetan-sartu (:id @lib)])
+                                            false)} "Liburu hau gogoko dut!"]]))]
      [:div.small-12.medium-12.columns
       [liburuaren-iruzkinak irak]
       (when (:hasita @saioa)
