@@ -334,6 +334,7 @@
                           (>! bide-kan [:birbidali (str "/liburuak/" (:id li))])))
     :liburua-ezabatu (do (swap! nire-liburuak (fn [lk] (remove #(= bal (:id %)) lk)))
                          (liburua-ezabatu bal))
+    :gogokoetan-sartu (println "todo gogoko " bal)
     nil))
 
 (defn iruzkin-kud [[mota bal]]

@@ -155,6 +155,7 @@
         :nire-liburuak [nire-liburuak liburu-kan nliburuak]
         :nire-iruzkinak [nire-iruzkinak iruzkin-kan niruzkinak]
         :liburua [liburua {:saioa saioa
+                           :liburu-kan liburu-kan
                            :iruzkin-kan iruzkin-kan
                            :lib lib
                            :irak lib-irak}]

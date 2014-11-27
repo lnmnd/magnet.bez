@@ -57,7 +57,7 @@
            [:li [:a {:href (str "#" x)} ">>" x]])]]))])
 
 
-(defn liburua [{:keys [saioa iruzkin-kan lib irak]}]
+(defn liburua [{:keys [saioa liburu-kan iruzkin-kan lib irak]}]
   [:div
    [:div.small-12.medium-6.columns
     [:h1 (:titulua @lib)]
@@ -88,7 +88,7 @@
      [:dd (:sinopsia @lib)]]]
    [:div.small-12.medium-6.columns
     [:img {:src (:azala @lib)}]
-    [:p [:a {:href "#" :on-click #(do (println "todo gogoko " (:id @lib))
+    [:p [:a {:href "#" :on-click #(do (put! liburu-kan [:gogokoetan-sartu (:id @lib)])
                                       false)} "Liburua gogoko dut"]]]
    [:div.small-12.medium-12.columns
     [liburuaren-iruzkinak irak]
