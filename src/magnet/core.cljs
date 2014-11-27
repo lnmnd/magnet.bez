@@ -188,6 +188,10 @@
 (defn liburua-ezabatu [id]
   (DELETE (str aurriz "liburuak/" id "?token=" (:token @saioa))))
 
+(defn gogokoetan-sartu [id]
+  (bidali-eta-entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak?token=" (:token @saioa))
+                     {:id id} identity))
+
 (defn iruzkina-ezabatu [id]
   (DELETE (str aurriz "iruzkinak/" id "?token=" (:token @saioa))))
 
@@ -334,7 +338,7 @@
                           (>! bide-kan [:birbidali (str "/liburuak/" (:id li))])))
     :liburua-ezabatu (do (swap! nire-liburuak (fn [lk] (remove #(= bal (:id %)) lk)))
                          (liburua-ezabatu bal))
-    :gogokoetan-sartu (println "todo gogoko " bal)
+    :gogokoetan-sartu (gogokoetan-sartu bal)
     nil))
 
 (defn iruzkin-kud [[mota bal]]
