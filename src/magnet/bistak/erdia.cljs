@@ -143,7 +143,7 @@
      [:p "Gogokorik ez."]
      [:ul (for [x @gogokoak]
             ^{:key x} [:li [:a {:href "#" :on-click #(do (when (js/confirm "Seguru gogokoetatik kendu nahi duzula?")
-                                                           (put! kan [:gogokoa-kendu (:id x)]))
+                                                           (put! kan [:gogokoetatik-kendu (:id x)]))
                                                          false)} "X"]
                        " " [:a {:href (str "#/liburuak/" (:id x))} (:titulua x)]])])])
 

@@ -194,6 +194,9 @@
   (bidali-eta-entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak?token=" (:token @saioa))
                      {:id id} identity))
 
+(defn gogokoetatik-kendu [id]
+  (DELETE (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak/" id "?token=" (:token @saioa))))
+
 (defn iruzkina-ezabatu [id]
   (DELETE (str aurriz "iruzkinak/" id "?token=" (:token @saioa))))
 
@@ -348,6 +351,7 @@
     :liburua-ezabatu (do (swap! nire-liburuak (fn [lk] (remove #(= bal (:id %)) lk)))
                          (liburua-ezabatu bal))
     :gogokoetan-sartu (gogokoetan-sartu bal)
+    :gogokoetatik-kendu (gogokoetatik-kendu bal)
     nil))
 
 (defn iruzkin-kud [[mota bal]]
