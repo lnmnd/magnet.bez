@@ -136,7 +136,8 @@
                                 edu
                                 (concat (take n edu) "...")))]])])])
 
-(defn nire-gogokoak []
+(defn nire-gogokoak [gogokoak]
+  (println @gogokoak)
   [:div
    [:h1 "Nire gogoko liburuak"]
    [:p "todo"]])
@@ -146,7 +147,7 @@
    [:h1 "Bilatu"]
    [:p "todo"]])
 
-(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak lib lib-irak]}]
+(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
@@ -159,7 +160,7 @@
         :liburua-gehitu [liburua-gehitu liburu-kan egileak argitaletxeak generoak etiketak]
         :nire-liburuak [nire-liburuak liburu-kan nliburuak]
         :nire-iruzkinak [nire-iruzkinak iruzkin-kan niruzkinak]
-        :nire-gogokoak [nire-gogokoak]
+        :nire-gogokoak [nire-gogokoak ngogokoak]
         :liburua [liburua {:saioa saioa
                            :liburu-kan liburu-kan
                            :iruzkin-kan iruzkin-kan
@@ -168,7 +169,7 @@
         :bilatu [bilatu]
         nil)]]))
 
-(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak erabiltzaileak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak liburua lib-irak]}]
+(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak erabiltzaileak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-iruzkinak]
    [nagusia {:saio-kan saio-kan
@@ -184,5 +185,6 @@
              :aliburuak aliburuak
              :nliburuak nliburuak
              :niruzkinak niruzkinak
+             :ngogokoak ngogokoak
              :lib liburua
              :lib-irak lib-irak}]])

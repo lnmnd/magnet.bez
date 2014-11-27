@@ -228,8 +228,7 @@
 (defn nire-gogokoak-lortu []
   (go (let [xs (<! (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak?muga=0")
                             :gogoko_liburuak))]
-        (reset! nire-gogokoak (rseq xs))
-        (println @nire-gogokoak))))
+        (reset! nire-gogokoak (rseq xs)))))
 
 (defn azken-liburuak-lortu
   "Azken liburuak lortzen ditu"
@@ -376,6 +375,7 @@
                                           :aliburuak azken-liburuak
                                           :nliburuak nire-liburuak
                                           :niruzkinak nire-iruzkinak
+                                          :ngogokoak nire-gogokoak
                                           :liburua liburua
                                           :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))
