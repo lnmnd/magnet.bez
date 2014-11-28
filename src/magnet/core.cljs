@@ -200,12 +200,6 @@
 (defn iruzkina-ezabatu [id]
   (DELETE (str aurriz "iruzkinak/" id "?token=" (:token @saioa))))
 
-(defn iruzkin-liburu-titulua
-  [ir]
-  (entzun (str aurriz "liburuak/" (:liburua ir))
-          (fn [x]
-            (assoc ir :liburu_titulua (:titulua (:liburua x))))))
-
 (defn azken-iruzkinak-lortu
   "Azken iruzkinak lortzen ditu"
   ([]

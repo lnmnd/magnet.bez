@@ -3,7 +3,6 @@
 (defn azken-iruzkina [ir]
   [:a {:href (str "#/liburuak/" (:liburua ir))}
    [:div.panel.radius
-    [:h5 "Liburu titulua"]
     [:blockquote {:style {:font-size "smaller"}} (:edukia ir) [:cite (:erabiltzailea ir) " - " (:data ir)]]]])
 
 (defn azken-iruzkinak [iruzkinak]
