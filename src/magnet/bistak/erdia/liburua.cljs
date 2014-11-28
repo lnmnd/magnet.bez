@@ -53,7 +53,7 @@
            [:li [:a {:href (str "#" x)} ">>" x]])]
         (when (:id i)
           [:a {:href (str "#" (:id i))} "#" (:id i)]) " "
-        (:erabiltzailea i) " data" [:br] (:edukia i)
+        (:erabiltzailea i) " " (take 10 (:data i)) " " (take 8 (drop 11 (:data i))) [:br] (:edukia i)
         [:ul.inline-list
          (for [x (:erantzunak i)]
            [:li [:a {:href (str "#" x)} ">>" x]])]]))])
