@@ -77,6 +77,8 @@
         [:dl
          [:dt "Erabiltzailea"]
          [:dd (:erabiltzailea @lib)]
+         [:dt "Igotze data"]
+         [:dd (take 10 (:igotze_data @lib))] ; eguna hartu
          [:dt "Urtea"]
          [:dd (:urtea @lib)]
          [:dt "Argitaletxea"]
