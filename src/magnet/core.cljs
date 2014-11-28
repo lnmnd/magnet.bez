@@ -53,67 +53,73 @@
 (defn entzun
   "Helbidea entzuten du eta erantzunari funtzioa aplikatzen dio.
   Emaitza duen kanala itzultzen du"
-  ([helbidea f ef]
-     (let [kan (chan)]
-       (GET helbidea
-            {:response-format :json
-             :keywords? true
-             :handler #(put! kan (f %))
-             :error-handler #(put! kan (ef %))})
-       kan))
+  ([helbidea]
+   (entzun helbidea identity))  
   ([helbidea f]
-     (let [kan (chan)]
-       (GET helbidea
-            {:response-format :json
-             :keywords? true
-             :handler #(put! kan (f %))})
-       kan)))
+   (let [kan (chan)]
+     (GET helbidea
+          {:response-format :json
+           :keywords? true
+           :handler #(put! kan (f %))})
+     kan))
+  ([helbidea f ef]
+   (let [kan (chan)]
+     (GET helbidea
+          {:response-format :json
+           :keywords? true
+           :handler #(put! kan (f %))
+           :error-handler #(put! kan (ef %))})
+     kan)))
 
 (defn bidali-eta-entzun
   "Helbidera datuak bidaltzen ditu eta erantzunari funtzioa aplikatzen dio.
   Emaitza duen kanala itzultzen du"
+  ([helbidea dat]
+   (bidali-eta-entzun helbidea dat identity))  
   ([helbidea dat f]
-     (let [kan (chan)]
-       (POST helbidea
-             {:params dat
-              :format :json
-              :response-format :json
-              :keywords? true
-              :handler #(put! kan (f %))})
-       kan))
+   (let [kan (chan)]
+     (POST helbidea
+           {:params dat
+            :format :json
+            :response-format :json
+            :keywords? true
+            :handler #(put! kan (f %))})
+     kan))
   ([helbidea dat f ef]
-     (let [kan (chan)]
-       (POST helbidea
-             {:params dat
-              :format :json
-              :response-format :json
-              :keywords? true
-              :handler #(put! kan (f %))
-              :error-handler #(put! kan (ef %))})
-       kan)))
+   (let [kan (chan)]
+     (POST helbidea
+           {:params dat
+            :format :json
+            :response-format :json
+            :keywords? true
+            :handler #(put! kan (f %))
+            :error-handler #(put! kan (ef %))})
+     kan)))
 
 (defn aldatu-eta-entzun
   "Helbidera aldatzeko datuak bidaltzen ditu eta erantzunari funtzioa aplikatzen dio.
   Emaitza duen kanala itzultzen du"
+  ([helbidea dat]
+   (aldatu-eta-entzun helbidea dat identity))  
   ([helbidea dat f]
-     (let [kan (chan)]
-       (PUT helbidea
-            {:params dat
-             :format :json
-             :response-format :json
-             :keywords? true
-             :handler #(put! kan (f %))})
-       kan))
+   (let [kan (chan)]
+     (PUT helbidea
+          {:params dat
+           :format :json
+           :response-format :json
+           :keywords? true
+           :handler #(put! kan (f %))})
+     kan))
   ([helbidea dat f ef]
-     (let [kan (chan)]
-       (PUT helbidea
-            {:params dat
-             :format :json
-             :response-format :json
-             :keywords? true
-             :handler #(put! kan (f %))
-             :error-handler #(put! kan (ef %))})
-       kan)))
+   (let [kan (chan)]
+     (PUT helbidea
+          {:params dat
+           :format :json
+           :response-format :json
+           :keywords? true
+           :handler #(put! kan (f %))
+           :error-handler #(put! kan (ef %))})
+     kan)))
 
 (defn erabiltzailea-gehitu
   "Erabiltzaile berri bat gehitzen du."
@@ -124,8 +130,7 @@
                   :pasahitza pas
                   :izena izen}]
        (bidali-eta-entzun (str aurriz "erabiltzaileak")
-                          (if (empty? desk) param (assoc param :deskribapena desk))
-                          identity))))
+                          (if (empty? desk) param (assoc param :deskribapena desk))))))
 
 (defn erabiltzailea-lortu [era]
   (entzun (str aurriz "erabiltzaileak/" era)
@@ -141,8 +146,7 @@
      (let [param {:pasahitza pas
                   :izena izen}]
        (aldatu-eta-entzun (str aurriz "erabiltzaileak/" era "?token=" (:token @saioa))
-                          (if (empty? desk) param (assoc param :deskribapena desk))
-                          identity))))
+                          (if (empty? desk) param (assoc param :deskribapena desk))))))
 
 (defn saioa-hasi
   "Saioa hasten du."
@@ -190,7 +194,7 @@
 
 (defn gogokoetan-sartu [id]
   (bidali-eta-entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak?token=" (:token @saioa))
-                     {:id id} identity))
+                     {:id id}))
 
 (defn gogokoetatik-kendu [id]
   (DELETE (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak/" id "?token=" (:token @saioa))))
@@ -298,8 +302,7 @@
   [id edukia]
   (bidali-eta-entzun
    (str aurriz "liburuak/" id "/iruzkinak?token=" (:token @saioa))
-   edukia
-   identity))
+   edukia))
 
 (defn egile-guztiak-lortu
   "Egile guztien zerrenda lortzen du"
