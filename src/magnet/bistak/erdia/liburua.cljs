@@ -19,9 +19,11 @@
         [:div.row.collapse
          [:label "Gurasoak"]
          [:div.small-10.columns
-          [:input {:type "text" :id "gurasoa"}]]
+          [:input {:type "text" :id "gurasoa" :placeholder "1,2"}]]
          [:div.small-2.columns
-          [:a.button.postfix {:on-click #(do (gurasoa-gehitu (.-value (.querySelector js/document "#gurasoa")))
+          [:a.button.postfix {:on-click #(do (let [xs (clojure.string.split (.-value (.querySelector js/document "#gurasoa")) #",")]
+                                               (doseq [x xs]
+                                                 (gurasoa-gehitu x)))
                                              (set! (.-value (.querySelector js/document "#gurasoa")) ""))}
            "Gehitu"]]]
         [:ul
