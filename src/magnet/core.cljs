@@ -126,7 +126,6 @@
        (bidali-eta-entzun (str aurriz "erabiltzaileak")
                           (if (empty? desk) param (assoc param :deskribapena desk))
                           identity))))
-#_(erabiltzailea-gehitu "era" "1234" "era")
 
 (defn erabiltzailea-lortu [era]
   (entzun (str aurriz "erabiltzaileak/" era)
@@ -174,7 +173,6 @@
                  :izena nil
                  :token nil
                  :iraungitze_data nil}))
-#_(saioa-amaitu)
 
 (defn erabiltzailea-ezabatu
   "Erabiltzailea ezabatu eta saioa amaitzen du."
@@ -210,7 +208,6 @@
   ([desp]
      (entzun (str aurriz "iruzkinak?desplazamendua=" desp "&muga=" azken-iruzkin-kopurua)
              #(do (reset! azken-iruzkinak (reverse (:iruzkinak %)))))))
-#_(azken-iruzkinak-lortu)
 
 (defn nire-liburuak-lortu []
   (go (let [libk (<! (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/liburuak")
@@ -253,14 +250,12 @@
   ([desp]
      (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" azken-liburu-kopurua)
              #(reset! azken-liburuak (reverse (:liburuak %))))))
-#_(azken-liburuak-lortu)
 
 (defn liburua-lortu
   "id duen liburua lortzen du."
   [id]
   (entzun (str aurriz "liburuak/" id)
           #(reset! liburua (:liburua %))))
-#_(liburua-lortu 1)
 
 (defn liburuaren-iruzkinak-lortu
   "id duen libururen iruzkinak lortzen ditu."
@@ -310,7 +305,6 @@
   "Egile guztien zerrenda lortzen du"
   []
   (entzun (str aurriz "egileak?muga=0") :egileak))
-#_(go (println (<! (egile-guztiak-lortu))))
 
 (defn bide-kud [[mota bal]]
   "Bidearen gertaerekin zer egin erabakitzen du."
