@@ -175,9 +175,9 @@
         :bilatu [bilatu]
         nil)]]))
 
-(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-iruzkinak erabiltzaileak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
+(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
   [:div.row
-   [alboko-barra azken-iruzkinak]
+   [alboko-barra azken-gogokoena azken-iruzkinak]
    [nagusia {:saio-kan saio-kan
              :saioa saioa
              :liburu-kan liburu-kan

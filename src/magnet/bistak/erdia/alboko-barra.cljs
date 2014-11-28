@@ -11,10 +11,13 @@
     (for [ir @iruzkinak]
       ^{:key ir} [azken-iruzkina ir])]])
 
-(defn alboko-barra [iruzkinak]
+(defn alboko-barra [lib iruzkinak]
   [:div.medium-4.small-12.hide-for-small.columns
-   [:img {:src "img/liburua.jpg"}]
+   [:img {:src (:azala @lib)}]
    [:div.panel
-    [:h3 "Titulua"]
-    [:h5 {:class "subheader"} "Liburu garrantzitsu baten datuak."]]
+    [:h3 (:titulua @lib)]
+    [:h5 {:class "subheader"} (for [x (interpose ", " (:egileak @lib))]
+                                [:span x])]
+    [:p (:iruzkin_kopurua @lib) " iruzkin" [:br]
+     (:gogoko_kopurua @lib) " gogoko"]]
    [azken-iruzkinak iruzkinak]])

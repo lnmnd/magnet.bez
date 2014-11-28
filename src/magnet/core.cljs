@@ -384,6 +384,7 @@
                                           :iruzkin-kan iruzkin-kan
                                           :saioa saioa
                                           :bidea bidea
+                                          :azken-gogokoena azken-gogokoena
                                           :azken-iruzkinak azken-iruzkinak
                                           :erabiltzaileak erabiltzaileak
                                           :egileak egileak
