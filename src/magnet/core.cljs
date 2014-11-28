@@ -4,7 +4,7 @@
             [ajax.core :refer [GET POST PUT DELETE]]
             [reagent.core :as reagent :refer [atom]]
             [figwheel.client :as fw]
-            [magnet.config :refer [azken-iruzkin-kopurua azken-liburu-kopurua]]
+            [magnet.config :refer [azken-gogoko-kopurua azken-iruzkin-kopurua azken-liburu-kopurua]]
             [magnet.bideak :as bideak]
             [magnet.bistak.core :as bistak]))
 
@@ -23,6 +23,8 @@
                :iraungitze_data nil}))
 (defonce ^{:doc "Uneko bidea"}
   bidea (atom []))
+(defonce ^{:doc "Azken liburuetatik gogokoena"}
+  azken-gogokoena (atom {}))
 (defonce ^{:doc "Azken iruzkinen zerrenda"}
   azken-iruzkinak (atom []))
 (defonce ^{:doc "Nire liburuen zerrenda"}
@@ -227,6 +229,22 @@
                             :gogoko_liburuak))]
         (reset! nire-gogokoak (rseq xs)))))
 
+(defn- gogokoena [x y]
+  (if (> (:gogoko_kopurua x) (:gogoko_kopurua y))
+    x
+    y))
+
+(defn azken-gogokoena-lortu
+  "Azken liburuetatik gogokoena lortzen du."
+  ([]
+   (go (let [guztira (<! (entzun (str aurriz "liburuak") :guztira))]
+         (azken-gogokoena-lortu (if (> guztira azken-gogoko-kopurua)
+                                  (- guztira azken-gogoko-kopurua)
+                                  0)))))
+  ([desp]
+   (go (let [liburuak (<! (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" azken-liburu-kopurua) :liburuak))]
+         (reset! azken-gogokoena (reduce gogokoena {:gogoko_kopurua -1} liburuak))))))
+
 (defn azken-liburuak-lortu
   "Azken liburuak lortzen ditu"
   ([]
@@ -412,6 +430,7 @@
 
     (reset! bidea [:index nil])
     (azken-liburuak-lortu)
+    (azken-gogokoena-lortu)
     (azken-iruzkinak-lortu))
 
   (fw/watch-and-reload :jsload-callback reagent/force-update-all))
