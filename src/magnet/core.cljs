@@ -180,9 +180,7 @@
   "Erabiltzailea ezabatu eta saioa amaitzen du."
   []
   (DELETE (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "?token=" (:token @saioa))
-          {:handler #(saioa-amaitu)
-           :error-handler #(println %)}))
-#_(erabiltzailea-ezabatu)
+          {:handler #(saioa-amaitu)}))
 
 (defn liburua-gehitu [edukia]
   (bidali-eta-entzun (str aurriz "liburuak?token=" (:token @saioa))
