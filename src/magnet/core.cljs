@@ -4,7 +4,7 @@
             [ajax.core :refer [GET POST PUT DELETE]]
             [reagent.core :as reagent :refer [atom]]
             [figwheel.client :as fw]
-            [magnet.config :refer [azken-gogoko-kopurua azken-iruzkin-kopurua azken-liburu-kopurua]]
+            [magnet.konfig :refer [azken-gogoko-kopurua azken-iruzkin-kopurua azken-liburu-kopurua]]
             [magnet.bideak :as bideak]
             [magnet.bistak.core :as bistak]))
 

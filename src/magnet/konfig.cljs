@@ -1,4 +1,4 @@
-(ns magnet.config)
+(ns magnet.konfig)
 
 (def azken-gogoko-kopurua 25)
 (def azken-iruzkin-kopurua 10)
