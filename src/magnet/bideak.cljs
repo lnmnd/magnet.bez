@@ -2,46 +2,19 @@
   (:require [secretary.core :as secretary :refer-macros [defroute]]
             [goog.events :as events]
             [goog.history.EventType :as EventType]
-            [cljs.core.async :refer [chan put!]])
+            [cljs.core.async :refer [chan put!]]
+            [magnet.bideak.makroak :refer-macros [bideak-eraiki]])
   (:import goog.History))
 
 (defn bideak-definitu []
-  (let [kan (chan)]
-
-    (secretary/set-config! :prefix "#")
-
-    (defroute "/" []
-      (put! kan [:index nil]))
-
-    (defroute "/bilatu" []
-      (put! kan [:bilatu nil]))
-
-    (defroute "/erregistratu" []
-      (put! kan [:erregistratu nil]))
-
-    (defroute "/saioa-hasi" []
-      (put! kan [:saioa-hasi nil]))
-
-    (defroute "/liburua-gehitu" []
-      (put! kan [:liburua-gehitu nil]))
-
-    (defroute "/nire-liburuak" []
-      (put! kan [:nire-liburuak nil]))
-
-    (defroute "/nire-iruzkinak" []
-      (put! kan [:nire-iruzkinak nil]))
-    
-    (defroute "/nire-gogokoak" []
-      (put! kan [:nire-gogokoak nil]))    
-        
-    (defroute "/profila" []
-      (put! kan [:profila nil]))
-
-    (defroute "/liburuak/:id" {:as params}
-      (put! kan [:liburua (:id params)]))
-
-    (let [history (History.)]
-      (events/listen history EventType/NAVIGATE
-                     #(secretary/dispatch! (.-token %)))
-      (.setEnabled history true))
-    kan))
+  (bideak-eraiki
+   [:index "/"]
+   [:bilatu "/bilatu"]
+   [:erregistratu "/erregistratu"]
+   [:saioa-hasi "/saioa-hasi"]
+   [:liburua-gehitu "/liburua-gehitu"]
+   [:nire-liburuak "/nire-liburuak"]
+   [:nire-iruzkinak "/nire-iruzkinak"]
+   [:nire-gogokoak "/nire-gogokoak"]
+   [:profila "/profila"]
+   [:liburua "/liburuak/:id" {:as params} (:id params)]))
