@@ -43,6 +43,8 @@
   liburuaren-iruzkinak (atom {}))
 (defonce ^{:doc "Erabiltzaileen zerrenda"}
   erabiltzaileak (atom []))
+(defonce ^{:doc "Tituluen zerrenda"}
+  tituluak (atom []))
 (defonce ^{:doc "Egileen zerrenda"}
   egileak (atom []))
 (defonce ^{:doc "Argitaletxeen zerrenda"}
@@ -288,6 +290,12 @@
   (entzun (str aurriz "erabiltzaileak?muga=0")
           #(reset! erabiltzaileak (map :erabiltzailea (:erabiltzaileak %)))))
 
+(defn tituluak-lortu
+  "Titulu guztiak lortzen ditu."
+  []
+  (entzun (str aurriz "tituluak?muga=0")
+          #(reset! tituluak (:tituluak %))))
+
 (defn egileak-lortu
   "Egile guztiak lortzen ditu."
   []
@@ -336,6 +344,7 @@
     (liburua-lortu bal)
     (liburuaren-iruzkinak-lortu bal))
   (when (= :liburua-gehitu mota)
+    (tituluak-lortu)    
     (egileak-lortu)
     (argitaletxeak-lortu)
     (generoak-lortu)
