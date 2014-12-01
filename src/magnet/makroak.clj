@@ -1,4 +1,4 @@
-(ns magnet.bideak.makroak)
+(ns magnet.makroak)
 
 (defn bidea-eraiki
   [kan gak bid & [par gor]]

@@ -3,7 +3,7 @@
             [goog.events :as events]
             [goog.history.EventType :as EventType]
             [cljs.core.async :refer [chan put!]]
-            [magnet.bideak.makroak :refer-macros [bideak-eraiki]])
+            [magnet.makroak :refer-macros [bideak-eraiki]])
   (:import goog.History))
 
 (defn bideak-definitu []
