@@ -2,6 +2,8 @@
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
   (:require [cljs.core.async :as async :refer [chan put! <! >! timeout]]
             [ajax.core :refer [GET POST PUT DELETE]]
+            [cljs-time.format :as format]
+            [cljs-time.coerce :as coerce]            
             [reagent.core :as reagent :refer [atom]]
             [figwheel.client :as fw]
             [magnet.konfig :refer [azken-gogoko-kopurua azken-iruzkin-kopurua azken-liburu-kopurua]]
@@ -148,6 +150,14 @@
        (aldatu-eta-entzun (str aurriz "erabiltzaileak/" era "?token=" (:token @saioa))
                           (if (empty? desk) param (assoc param :deskribapena desk))))))
 
+(declare saioa-hasi)
+(defn saioa-berritu
+  "seg segundu pasa ondoren saioa berriz hasten du saioa oraindik ez bada amaitu."
+  [seg]
+  (go (<! (timeout (* 1000 seg)))
+      (when (:hasita @saioa)
+        (saioa-hasi (:erabiltzailea @saioa) (:pasahitza @saioa)))))
+
 (defn saioa-hasi
   "Saioa hasten du."
   [era pas]
@@ -155,11 +165,16 @@
    (str aurriz "saioak")
    {:erabiltzailea era
     :pasahitza pas}
-   #(go (let [dat (<! (erabiltzailea-lortu era))]
+   #(go (let [dat (<! (erabiltzailea-lortu era))
+              formatua (format/formatters :date-time-no-ms)
+              form->ms (fn [x] (coerce/to-long (format/parse formatua x)))]
+          ; iraungitu baino 10 s lehenago saioa berritu
+          (saioa-berritu (* 1000 (- (form->ms (:iraungitze_data %)) (form->ms (:saio_hasiera %)) 10)))
           (swap! saioa assoc
                  :hasiera-okerra false
                  :hasita true
                  :erabiltzailea era
+                 :pasahitza pas
                  :izena (:izena dat)
                  :deskribapena (:deskribapena dat)
                  :token (:token %)
