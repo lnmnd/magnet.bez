@@ -406,6 +406,7 @@
                                           :azken-gogokoena azken-gogokoena
                                           :azken-iruzkinak azken-iruzkinak
                                           :erabiltzaileak erabiltzaileak
+                                          :tituluak tituluak
                                           :egileak egileak
                                           :argitaletxeak argitaletxeak
                                           :generoak generoak

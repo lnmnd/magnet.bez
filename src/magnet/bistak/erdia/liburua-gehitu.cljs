@@ -3,7 +3,7 @@
             [reagent.core :as reagent :refer [atom]]
             [magnet.bistak.lagun :refer [formu-tratatu]]))
 
-(defn liburua-gehitu [kan egile-guztiak argitaletxeak generoak etiketa-guztiak]
+(defn liburua-gehitu [kan titulu-guztiak egile-guztiak argitaletxeak generoak etiketa-guztiak]
   (let [bidali-klikatuta (atom false)
         epub (atom "")
         epub-aukeratuta (atom false)
@@ -22,6 +22,8 @@
                      (let [fitx (.item (.-files tar) 0)]
                        (epub-edukia-aldatu fitx)))
         titulua (atom "")
+        titulua-badago (atom false)
+        titulua-aztertu #(reset! titulua-badago (contains? (set @titulu-guztiak) @titulua))
         egileak (atom (sorted-map))
         egile-kop (atom 0)
         egilea-gehitu (fn [egilea]
@@ -63,7 +65,7 @@
                       (let [fitx (.item (.-files tar) 0)]
                         (azala-img-aldatu fitx)))
         formu-zuzena (fn [] (and @epub-fitxategia? (egilerik-gehituta) @jpg-azala))]
-    (fn [kan egile-guztiak argitaletxeak generoak etiketa-guztiak]
+    (fn [kan titulu-guztiak egile-guztiak argitaletxeak generoak etiketa-guztiak]
       [:div
        [:h1 "Liburua gehitu"]
        [:form {:id "liburua-gehitu"}
@@ -71,8 +73,9 @@
         [:input {:type "file" :required true :on-change #(epub-lortu (-> % .-target))}]
         (when (and @epub-aukeratuta (not @epub-fitxategia?))
           [:small.error "Fitxategiak epub formatua eduki behar du."])
-        [:label "Titulua"]
-        [:input {:type "text" :required true :max-length "256" :on-change #(reset! titulua (-> % .-target .-value))}]
+        [:label "Titulua"] (when @titulua-badago [:span.label.warning "Titulu hori duen liburua existitzen da."])
+        [:input {:type "text" :required true :max-length "256" :on-change #(do (reset! titulua (-> % .-target .-value))
+                                                                               (titulua-aztertu))}]
         [:label "Egileak"]
         [:div.row.collapse
          [:div.small-10.columns
