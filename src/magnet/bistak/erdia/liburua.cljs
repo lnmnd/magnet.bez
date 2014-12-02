@@ -6,9 +6,12 @@
 (defn- iruzkin-form [{:keys [iruzkin-kan libid iruzkinak]}]
   (let [gurasoak (atom (sorted-map))
         guraso-kop (atom 0)
+        gurasoa-existitzen-da? (fn [irak gu]
+                                 (some #(= gu (:id %)) irak))
         gurasoa-gehitu (fn [gu]
-                         (let [id (swap! guraso-kop inc)]
-                           (swap! gurasoak assoc id {:id id :gurasoa (js/parseInt gu)})))
+                         (when (gurasoa-existitzen-da? @iruzkinak gu)
+                           (let [id (swap! guraso-kop inc)]
+                             (swap! gurasoak assoc id {:id id :gurasoa gu}))))
         gurasoa-ezabatu #(swap! gurasoak dissoc %)
         guraso-zerrenda (fn []
                           (map #(:gurasoa (second %)) @gurasoak))
@@ -23,7 +26,7 @@
          [:div.small-2.columns
           [:a.button.postfix {:on-click #(do (let [xs (clojure.string.split (.-value (.querySelector js/document "#gurasoa")) #",")]
                                                (doseq [x xs]
-                                                 (gurasoa-gehitu x)))
+                                                 (gurasoa-gehitu (js/parseInt x))))
                                              (set! (.-value (.querySelector js/document "#gurasoa")) ""))}
            "Gehitu"]]]
         [:ul
