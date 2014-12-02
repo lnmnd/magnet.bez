@@ -389,12 +389,18 @@
                             (gogokoetatik-kendu bal))
     nil))
 
+(defn erantzuna-gehitu [irak ir]
+  (-> (map (fn [x]
+             (if (contains? (set (map js/parseInt (:gurasoak ir))) (:id x))
+               (update-in x [:erantzunak] #(conj % (:id ir)))
+               x)) irak)
+      (concat [ir])))
+
 (defn iruzkin-kud [[mota bal]]
   "Iruzkinekin lotutako kudeatzailea."
   (case mota
     :iruzkina-gehitu (go (let [{ir :iruzkina} (<! (iruzkina-gehitu (:id bal) (:edukia bal)))]
-                           (swap! liburuaren-iruzkinak conj ir)
-                           (liburuaren-iruzkinak-lortu (:id bal))))
+                           (swap! liburuaren-iruzkinak erantzuna-gehitu ir (:gurasoak ir))))
     :iruzkina-ezabatu (do (swap! nire-iruzkinak (fn [lk] (remove #(= bal (:id %)) lk)))
                           (iruzkina-ezabatu bal))
     nil))
