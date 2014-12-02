@@ -391,7 +391,7 @@
 
 (defn erantzuna-gehitu [irak ir]
   (-> (map (fn [x]
-             (if (contains? (set (map js/parseInt (:gurasoak ir))) (:id x))
+             (if (contains? (set (:gurasoak ir)) (:id x))
                (update-in x [:erantzunak] #(conj % (:id ir)))
                x)) irak)
       (concat [ir])))

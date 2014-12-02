@@ -3,12 +3,12 @@
             [reagent.core :as reagent :refer [atom]]
             [magnet.bistak.lagun :refer [formu-tratatu]]))
 
-(defn- iruzkin-form [{:keys [iruzkin-kan libid]}]
+(defn- iruzkin-form [{:keys [iruzkin-kan libid iruzkinak]}]
   (let [gurasoak (atom (sorted-map))
         guraso-kop (atom 0)
         gurasoa-gehitu (fn [gu]
                          (let [id (swap! guraso-kop inc)]
-                           (swap! gurasoak assoc id {:id id :gurasoa gu})))
+                           (swap! gurasoak assoc id {:id id :gurasoa (js/parseInt gu)})))
         gurasoa-ezabatu #(swap! gurasoak dissoc %)
         guraso-zerrenda (fn []
                           (map #(:gurasoa (second %)) @gurasoak))
@@ -102,4 +102,5 @@
       [liburuaren-iruzkinak irak]
       (when (:hasita @saioa)
         [iruzkin-form {:iruzkin-kan iruzkin-kan
-                       :libid (:id @lib)}])]]))
+                       :libid (:id @lib)
+                       :iruzkinak irak}])]]))
