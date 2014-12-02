@@ -6,10 +6,13 @@
 (defn- iruzkin-form [{:keys [iruzkin-kan libid iruzkinak]}]
   (let [gurasoak (atom (sorted-map))
         guraso-kop (atom 0)
+        gurasoa-gehituta? (fn [xs x]
+                            (some #(= x (:gurasoa (second %))) xs))
         gurasoa-existitzen-da? (fn [irak gu]
                                  (some #(= gu (:id %)) irak))
         gurasoa-gehitu (fn [gu]
-                         (when (gurasoa-existitzen-da? @iruzkinak gu)
+                         (when (and (gurasoa-existitzen-da? @iruzkinak gu)
+                                    (not (gurasoa-gehituta? @gurasoak gu)))
                            (let [id (swap! guraso-kop inc)]
                              (swap! gurasoak assoc id {:id id :gurasoa gu}))))
         gurasoa-ezabatu #(swap! gurasoak dissoc %)
