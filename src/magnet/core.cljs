@@ -366,12 +366,14 @@
                       (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal) (:deskribapena bal)))
                           (saioa-hasi (:erabiltzailea bal) (:pasahitza bal))))
     :erabiltzailea-aldatu (erabiltzailea-aldatu (:era bal) (:pas bal) (:izen bal) (:des bal))
-    :erabiltzailea-ezabatu (erabiltzailea-ezabatu)
+    :erabiltzailea-ezabatu (do (put! bide-kan [:birbidali "/"])
+                               (erabiltzailea-ezabatu))
     :saioa-hasi (go (when (<! (<! (saioa-hasi (:era bal) (:pas bal))))
                       (put! bide-kan [:birbidali ""])
                       (nire-liburuak-lortu)
                       (nire-iruzkinak-lortu)))
-    :saioa-amaitu (saioa-amaitu)
+    :saioa-amaitu (do (put! bide-kan [:birbidali ""])
+                      (saioa-amaitu)) 
     nil))
 
 (defn liburu-kud [[mota bal] bide-kan]
