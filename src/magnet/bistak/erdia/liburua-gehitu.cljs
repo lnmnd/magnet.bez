@@ -13,10 +13,11 @@
                                (set! (.-onload fr)
                                      (fn [ger]
                                        (let [mota "data:application/epub+zip;base64,"]
-                                         (reset! epub-aukeratuta true)
                                          (reset! epub-fitxategia?
                                                  (= mota (clojure.string/join (take (count mota) (.-result (.-target ger))))))
-                                         (reset! epub (subs (.-result (.-target ger)) (count mota))))))
+                                         (reset! epub-aukeratuta true)
+                                         (when @epub-fitxategia?
+                                           (reset! epub (subs (.-result (.-target ger)) (count mota)))))))
                                (.readAsDataURL fr f)))
         epub-lortu (fn [tar]
                      (let [fitx (.item (.-files tar) 0)]
