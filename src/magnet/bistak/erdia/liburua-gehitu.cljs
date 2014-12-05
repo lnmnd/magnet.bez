@@ -58,9 +58,10 @@
                                        (reset! azala-aukeratuta true)
                                        (reset! jpg-azala
                                                (= mota (clojure.string/join (take (count mota) (.-result (.-target ger))))))
-                                       (reset! azala (subs (.-result (.-target ger)) (count mota)))
-                                       (set! (.-src (js/document.getElementById "liburua-gehitu-azala-img"))
-                                             (.-result (.-target ger))))))
+                                       (when @jpg-azala
+                                         (reset! azala (subs (.-result (.-target ger)) (count mota)))
+                                         (set! (.-src (js/document.getElementById "liburua-gehitu-azala-img"))
+                                               (.-result (.-target ger)))))))
                              (.readAsDataURL fr f)))
         azala-lortu (fn [tar]
                       (let [fitx (.item (.-files tar) 0)]
