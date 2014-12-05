@@ -56,7 +56,11 @@
 
 (defn entzun
   "Helbidea entzuten du eta erantzunari funtzioa aplikatzen dio.
-  Emaitza duen kanala itzultzen du"
+  Emaitza duen kanala itzultzen du.
+
+  Adb:
+  (go (let [ema (<! (entzun \"helbidea\"))]
+        (println ema)))"
   ([helbidea]
    (entzun helbidea identity))  
   ([helbidea f]
