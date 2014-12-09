@@ -1,6 +1,7 @@
 (ns magnet.bistak.erdia.liburua-gehitu
   (:require [cljs.core.async :refer [put!]]
             [reagent.core :as reagent :refer [atom]]
+            [magnet.lagun :refer [levenshtein]]
             [magnet.bistak.lagun :refer [formu-tratatu]]))
 
 (defn liburua-gehitu [kan titulu-guztiak egile-guztiak argitaletxeak generoak etiketa-guztiak]
@@ -24,7 +25,10 @@
                        (epub-edukia-aldatu fitx)))
         titulua (atom "")
         titulua-badago (atom false)
-        titulua-aztertu #(reset! titulua-badago (contains? (set @titulu-guztiak) @titulua))
+        antzerako-tituluak (atom [])
+        titulua-aztertu #(do (reset! titulua-badago (contains? (set @titulu-guztiak) @titulua))
+                             (reset! antzerako-tituluak (filter (fn [x]
+                                                                  (> 4 (levenshtein x @titulua))) @titulu-guztiak)))
         egileak (atom (sorted-map))
         egile-kop (atom 0)
         egilea-gehitu (fn [egilea]
@@ -75,7 +79,11 @@
         [:input {:type "file" :required true :on-change #(epub-lortu (-> % .-target))}]
         (when (and @epub-aukeratuta (not @epub-fitxategia?))
           [:small.error "Fitxategiak epub formatua eduki behar du."])
-        [:label "Titulua"] (when @titulua-badago [:span.label.warning "Titulu hori duen liburua existitzen da."])
+        [:label "Titulua"]
+        (when @titulua-badago [:span.label.warning "Titulu hori duen liburua existitzen da."])
+        (when (not (empty? @antzerako-tituluak)) [:span.label.warning "Antzerako tituluak badaude: "
+                                                  (for [x (interpose ", " @antzerako-tituluak)]
+                                                    [:span x])])
         [:input {:type "text" :required true :max-length "256" :on-change #(do (reset! titulua (-> % .-target .-value))
                                                                                (titulua-aztertu))}]
         [:label "Egileak"]
