@@ -13,7 +13,8 @@
 
 (defn alboko-barra [lib iruzkinak]
   [:div.medium-4.small-12.hide-for-small.columns
-   [:img {:src (:azala @lib)}]
+   [:a {:href (str "#/liburuak/" (:id @lib))}
+    [:img {:src (:azala @lib)}]]
    [:div.panel
     [:h3 (:titulua @lib)]
     [:h5 {:class "subheader"} (for [x (interpose ", " (:egileak @lib))]
