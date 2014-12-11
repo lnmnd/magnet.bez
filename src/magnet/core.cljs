@@ -13,7 +13,7 @@
 (enable-console-print!)
 
 (def ^{:doc "APIaren aurrizkia"}
-  aurriz "http://localhost:3000/v1/")
+  aurriz "")
 
 (defonce ^{:doc "Erabiltzailearen saioa"}
   saioa (atom {:hasiera-okerra false
@@ -431,7 +431,9 @@
                                           :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))
 
-(defn ^:export run [dev]
+(defn ^:export run [dev, zerbitzaria, portua]
+  (set! aurriz (str "http://" zerbitzaria ":" portua "/v1/"))
+  
   (let [saio-kan (chan)
         bide-kan (bideak/bideak-definitu)
         liburu-kan (chan)
