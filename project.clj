@@ -20,13 +20,19 @@
           :src-dir-uri "http://github.com/lnmnd/magnet.bez/blob/master/"
           :src-linenum-anchor-prefix "L"}
   :cljsbuild {
-              :builds [{
-                        :source-paths ["src"]
+              :builds {
+                       :dev
+                       {:source-paths ["src"]
                         :compiler {
                                    :output-to "resources/public/magnet.js"
                                    :source-map "resources/public/magnet.js.map"
                                    :output-dir "resources/public/out"
-                                   :optimizations :none}}]}
+                                   :optimizations :none}}
+                       :prod
+                       {:source-paths ["src"]
+                        :compiler {
+                                   :output-to "dist/js/magnet.js"
+                                   :optimizations :advanced}}}}
   :figwheel {
              :http-server-root "public"
              :server-port 8080

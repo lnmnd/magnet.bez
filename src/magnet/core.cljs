@@ -431,7 +431,7 @@
                                           :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))
 
-(defn ^:export run []
+(defn ^:export run [dev]
   (let [saio-kan (chan)
         bide-kan (bideak/bideak-definitu)
         liburu-kan (chan)
@@ -466,4 +466,5 @@
     (azken-gogokoena-lortu)
     (azken-iruzkinak-lortu))
 
-  (fw/watch-and-reload :jsload-callback reagent/force-update-all))
+  (when dev
+    (fw/watch-and-reload :jsload-callback reagent/force-update-all)))
