@@ -31,7 +31,7 @@
                        :prod
                        {:source-paths ["src"]
                         :compiler {
-                                   :output-to "dist/magnet.js"
+                                   :output-to "dist/js/magnet.js"
                                    :optimizations :advanced}}}}
   :figwheel {
              :http-server-root "public"
