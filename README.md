@@ -23,3 +23,9 @@ Ateratzeko:
 Nabigatzailearekin http://localhost:8080 helbidera joan.
 
 Kodea aldatzean orria automatikoki berrituko da.
+
+## Banatzeko bertsioa prestatu
+
+> lein cljsbuild once prod
+
+dist karpeta prest geratuko da.
