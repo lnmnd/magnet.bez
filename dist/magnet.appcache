@@ -1,0 +1,19 @@
+CACHE MANIFEST
+# v1.0.0
+index.html
+css/foundation.min.css
+js/react-0.9.0.min.js
+js/foundation.min.js
+js/magnet.js
+js/vendor/jquery.js
+js/vendor/modernizr.js
+img/liburua.jpg
+img/magnet.gif
+
+# Konektatu gabe egonez gero erakutsiko da
+FALLBACK:
+/ /offline.html
+
+# Konektatuta egonez gero
+NETWORK:
+*
