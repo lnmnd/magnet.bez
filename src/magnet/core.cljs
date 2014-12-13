@@ -353,12 +353,6 @@
     (argitaletxeak-lortu)
     (generoak-lortu)
     (etiketak-lortu))  
-  (when (= :nire-liburuak mota)
-    (nire-liburuak-lortu))
-  (when (= :nire-iruzkinak mota)
-    (nire-iruzkinak-lortu))
-  (when (= :nire-gogokoak mota)
-    (nire-gogokoak-lortu))  
   (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua :bilatu}
                    mota)
     (reset! bidea [mota bal])))
@@ -374,6 +368,7 @@
                                (erabiltzailea-ezabatu))
     :saioa-hasi (go (when (<! (<! (saioa-hasi (:era bal) (:pas bal))))
                       (put! bide-kan [:birbidali ""])
+                      (nire-gogokoak-lortu)
                       (nire-liburuak-lortu)
                       (nire-iruzkinak-lortu)))
     :saioa-amaitu (do (put! bide-kan [:birbidali ""])
@@ -384,11 +379,12 @@
   "Liburuekin lotutako kudeatzailea."
   (case mota
     :liburua-gehitu (go (let [li (<! (liburua-gehitu bal))]
+                          (swap! nire-liburuak conj li)
                           (>! bide-kan [:birbidali (str "/liburuak/" (:id li))])))
     :liburua-ezabatu (do (swap! nire-liburuak (fn [lk] (remove #(= bal (:id %)) lk)))
                          (liburua-ezabatu bal))
-    :gogokoetan-sartu (go (<! (gogokoetan-sartu bal))
-                          (nire-gogokoak-lortu))
+    :gogokoetan-sartu (go (swap! nire-gogokoak conj @liburua)
+                          (<! (gogokoetan-sartu bal)))
     :gogokoetatik-kendu (do (swap! nire-gogokoak (fn [xs] (remove #(= bal (:id %)) xs))) 
                             (gogokoetatik-kendu bal))
     nil))
@@ -404,7 +400,8 @@
   "Iruzkinekin lotutako kudeatzailea."
   (case mota
     :iruzkina-gehitu (go (let [{ir :iruzkina} (<! (iruzkina-gehitu (:id bal) (:edukia bal)))]
-                           (swap! liburuaren-iruzkinak erantzuna-gehitu ir (:gurasoak ir))))
+                           (swap! liburuaren-iruzkinak erantzuna-gehitu ir (:gurasoak ir))
+                           (swap! nire-iruzkinak conj ir)))
     :iruzkina-ezabatu (do (swap! nire-iruzkinak (fn [lk] (remove #(= bal (:id %)) lk)))
                           (iruzkina-ezabatu bal))
     nil))
