@@ -353,8 +353,6 @@
     (argitaletxeak-lortu)
     (generoak-lortu)
     (etiketak-lortu))  
-  (when (= :nire-liburuak mota)
-    (nire-liburuak-lortu))
   (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua :bilatu}
                    mota)
     (reset! bidea [mota bal])))
@@ -381,6 +379,7 @@
   "Liburuekin lotutako kudeatzailea."
   (case mota
     :liburua-gehitu (go (let [li (<! (liburua-gehitu bal))]
+                          (swap! nire-liburuak conj li)
                           (>! bide-kan [:birbidali (str "/liburuak/" (:id li))])))
     :liburua-ezabatu (do (swap! nire-liburuak (fn [lk] (remove #(= bal (:id %)) lk)))
                          (liburua-ezabatu bal))
