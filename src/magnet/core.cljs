@@ -12,7 +12,7 @@
 
 (enable-console-print!)
 
-(def ^{:doc "APIaren aurrizkia"}
+(defonce ^{:doc "APIaren aurrizkia"}
   aurriz "")
 
 (defonce ^{:doc "Erabiltzailearen saioa"}
