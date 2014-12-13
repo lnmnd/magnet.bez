@@ -355,8 +355,6 @@
     (etiketak-lortu))  
   (when (= :nire-liburuak mota)
     (nire-liburuak-lortu))
-  (when (= :nire-iruzkinak mota)
-    (nire-iruzkinak-lortu))
   (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua :bilatu}
                    mota)
     (reset! bidea [mota bal])))
@@ -403,7 +401,8 @@
   "Iruzkinekin lotutako kudeatzailea."
   (case mota
     :iruzkina-gehitu (go (let [{ir :iruzkina} (<! (iruzkina-gehitu (:id bal) (:edukia bal)))]
-                           (swap! liburuaren-iruzkinak erantzuna-gehitu ir (:gurasoak ir))))
+                           (swap! liburuaren-iruzkinak erantzuna-gehitu ir (:gurasoak ir))
+                           (swap! nire-iruzkinak conj ir)))
     :iruzkina-ezabatu (do (swap! nire-iruzkinak (fn [lk] (remove #(= bal (:id %)) lk)))
                           (iruzkina-ezabatu bal))
     nil))
