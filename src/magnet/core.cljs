@@ -374,6 +374,7 @@
                                (erabiltzailea-ezabatu))
     :saioa-hasi (go (when (<! (<! (saioa-hasi (:era bal) (:pas bal))))
                       (put! bide-kan [:birbidali ""])
+                      (nire-gogokoak-lortu)
                       (nire-liburuak-lortu)
                       (nire-iruzkinak-lortu)))
     :saioa-amaitu (do (put! bide-kan [:birbidali ""])
