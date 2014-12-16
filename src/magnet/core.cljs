@@ -350,6 +350,7 @@
   (when (= :index mota)
     (liburuak-lortu))
   (when (= :liburuak mota)
+    (reset! orriak [bal (second @orriak)])
     (liburuak-lortu))
   (when (= :erregistratu mota)
     (erabiltzaileak-lortu))    
