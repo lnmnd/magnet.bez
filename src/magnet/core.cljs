@@ -39,6 +39,8 @@
   nire-gogokoak (atom []))
 (defonce ^{:doc "Guztira duden liburu kopurua"}
   liburu-kopurua (atom 0))
+(defonce ^{:doc "Orriak: uneko orria eta orri kopurua"}
+  orriak (atom [1 1]))
 (defonce ^{:doc "Liburuen zerrenda"}
   liburuak (atom []))
 (defonce ^{:doc "Liburuaren datuak"}
@@ -426,6 +428,7 @@
                                           :generoak generoak
                                           :etiketak etiketak
                                           :liburu-kopurua liburu-kopurua
+                                          :orriak orriak
                                           :liburuak liburuak
                                           :nliburuak nire-liburuak
                                           :niruzkinak nire-iruzkinak

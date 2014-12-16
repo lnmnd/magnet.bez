@@ -92,7 +92,7 @@
                                            false)}
          "Ezabatu"]]])))
 
-(defn liburuen-orria [liburu-kop libuk]
+(defn liburuen-orria [liburu-kop orriak libuk]
   [:div
    (for [li @libuk]
      ^{:key li} [:a {:href (str "#/liburuak/" (:id li))}
@@ -109,7 +109,9 @@
                      [:br]
                      (:gogoko_kopurua li) " ♥"]]]]])
    [:p.left "Liburuak guztira: " @liburu-kop]
-   [:p.right "orriak hemen"]])
+   [:p.right "orriak hemen "
+    (let [[unekoa kop] @orriak]
+      (str kop " orri, " unekoa " unekoa"))]])
 
 (defn nire-liburuak [kan liburuak]
   [:div
@@ -154,12 +156,12 @@
    [:h1 "Bilatu"]
    [:p "todo"]])
 
-(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua liburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
+(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
       (case bid
-        :index [liburuen-orria liburu-kopurua liburuak]
+        :index [liburuen-orria liburu-kopurua orriak liburuak]
         :erregistratu [erregistratu saio-kan erabiltzaileak]
         :saioa-hasi [saioa-hasi saio-kan saioa]
         :profila [profila {:saio-kan saio-kan
@@ -177,7 +179,7 @@
         :bilatu [bilatu]
         nil)]]))
 
-(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
+(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-gogokoena azken-iruzkinak]
    [nagusia {:saio-kan saio-kan
@@ -192,6 +194,7 @@
              :generoak generoak
              :etiketak etiketak
              :liburu-kopurua liburu-kopurua
+             :orriak orriak
              :liburuak liburuak
              :nliburuak nliburuak
              :niruzkinak niruzkinak
