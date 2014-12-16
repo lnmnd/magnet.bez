@@ -109,9 +109,10 @@
                      [:br]
                      (:gogoko_kopurua li) " ♥"]]]]])
    [:p.left "Liburuak guztira: " @liburu-kop]
-   [:p.right "orriak hemen "
+   [:ul.right.pagination 
     (let [[unekoa kop] @orriak]
-      (str kop " orri, " unekoa " unekoa"))]])
+      (for [i (range 1 (+ kop 1))]
+        ^{:key i} [:li (if (= unekoa i) {:class "current"}) [:a {:href "#"} i]]))]])
 
 (defn nire-liburuak [kan liburuak]
   [:div
