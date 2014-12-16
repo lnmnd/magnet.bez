@@ -92,7 +92,7 @@
                                            false)}
          "Ezabatu"]]])))
 
-(defn azken-liburuak [liburu-kop libuk]
+(defn liburuen-orria [liburu-kop libuk]
   [:div
    (for [li @libuk]
      ^{:key li} [:a {:href (str "#/liburuak/" (:id li))}
@@ -159,7 +159,7 @@
     [:div.medium-8.columns
      [:div.row
       (case bid
-        :index [azken-liburuak liburu-kopurua liburuak]
+        :index [liburuen-orria liburu-kopurua liburuak]
         :erregistratu [erregistratu saio-kan erabiltzaileak]
         :saioa-hasi [saioa-hasi saio-kan saioa]
         :profila [profila {:saio-kan saio-kan
