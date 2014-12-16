@@ -6,7 +6,7 @@
             [cljs-time.coerce :as coerce]            
             [reagent.core :as reagent :refer [atom]]
             [figwheel.client :as fw]
-            [magnet.konfig :refer [azken-gogoko-kopurua azken-iruzkin-kopurua azken-liburu-kopurua]]
+            [magnet.konfig :refer [azken-gogoko-kopurua azken-iruzkin-kopurua liburu-kopurua]]
             [magnet.bideak :as bideak]
             [magnet.bistak.core :as bistak]))
 
@@ -35,8 +35,8 @@
   nire-iruzkinak (atom []))
 (defonce ^{:doc "Nire gogoko liburuen zerenda"}
   nire-gogokoak (atom []))
-(defonce ^{:doc "Azken liburuen zerrenda"}
-  azken-liburuak (atom []))
+(defonce ^{:doc "Liburuen zerrenda"}
+  liburuak (atom []))
 (defonce ^{:doc "Liburuaren datuak"}
   liburua (atom {}))
 (defonce ^{:doc "Uneko liburuaren iruzkinak"}
@@ -262,19 +262,19 @@
                                   (- guztira azken-gogoko-kopurua)
                                   0)))))
   ([desp]
-   (go (let [liburuak (<! (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" azken-liburu-kopurua) :liburuak))]
+   (go (let [liburuak (<! (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" liburu-kopurua) :liburuak))]
          (reset! azken-gogokoena (reduce gogokoena {:gogoko_kopurua -1} liburuak))))))
 
-(defn azken-liburuak-lortu
+(defn liburuak-lortu
   "Azken liburuak lortzen ditu"
   ([]
      (entzun (str aurriz "liburuak")
-             #(azken-liburuak-lortu (if (> (:guztira %) azken-liburu-kopurua)
-                                      (- (:guztira %) azken-liburu-kopurua)
+             #(liburuak-lortu (if (> (:guztira %) liburu-kopurua)
+                                      (- (:guztira %) liburu-kopurua)
                                       0))))
   ([desp]
-     (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" azken-liburu-kopurua)
-             #(reset! azken-liburuak (reverse (:liburuak %))))))
+     (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" liburu-kopurua)
+             #(reset! liburuak (reverse (:liburuak %))))))
 
 (defn liburua-lortu
   "id duen liburua lortzen du."
@@ -341,7 +341,7 @@
   (when (= :birbidali mota)
     (set! (.-location js/window) (str "#" bal)))
   (if (= :index mota)
-    (azken-liburuak-lortu))
+    (liburuak-lortu))
   (when (= :erregistratu mota)
     (erabiltzaileak-lortu))    
   (when (= :liburua mota)
@@ -420,7 +420,7 @@
                                           :argitaletxeak argitaletxeak
                                           :generoak generoak
                                           :etiketak etiketak
-                                          :aliburuak azken-liburuak
+                                          :aliburuak liburuak
                                           :nliburuak nire-liburuak
                                           :niruzkinak nire-iruzkinak
                                           :ngogokoak nire-gogokoak
@@ -461,7 +461,7 @@
         (recur (<! iruzkin-kan))))
 
     (reset! bidea [:index nil])
-    (azken-liburuak-lortu)
+    (liburuak-lortu)
     (azken-gogokoena-lortu)
     (azken-iruzkinak-lortu))
 
