@@ -9,6 +9,7 @@
 (defn bideak-definitu []
   (bideak-eraiki
    [:index "/"]
+   [:liburuak "/orria/:orria" {:as params} (:orria params)]
    [:bilatu "/bilatu"]
    [:erregistratu "/erregistratu"]
    [:saioa-hasi "/saioa-hasi"]

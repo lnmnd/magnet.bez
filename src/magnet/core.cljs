@@ -349,6 +349,8 @@
     (set! (.-location js/window) (str "#" bal)))
   (when (= :index mota)
     (liburuak-lortu))
+  (when (= :liburuak mota)
+    (liburuak-lortu))
   (when (= :erregistratu mota)
     (erabiltzaileak-lortu))    
   (when (= :liburua mota)
@@ -360,7 +362,7 @@
     (argitaletxeak-lortu)
     (generoak-lortu)
     (etiketak-lortu))  
-  (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua :bilatu}
+  (when (contains? #{:index :liburuak :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua :bilatu}
                    mota)
     (reset! bidea [mota bal])))
 

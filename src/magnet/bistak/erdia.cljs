@@ -112,7 +112,7 @@
    [:ul.right.pagination 
     (let [[unekoa kop] @orriak]
       (for [i (range 1 (+ kop 1))]
-        ^{:key i} [:li (if (= unekoa i) {:class "current"}) [:a {:href "#"} i]]))]])
+        ^{:key i} [:li (if (= unekoa i) {:class "current"}) [:a {:href (str "#/" i)} i]]))]])
 
 (defn nire-liburuak [kan liburuak]
   [:div
@@ -163,6 +163,7 @@
      [:div.row
       (case bid
         :index [liburuen-orria liburu-kopurua orriak liburuak]
+        :liburuak [liburuen-orria liburu-kopurua orriak liburuak]
         :erregistratu [erregistratu saio-kan erabiltzaileak]
         :saioa-hasi [saioa-hasi saio-kan saioa]
         :profila [profila {:saio-kan saio-kan
