@@ -108,7 +108,8 @@
                      (:iruzkin_kopurua li) " ✍"
                      [:br]
                      (:gogoko_kopurua li) " ♥"]]]]])
-   [:p "Liburuak guztira: " @liburu-kop]])
+   [:p.left "Liburuak guztira: " @liburu-kop]
+   [:p.right "orriak hemen"]])
 
 (defn nire-liburuak [kan liburuak]
   [:div
