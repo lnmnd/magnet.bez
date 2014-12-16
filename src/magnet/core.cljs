@@ -6,7 +6,6 @@
             [cljs-time.coerce :as coerce]            
             [reagent.core :as reagent :refer [atom]]
             [figwheel.client :as fw]
-            [magnet.konfig :refer [azken-gogoko-kopurua azken-iruzkin-kopurua liburu-kopurua]]
             [magnet.bideak :as bideak]
             [magnet.bistak.core :as bistak]))
 
@@ -14,6 +13,9 @@
 
 (defonce ^{:doc "APIaren aurrizkia"}
   aurriz "")
+(defonce azken-gogoko-kopurua 0)
+(defonce azken-iruzkin-kopurua 0)
+(defonce liburu-kopurua 0)
 
 (defonce ^{:doc "Erabiltzailearen saioa"}
   saioa (atom {:hasiera-okerra false
@@ -428,8 +430,11 @@
                                           :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))
 
-(defn ^:export run [dev, zerbitzaria, portua]
+(defn ^:export run [dev, zerbitzaria, portua, kazken-gogoko-kopurua, kazken-iruzkin-kopurua, kliburu-kopurua]
   (set! aurriz (str "http://" zerbitzaria ":" portua "/v1/"))
+  (set! azken-gogoko-kopurua kazken-gogoko-kopurua)
+  (set! azken-iruzkin-kopurua kazken-iruzkin-kopurua)
+  (set! liburu-kopurua kliburu-kopurua)
   
   (let [saio-kan (chan)
         bide-kan (bideak/bideak-definitu)
