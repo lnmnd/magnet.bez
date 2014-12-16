@@ -268,7 +268,7 @@
          (reset! azken-gogokoena (reduce gogokoena {:gogoko_kopurua -1} liburuak))))))
 
 (defn liburuak-lortu
-  "Azken liburuak lortzen ditu"
+  "Liburuak lortzen ditu"
   ([]
      (entzun (str aurriz "liburuak")
              #(liburuak-lortu (if (> (:guztira %) liburu-kopurua)
