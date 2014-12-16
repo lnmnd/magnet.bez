@@ -425,6 +425,7 @@
                                           :argitaletxeak argitaletxeak
                                           :generoak generoak
                                           :etiketak etiketak
+                                          :liburu-kopurua liburu-kopurua
                                           :liburuak liburuak
                                           :nliburuak nire-liburuak
                                           :niruzkinak nire-iruzkinak

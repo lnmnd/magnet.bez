@@ -92,7 +92,7 @@
                                            false)}
          "Ezabatu"]]])))
 
-(defn azken-liburuak [libuk]
+(defn azken-liburuak [liburu-kop libuk]
   [:div
    (for [li @libuk]
      ^{:key li} [:a {:href (str "#/liburuak/" (:id li))}
@@ -107,7 +107,8 @@
                     [:div.small-4.columns
                      (:iruzkin_kopurua li) " ✍"
                      [:br]
-                     (:gogoko_kopurua li) " ♥"]]]]])])
+                     (:gogoko_kopurua li) " ♥"]]]]])
+   [:p "Liburuak guztira: " @liburu-kop]])
 
 (defn nire-liburuak [kan liburuak]
   [:div
@@ -152,12 +153,12 @@
    [:h1 "Bilatu"]
    [:p "todo"]])
 
-(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
+(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua liburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
       (case bid
-        :index [azken-liburuak liburuak]
+        :index [azken-liburuak liburu-kopurua liburuak]
         :erregistratu [erregistratu saio-kan erabiltzaileak]
         :saioa-hasi [saioa-hasi saio-kan saioa]
         :profila [profila {:saio-kan saio-kan
@@ -175,7 +176,7 @@
         :bilatu [bilatu]
         nil)]]))
 
-(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
+(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-gogokoena azken-iruzkinak]
    [nagusia {:saio-kan saio-kan
@@ -189,6 +190,7 @@
              :argitaletxeak argitaletxeak
              :generoak generoak
              :etiketak etiketak
+             :liburu-kopurua liburu-kopurua
              :liburuak liburuak
              :nliburuak nliburuak
              :niruzkinak niruzkinak
