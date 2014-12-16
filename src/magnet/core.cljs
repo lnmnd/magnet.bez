@@ -347,7 +347,7 @@
   "Bidearen gertaerekin zer egin erabakitzen du."
   (when (= :birbidali mota)
     (set! (.-location js/window) (str "#" bal)))
-  (if (= :index mota)
+  (when (= :index mota)
     (liburuak-lortu))
   (when (= :erregistratu mota)
     (erabiltzaileak-lortu))    
