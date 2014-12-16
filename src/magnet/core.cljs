@@ -37,6 +37,8 @@
   nire-iruzkinak (atom []))
 (defonce ^{:doc "Nire gogoko liburuen zerenda"}
   nire-gogokoak (atom []))
+(defonce ^{:doc "Guztira duden liburu kopurua"}
+  liburuak-guztira (atom 0))
 (defonce ^{:doc "Liburuen zerrenda"}
   liburuak (atom []))
 (defonce ^{:doc "Liburuaren datuak"}
@@ -271,9 +273,10 @@
   "Liburuak lortzen ditu"
   ([]
      (entzun (str aurriz "liburuak")
-             #(liburuak-lortu (if (> (:guztira %) liburu-kopurua)
-                                      (- (:guztira %) liburu-kopurua)
-                                      0))))
+             #(do (reset! liburuak-guztira (:guztira %))
+                  (liburuak-lortu (if (> @liburuak-guztira liburu-kopurua)
+                                    (- @liburuak-guztira liburu-kopurua)
+                                    0)))))
   ([desp]
      (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" liburu-kopurua)
              #(reset! liburuak (reverse (:liburuak %))))))
