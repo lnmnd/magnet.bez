@@ -348,7 +348,9 @@
   (when (= :birbidali mota)
     (set! (.-location js/window) (str "#" bal)))
   (when (= :index mota)
-    (liburuak-lortu))
+    (let [orria (if bal bal 1)]
+      (reset! orriak [orria (second @orriak)])
+      (liburuak-lortu)))
   (when (= :erregistratu mota)
     (erabiltzaileak-lortu))    
   (when (= :liburua mota)
