@@ -108,6 +108,7 @@
                      (:iruzkin_kopurua li) " ✍"
                      [:br]
                      (:gogoko_kopurua li) " ♥"]]]]])
+   [:hr]
    [:p.left "Liburuak guztira: " @liburu-kop]
    [:ul.right.pagination 
     (let [[unekoa kop] @orriak]
