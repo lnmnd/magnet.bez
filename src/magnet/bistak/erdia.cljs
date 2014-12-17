@@ -92,7 +92,7 @@
                                            false)}
          "Ezabatu"]]])))
 
-(defn azken-liburuak [libuk]
+(defn liburuen-orria [liburu-kop orriak libuk]
   [:div
    (for [li @libuk]
      ^{:key li} [:a {:href (str "#/liburuak/" (:id li))}
@@ -107,7 +107,13 @@
                     [:div.small-4.columns
                      (:iruzkin_kopurua li) " ✍"
                      [:br]
-                     (:gogoko_kopurua li) " ♥"]]]]])])
+                     (:gogoko_kopurua li) " ♥"]]]]])
+   [:hr]
+   [:p.left "Liburuak guztira: " @liburu-kop]
+   [:ul.right.pagination 
+    (let [[unekoa kop] @orriak]
+      (for [i (range 1 (+ kop 1))]
+        ^{:key i} [:li (if (= unekoa i) {:class "current"}) [:a {:href (str "#/orria/" i)} i]]))]])
 
 (defn nire-liburuak [kan liburuak]
   [:div
@@ -152,12 +158,13 @@
    [:h1 "Bilatu"]
    [:p "todo"]])
 
-(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak tituluak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
+(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
       (case bid
-        :index [azken-liburuak aliburuak]
+        :index [liburuen-orria liburu-kopurua orriak liburuak]
+        :liburuak [liburuen-orria liburu-kopurua orriak liburuak]
         :erregistratu [erregistratu saio-kan erabiltzaileak]
         :saioa-hasi [saioa-hasi saio-kan saioa]
         :profila [profila {:saio-kan saio-kan
@@ -175,7 +182,7 @@
         :bilatu [bilatu]
         nil)]]))
 
-(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak aliburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
+(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-gogokoena azken-iruzkinak]
    [nagusia {:saio-kan saio-kan
@@ -189,7 +196,9 @@
              :argitaletxeak argitaletxeak
              :generoak generoak
              :etiketak etiketak
-             :aliburuak aliburuak
+             :liburu-kopurua liburu-kopurua
+             :orriak orriak
+             :liburuak liburuak
              :nliburuak nliburuak
              :niruzkinak niruzkinak
              :ngogokoak ngogokoak

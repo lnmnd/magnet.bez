@@ -15,7 +15,7 @@
   aurriz "")
 (defonce azken-gogoko-kopurua 0)
 (defonce azken-iruzkin-kopurua 0)
-(defonce liburu-kopurua 0)
+(defonce liburu-orriko 0)
 
 (defonce ^{:doc "Erabiltzailearen saioa"}
   saioa (atom {:hasiera-okerra false
@@ -37,6 +37,10 @@
   nire-iruzkinak (atom []))
 (defonce ^{:doc "Nire gogoko liburuen zerenda"}
   nire-gogokoak (atom []))
+(defonce ^{:doc "Guztira duden liburu kopurua"}
+  liburu-kopurua (atom 0))
+(defonce ^{:doc "Orriak: uneko orria eta orri kopurua"}
+  orriak (atom [1 1]))
 (defonce ^{:doc "Liburuen zerrenda"}
   liburuak (atom []))
 (defonce ^{:doc "Liburuaren datuak"}
@@ -264,19 +268,21 @@
                                   (- guztira azken-gogoko-kopurua)
                                   0)))))
   ([desp]
-   (go (let [liburuak (<! (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" liburu-kopurua) :liburuak))]
+   (go (let [liburuak (<! (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" liburu-orriko) :liburuak))]
          (reset! azken-gogokoena (reduce gogokoena {:gogoko_kopurua -1} liburuak))))))
 
 (defn liburuak-lortu
-  "Azken liburuak lortzen ditu"
+  "Liburuak lortzen ditu"
   ([]
      (entzun (str aurriz "liburuak")
-             #(liburuak-lortu (if (> (:guztira %) liburu-kopurua)
-                                      (- (:guztira %) liburu-kopurua)
-                                      0))))
+             #(do (reset! liburu-kopurua (:guztira %))
+                  (liburuak-lortu (if (> @liburu-kopurua liburu-orriko)
+                                    (- @liburu-kopurua liburu-orriko)
+                                    0)))))
   ([desp]
-     (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" liburu-kopurua)
-             #(reset! liburuak (reverse (:liburuak %))))))
+     (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" liburu-orriko)
+             #(do (reset! orriak [(first @orriak) (Math/ceil (/ (:guztira %) liburu-orriko))])
+                  (reset! liburuak (reverse (:liburuak %)))))))
 
 (defn liburua-lortu
   "id duen liburua lortzen du."
@@ -342,8 +348,11 @@
   "Bidearen gertaerekin zer egin erabakitzen du."
   (when (= :birbidali mota)
     (set! (.-location js/window) (str "#" bal)))
-  (if (= :index mota)
-    (liburuak-lortu))
+  (when (= :index mota)
+    (let [orria (if bal bal 1)]
+      (reset! orriak [orria (second @orriak)])
+      (liburuak-lortu (- @liburu-kopurua
+                         (* liburu-orriko orria)))))
   (when (= :erregistratu mota)
     (erabiltzaileak-lortu))    
   (when (= :liburua mota)
@@ -422,7 +431,9 @@
                                           :argitaletxeak argitaletxeak
                                           :generoak generoak
                                           :etiketak etiketak
-                                          :aliburuak liburuak
+                                          :liburu-kopurua liburu-kopurua
+                                          :orriak orriak
+                                          :liburuak liburuak
                                           :nliburuak nire-liburuak
                                           :niruzkinak nire-iruzkinak
                                           :ngogokoak nire-gogokoak
@@ -430,11 +441,11 @@
                                           :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))
 
-(defn ^:export run [dev, zerbitzaria, portua, kazken-gogoko-kopurua, kazken-iruzkin-kopurua, kliburu-kopurua]
+(defn ^:export run [dev, zerbitzaria, portua, kazken-gogoko-kopurua, kazken-iruzkin-kopurua, kliburu-orriko]
   (set! aurriz (str "http://" zerbitzaria ":" portua "/v1/"))
   (set! azken-gogoko-kopurua kazken-gogoko-kopurua)
   (set! azken-iruzkin-kopurua kazken-iruzkin-kopurua)
-  (set! liburu-kopurua kliburu-kopurua)
+  (set! liburu-orriko kliburu-orriko)
   
   (let [saio-kan (chan)
         bide-kan (bideak/bideak-definitu)
