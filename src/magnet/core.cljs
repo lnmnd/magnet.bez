@@ -281,7 +281,8 @@
                                     0)))))
   ([desp]
      (entzun (str aurriz "liburuak?desplazamendua=" desp "&muga=" liburu-orriko)
-             #(reset! liburuak (reverse (:liburuak %))))))
+             #(do (reset! orriak [(first @orriak) (Math/ceil (/ (:guztira %) liburu-orriko))])
+                  (reset! liburuak (reverse (:liburuak %)))))))
 
 (defn liburua-lortu
   "id duen liburua lortzen du."
