@@ -350,7 +350,8 @@
   (when (= :index mota)
     (let [orria (if bal bal 1)]
       (reset! orriak [orria (second @orriak)])
-      (liburuak-lortu)))
+      (liburuak-lortu (- @liburu-kopurua
+                         (* liburu-orriko orria)))))
   (when (= :erregistratu mota)
     (erabiltzaileak-lortu))    
   (when (= :liburua mota)
