@@ -112,7 +112,7 @@
    [:ul.right.pagination 
     (let [[unekoa kop] @orriak]
       (for [i (range 1 (+ kop 1))]
-        ^{:key i} [:li (if (= unekoa i) {:class "current"}) [:a {:href (str "#/orriak/" i)} i]]))]])
+        ^{:key i} [:li (if (= unekoa i) {:class "current"}) [:a {:href (str "#/orria/" i)} i]]))]])
 
 (defn nire-liburuak [kan liburuak]
   [:div
