@@ -441,7 +441,7 @@
                                           :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))
 
-(defn ^:export run [dev, zerbitzaria, portua, kazken-gogoko-kopurua, kazken-iruzkin-kopurua, kliburu-orriko]
+(defn ^:export run [figwheel, zerbitzaria, portua, kazken-gogoko-kopurua, kazken-iruzkin-kopurua, kliburu-orriko]
   (set! aurriz (str "http://" zerbitzaria ":" portua "/v1/"))
   (set! azken-gogoko-kopurua kazken-gogoko-kopurua)
   (set! azken-iruzkin-kopurua kazken-iruzkin-kopurua)
@@ -481,5 +481,5 @@
     (azken-gogokoena-lortu)
     (azken-iruzkinak-lortu))
 
-  (when dev
+  (when figwheel
     (fw/watch-and-reload :jsload-callback reagent/force-update-all)))
