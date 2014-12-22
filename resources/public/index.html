@@ -121,8 +121,10 @@
     <script src="out/goog/base.js" type="text/javascript"></script>
     <script src="magnet.js" type="text/javascript"></script>
     <script type="text/javascript">goog.require("magnet.core");</script>
+    <script src="konfig.js" type="text/javascript"></script>
     <script type="text/javascript">
-     magnet.core.run(true, "localhost", 3000, 25, 10, 9);
+     magnet.core.run(konfig.dev, konfig.zerbitzaria, konfig.portua,
+		     konfig.azken_gogoko_kopurua, konfig.azken_iruzkin_kopurua, konfig.liburu_orriko);
     </script>
   </body>
 </html>

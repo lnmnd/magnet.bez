@@ -14,3 +14,5 @@ pom.xml.asc
 /resources/public//magnet.js.map
 /out/
 /dist/js/magnet.js
+/resources/public/konfig.js
+/dist/konfig.js
