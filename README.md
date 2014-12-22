@@ -1,5 +1,15 @@
 # Magnet loturak: bezeroa
 
+## Konfigurazioa
+
+konfig.js kopiatu ondorengo kokapenetara eta parametroak aldatu
+behar izanez gero:
+
+- Garapena: resources/public/konfig.js
+- Banaketa: dist/konfig.js
+
+Garapenean figwheel true izatea gomendatzen da eta banaketan false.
+
 ## Garapena
 
 ### REPL bidezkoa
