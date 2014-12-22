@@ -1,5 +1,5 @@
 konfig = {
-    dev: true,
+    figwheel: true,
     zerbitzaria: "localhost",
     portua: 3000,
     azken_gogoko_kopurua: 25,
