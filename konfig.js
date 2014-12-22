@@ -1,4 +1,4 @@
-konfig = {
+var konfig = {
     figwheel: true,
     zerbitzaria: "localhost",
     portua: 3000,
