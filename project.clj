@@ -17,7 +17,8 @@
             [lein-figwheel "0.1.5-SNAPSHOT"]]
   :codox {:language :clojurescript
           :src-dir-uri "http://github.com/lnmnd/magnet.bez/blob/master/"
-          :src-linenum-anchor-prefix "L"}
+          :src-linenum-anchor-prefix "L"
+          :project {:name "Magnet", :version "1.0.0", :description "Magnet loturak: bezeroa"}}
   :cljsbuild {
               :builds {
                        :dev
