@@ -16,7 +16,6 @@
             [lein-cljsbuild "1.0.3"]
             [lein-figwheel "0.1.5-SNAPSHOT"]]
   :codox {:language :clojurescript
-          :include ["magnet.core"]
           :src-dir-uri "http://github.com/lnmnd/magnet.bez/blob/master/"
           :src-linenum-anchor-prefix "L"}
   :cljsbuild {
