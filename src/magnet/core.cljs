@@ -364,7 +364,7 @@
     (argitaletxeak-lortu)
     (generoak-lortu)
     (etiketak-lortu))  
-  (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua :bilatu}
+  (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua}
                    mota)
     (reset! bidea [mota bal])))
 

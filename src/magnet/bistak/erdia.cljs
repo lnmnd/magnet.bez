@@ -153,11 +153,6 @@
                                                          false)} "X"]
                        " " [:a {:href (str "#/liburuak/" (:id x))} (:titulua x)]])])])
 
-(defn bilatu []
-  [:div
-   [:h1 "Bilatu"]
-   [:p "todo"]])
-
 (defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
@@ -179,7 +174,6 @@
                            :lib lib
                            :irak lib-irak
                            :ngogokoak ngogokoak}]
-        :bilatu [bilatu]
         nil)]]))
 
 (defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]

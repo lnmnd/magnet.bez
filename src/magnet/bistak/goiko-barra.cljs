@@ -13,8 +13,6 @@
     (if (:hasita @saioa)
       [:ul.right
        [:li.divider]
-       [:li [:a {:href "#/bilatu"} "Bilatu"]]
-       [:li.divider]
        [:li [:a {:href "#/liburua-gehitu"}
              "Liburua gehitu"]]
        [:li.divider]
@@ -34,8 +32,6 @@
                                           false)}
              (str (:erabiltzailea @saioa)) "-ren saioa amaitu"]]]
       [:ul.right
-       [:li.divider]
-       [:li [:a {:href "#/bilatu"} "Bilatu"]]
        [:li.divider]
        [:li [:a {:href "#/erregistratu"} "Erregistratu"]]
        [:li.divider]

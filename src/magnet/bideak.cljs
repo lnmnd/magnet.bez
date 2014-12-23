@@ -10,7 +10,6 @@
   (bideak-eraiki
    [:index "/"]
    [:index "/orria/:orria" {:as params} (:orria params)]
-   [:bilatu "/bilatu"]
    [:erregistratu "/erregistratu"]
    [:saioa-hasi "/saioa-hasi"]
    [:liburua-gehitu "/liburua-gehitu"]
