@@ -9,7 +9,7 @@
    [:div.medium-12.columns
     [:div.row
      [:div.medium-6.columns
-      [:p "Liburutruk"]]
+      [:p "Liburuak"]]
      [:div.medium-6.columns
       [:ul.inline-list.right
        [:li [:a {:href "#/honi-buruz"} "Honi buruz"]]]]]]])
