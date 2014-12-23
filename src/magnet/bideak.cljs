@@ -17,4 +17,5 @@
    [:nire-iruzkinak "/nire-iruzkinak"]
    [:nire-gogokoak "/nire-gogokoak"]
    [:profila "/profila"]
-   [:liburua "/liburuak/:id" {:as params} (:id params)]))
+   [:liburua "/liburuak/:id" {:as params} (:id params)]
+   [:honi-buruz "/honi-buruz"]))

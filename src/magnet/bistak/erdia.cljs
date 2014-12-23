@@ -153,6 +153,11 @@
                                                          false)} "X"]
                        " " [:a {:href (str "#/liburuak/" (:id x))} (:titulua x)]])])])
 
+(defn honi-buruz []
+  [:div
+   [:h2 "Honi buruz"]
+   [:p "Liburuak trukatzeko gunea."]])
+
 (defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
@@ -174,6 +179,7 @@
                            :lib lib
                            :irak lib-irak
                            :ngogokoak ngogokoak}]
+        :honi-buruz [honi-buruz]
         nil)]]))
 
 (defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]

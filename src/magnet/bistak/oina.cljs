@@ -7,9 +7,7 @@
    [:div.medium-12.columns
     [:div.row
      [:div.medium-6.columns
-      [:p "Oineko mezua"]]
+      [:p "Liburutruk"]]
      [:div.medium-6.columns
       [:ul.inline-list.right
-       [:li [:a {:href "#"} "Lotura 1"]]
-       [:li [:a {:href "#"} "Lotura 2"]]
-       [:li [:a {:href "#"} "Lotura 3"]]]]]]])
+       [:li [:a {:href "#/honi-buruz"} "Honi buruz"]]]]]]])
