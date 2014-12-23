@@ -16,6 +16,9 @@
             [lein-cljsbuild "1.0.3"]
             [lein-figwheel "0.1.5-SNAPSHOT"]]
   :codox {:language :clojurescript
+          :include ["magnet.bideak" "magnet.core" "magnet.lagun" "magnet.makroak"
+                    "magnet.bistak.core" "magnet.bistak.oina" "magnet.bistak.lagun" "magnet.bistak.goiko-barra"
+                    "magnet.bistak.erdia" "magnet.bistak.erdia.liburua" "magnet.bistak.erdia.liburua-gehitu" "magnet.bistak.erdia.alboko-barra"]
           :src-dir-uri "http://github.com/lnmnd/magnet.bez/blob/master/"
           :src-linenum-anchor-prefix "L"
           :project {:name "Magnet", :version "1.0.0", :description "Magnet loturak: bezeroa"}}
