@@ -11,7 +11,9 @@
     (for [ir @iruzkinak]
       ^{:key ir} [azken-iruzkina ir])]])
 
-(defn alboko-barra [lib iruzkinak]
+(defn alboko-barra
+  "Liburu bat eta iruzkinak erakusten ditu."
+  [lib iruzkinak]
   [:div.medium-4.small-12.hide-for-small.columns
    [:a {:href (str "#/liburuak/" (:id @lib))}
     [:img {:src (:azala @lib)}]]

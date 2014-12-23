@@ -5,7 +5,9 @@
             [magnet.bistak.erdia :as erdia]            
             [magnet.bistak.oina :as oina]))
 
-(defn main [{:keys [saio-kan liburu-kan iruzkin-kan saioa bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
+(defn main
+  "Bisten sarrera, datu guztiak pasa behar zaizkio."
+  [{:keys [saio-kan liburu-kan iruzkin-kan saioa bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
   [:div {:class "row"}
    [:div {:class "medium-12 columns"}
     [goiko-barra/main {:saio-kan saio-kan

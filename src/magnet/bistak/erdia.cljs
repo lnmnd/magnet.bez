@@ -6,8 +6,9 @@
             [magnet.bistak.erdia.liburua-gehitu :refer [liburua-gehitu]]
             [magnet.bistak.erdia.liburua :refer [liburua]]))
 
-; BISTAK
-(defn erregistratu [kan erak]
+(defn erregistratu
+  "Erregistratzeko orria, erabiltzailea existitzen bada abisatu egiten du."
+  [kan erak]
   (let [erabiltzailea (atom "")
         pasahitza (atom "")
         izena (atom "")
@@ -38,7 +39,9 @@
                                                                                 :izena @izena
                                                                                 :deskribapena @deskribapena}]))))}]]])))
 
-(defn saioa-hasi [kan saioa]
+(defn saioa-hasi
+  "Saioa hasteko orria, gaizki hasiz gero abisatu egiten du."
+  [kan saioa]
   (let [era (atom "")
         pas (atom "")]
     (fn [kan saioa]
@@ -55,7 +58,9 @@
                         :on-click #(formu-tratatu "#saioa-hasi"
                                                   (fn [] (put! kan [:saioa-hasi {:era @era :pas @pas}])))}]]])))
 
-(defn profila [{:keys [saio-kan saioa]}]
+(defn profila
+  "Erabiltzailearen profila, aldatzeko eta ezabatzeko aukerarekin."
+  [{:keys [saio-kan saioa]}]
   (let [pas (atom "")
         izen (atom "")
         des (atom "")
@@ -92,7 +97,9 @@
                                            false)}
          "Ezabatu"]]])))
 
-(defn liburuen-orria [liburu-kop orriak libuk]
+(defn liburuen-orria
+  "Liburuak erakusten ditu, behean orrien nabigazioarekin."
+  [liburu-kop orriak libuk]
   [:div
    (for [li @libuk]
      ^{:key li} [:a {:href (str "#/liburuak/" (:id li))}
@@ -158,7 +165,9 @@
    [:h2 "Honi buruz"]
    [:p "Liburuak trukatzeko gunea."]])
 
-(defn nagusia [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
+(defn nagusia
+  "Eduki nagusia, bidearen arabera aldatuko da."
+  [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak lib lib-irak]}]
   (let [[bid bal] @bidea]
     [:div.medium-8.columns
      [:div.row
@@ -182,7 +191,9 @@
         :honi-buruz [honi-buruz]
         nil)]]))
 
-(defn main [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
+(defn main
+  "Erdiko zatia, alboko barra eta eduki nagusia ditu."
+  [{:keys [saio-kan saioa liburu-kan iruzkin-kan bidea azken-gogokoena azken-iruzkinak erabiltzaileak tituluak egileak argitaletxeak generoak etiketak liburu-kopurua orriak liburuak nliburuak niruzkinak ngogokoak liburua lib-irak]}]
   [:div.row
    [alboko-barra azken-gogokoena azken-iruzkinak]
    [nagusia {:saio-kan saio-kan

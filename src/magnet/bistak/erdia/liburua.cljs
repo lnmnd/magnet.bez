@@ -3,7 +3,9 @@
             [reagent.core :as reagent :refer [atom]]
             [magnet.bistak.lagun :refer [formu-tratatu]]))
 
-(defn- iruzkin-form [{:keys [iruzkin-kan libid iruzkinak]}]
+(defn- iruzkin-form
+  "Iruzkina gehitzeko, gurasoak gehitzen ditu."
+  [{:keys [iruzkin-kan libid iruzkinak]}]
   (let [gurasoak (atom (sorted-map))
         guraso-kop (atom 0)
         gurasoa-gehituta? (fn [x] (some #(= x (:gurasoa (second %))) @gurasoak))
@@ -44,7 +46,9 @@
                                                              (reset! edukia ""))))}]]])))
 
 
-(defn- liburuaren-iruzkinak [irak]
+(defn- liburuaren-iruzkinak
+  "Iruzkinen segida."
+  [irak]
   [:div
    [:h2 "Iruzkinak"]
    (if (empty? @irak)
@@ -63,7 +67,9 @@
            [:li [:a {:href (str "#" x)} ">>" x]])]]))])
 
 
-(defn liburua [{:keys [saioa liburu-kan iruzkin-kan lib irak ngogokoak]}]
+(defn liburua
+  "Liburuaren datuak eta iruzkinak. Saioa hasita edukiz gero gogokoetan dagoen eta gehitzeko aukera."
+  [{:keys [saioa liburu-kan iruzkin-kan lib irak ngogokoak]}]
   (let [gogokoetan-dut? (some #(= (:id %) (:id @lib)) @ngogokoak)]
     [:div
      [:div.small-12.medium-6.columns

@@ -2,7 +2,9 @@
   (:require [cljs.core.async :refer [put!]]
             [reagent.core :as reagent :refer [atom]]))
 
-(defn main [{:keys [saio-kan saioa]}]
+(defn main
+  "Erabiltzailearen menua duen goiko barra."
+  [{:keys [saio-kan saioa]}]
   [:nav {:class "top-bar" :data-topbar true}
    [:ul.title-area
     [:li.name

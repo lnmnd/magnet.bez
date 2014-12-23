@@ -4,7 +4,9 @@
             [magnet.lagun :refer [levenshtein]]
             [magnet.bistak.lagun :refer [formu-tratatu]]))
 
-(defn liburua-gehitu [kan titulu-guztiak egile-guztiak argitaletxeak generoak etiketa-guztiak]
+(defn liburua-gehitu
+  "Liburua gehitzeko orria, hainbat eragiketa konplikatu egiten ditu datuak ongi bidaltzeko."
+  [kan titulu-guztiak egile-guztiak argitaletxeak generoak etiketa-guztiak]
   (let [bidali-klikatuta (atom false)
         epub (atom "")
         epub-aukeratuta (atom false)

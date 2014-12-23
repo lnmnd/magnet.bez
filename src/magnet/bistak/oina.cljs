@@ -2,7 +2,9 @@
   (:require [cljs.core.async :refer [put!]]
             [reagent.core :as reagent :refer [atom]]))
 
-(defn main []
+(defn main
+  "Webgunearen oina."
+  []
   [:footer.row
    [:div.medium-12.columns
     [:div.row
