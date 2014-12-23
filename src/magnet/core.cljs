@@ -1,4 +1,5 @@
-(ns magnet.core
+(ns ^{:doc "Aplikazioaren muina."}
+    magnet.core
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
   (:require [cljs.core.async :as async :refer [chan put! <! >! timeout]]
             [ajax.core :refer [GET POST PUT DELETE]]
@@ -11,12 +12,17 @@
 
 (enable-console-print!)
 
+;; Konfigurazioa, hasieran berridatziko da
 (defonce ^{:doc "APIaren aurrizkia"}
   aurriz "")
-(defonce azken-gogoko-kopurua 0)
-(defonce azken-iruzkin-kopurua 0)
-(defonce liburu-orriko 0)
+(defonce ^{:doc "Azkenengotatik gogokoena lortzeko hartuko diren liburuen kopurua"}
+  azken-gogoko-kopurua 0)
+(defonce ^{:doc "Azken iruzkinetan agertuko diren liburuen kopurua"}
+  azken-iruzkin-kopurua 0)
+(defonce ^{:doc "Orri bakoitzean agertuko diren liburuen kopurua"}
+  liburu-orriko 0)
 
+;; Aplikazioren egoera guztia hemen doa
 (defonce ^{:doc "Erabiltzailearen saioa"}
   saioa (atom {:hasiera-okerra false
                :hasita false
@@ -147,6 +153,7 @@
                           (if (empty? desk) param (assoc param :deskribapena desk))))))
 
 (defn erabiltzailea-lortu [era]
+  "Erabiltzailearen datuak lortzen ditu."
   (entzun (str aurriz "erabiltzaileak/" era)
           :erabiltzailea))
 
@@ -211,22 +218,32 @@
   (DELETE (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "?token=" (:token @saioa))
           {:handler #(saioa-amaitu)}))
 
-(defn liburua-gehitu [edukia]
+(defn liburua-gehitu
+  "Liburu berri bat gehitzen du."
+  [edukia]
   (bidali-eta-entzun (str aurriz "liburuak?token=" (:token @saioa))
                      edukia
                      :liburua))
 
-(defn liburua-ezabatu [id]
+(defn liburua-ezabatu
+  "Liburua ezabatzen du."
+  [id]
   (DELETE (str aurriz "liburuak/" id "?token=" (:token @saioa))))
 
-(defn gogokoetan-sartu [id]
+(defn gogokoetan-sartu
+  "Liburua uneko erabiltzailearen gogokoetan sartzen du."
+  [id]
   (bidali-eta-entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak?token=" (:token @saioa))
                      {:id id}))
 
-(defn gogokoetatik-kendu [id]
+(defn gogokoetatik-kendu
+  "Liburua uneko erabiltzailearen gogokoetatik kentzen du."
+  [id]
   (DELETE (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak/" id "?token=" (:token @saioa))))
 
-(defn iruzkina-ezabatu [id]
+(defn iruzkina-ezabatu
+  "Iruzkina ezabatzen du."
+  [id]
   (DELETE (str aurriz "iruzkinak/" id "?token=" (:token @saioa))))
 
 (defn azken-iruzkinak-lortu
@@ -240,22 +257,30 @@
      (entzun (str aurriz "iruzkinak?desplazamendua=" desp "&muga=" azken-iruzkin-kopurua)
              #(do (reset! azken-iruzkinak (reverse (:iruzkinak %)))))))
 
-(defn nire-liburuak-lortu []
+(defn nire-liburuak-lortu
+  "Uneko erabiltzaileak gehitutako liburuak lortzen ditu."
+  []
   (go (let [libk (<! (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/liburuak")
                              :liburuak))]
         (reset! nire-liburuak (rseq libk)))))
 
-(defn nire-iruzkinak-lortu []
+(defn nire-iruzkinak-lortu
+  "Uneko erabiltzaileak gehitutako iruzkinak lortzen ditu."
+  []
   (go (let [irk (<! (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/iruzkinak?muga=0")
                             :iruzkinak))]
         (reset! nire-iruzkinak (rseq irk)))))
 
-(defn nire-gogokoak-lortu []
+(defn nire-gogokoak-lortu
+  "Uneko erabiltzailearen gogoko liburuak lortzen ditu."
+  []
   (go (let [xs (<! (entzun (str aurriz "erabiltzaileak/" (:erabiltzailea @saioa) "/gogoko_liburuak?muga=0")
                             :gogoko_liburuak))]
         (reset! nire-gogokoak (rseq xs)))))
 
-(defn- gogokoena [x y]
+(defn- gogokoena
+  "Bi liburuetatik gogokoena itzultzen du."
+  [x y]
   (if (> (:gogoko_kopurua x) (:gogoko_kopurua y))
     x
     y))
@@ -272,7 +297,7 @@
          (reset! azken-gogokoena (reduce gogokoena {:gogoko_kopurua -1} liburuak))))))
 
 (defn liburuak-lortu
-  "Liburuak lortzen ditu"
+  "Liburuak lortzen ditu."
   ([]
      (entzun (str aurriz "liburuak")
              #(do (reset! liburu-kopurua (:guztira %))
@@ -345,7 +370,7 @@
   (entzun (str aurriz "egileak?muga=0") :egileak))
 
 (defn bide-kud [[mota bal]]
-  "Bidearen gertaerekin zer egin erabakitzen du."
+  "Bidearen gertaerekin lotutako kudeatzailea."
   (when (= :birbidali mota)
     (set! (.-location js/window) (str "#" bal)))
   (when (= :index mota)
@@ -369,7 +394,7 @@
     (reset! bidea [mota bal])))
 
 (defn saio-kud [[mota bal] bide-kan]
-  "Saioaren gertaerekin zer egin erabakitzen du"
+  "Saioaren gertaerekin lotutako kudeatzailea."
   (case mota
     :erregistratu (do (put! bide-kan [:birbidali "profila"])
                       (go (<! (erabiltzailea-gehitu (:erabiltzailea bal) (:pasahitza bal) (:izena bal) (:deskribapena bal)))
@@ -400,7 +425,9 @@
                             (gogokoetatik-kendu bal))
     nil))
 
-(defn erantzuna-gehitu [irak ir]
+(defn erantzuna-gehitu
+  "Iruzkinen segidan erantzuna gehitzen du."
+  [irak ir]
   (-> (map (fn [x]
              (if (contains? (set (:gurasoak ir)) (:id x))
                (update-in x [:erantzunak] #(conj % (:id ir)))
@@ -417,7 +444,9 @@
                           (iruzkina-ezabatu bal))
     nil))
 
-(defn errendatu [{:keys [saio-kan liburu-kan iruzkin-kan]}]
+(defn errendatu
+  "Datuak errendatzen ditu bistak erabiliz."
+  [{:keys [saio-kan liburu-kan iruzkin-kan]}]
   (reagent/render-component [bistak/main {:saio-kan saio-kan
                                           :liburu-kan liburu-kan
                                           :iruzkin-kan iruzkin-kan
@@ -441,7 +470,9 @@
                                           :lib-irak liburuaren-iruzkinak}]
                             (.querySelector js/document "#app")))
 
-(defn ^:export run [figwheel, zerbitzaria, portua, kazken-gogoko-kopurua, kazken-iruzkin-kopurua, kliburu-orriko]
+(defn ^:export run
+  "Sarrera, parametroen bidez konfiguratzen da."
+  [figwheel, zerbitzaria, portua, kazken-gogoko-kopurua, kazken-iruzkin-kopurua, kliburu-orriko]
   (set! aurriz (str "http://" zerbitzaria ":" portua "/v1/"))
   (set! azken-gogoko-kopurua kazken-gogoko-kopurua)
   (set! azken-iruzkin-kopurua kazken-iruzkin-kopurua)
