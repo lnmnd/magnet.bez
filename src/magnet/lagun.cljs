@@ -1,4 +1,5 @@
-(ns magnet.lagun)
+(ns ^{:doc "Funtzio laguntzaileak."}
+  magnet.lagun)
 
 ;; Wikibooks-etik:
 ;; https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Clojure
