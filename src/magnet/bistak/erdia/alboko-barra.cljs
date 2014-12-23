@@ -1,9 +1,11 @@
 (ns magnet.bistak.erdia.alboko-barra)
 
+(defn data [d]
+  [:span (take 10 d) " " (take 8 (drop 11 d))])
+
 (defn azken-iruzkina [ir]
   [:a {:href (str "#/liburuak/" (:liburua ir))}
-   [:div.panel.radius
-    [:blockquote {:style {:font-size "smaller"}} (:edukia ir) [:cite (:erabiltzailea ir) " - " (:data ir)]]]])
+   [:blockquote {:style {:font-size "smaller"}} (:edukia ir) [:cite (:erabiltzailea ir) " - " (data (:data ir))]]])
 
 (defn azken-iruzkinak [iruzkinak]
   [:div
