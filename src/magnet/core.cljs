@@ -472,8 +472,8 @@
 
 (defn ^:export run
   "Sarrera, parametroen bidez konfiguratzen da."
-  [figwheel, zerbitzaria, portua, kazken-gogoko-kopurua, kazken-iruzkin-kopurua, kliburu-orriko]
-  (set! aurriz (str "http://" zerbitzaria ":" portua "/v1/"))
+  [figwheel, api-oinarria, kazken-gogoko-kopurua, kazken-iruzkin-kopurua, kliburu-orriko]
+  (set! aurriz api-oinarria)
   (set! azken-gogoko-kopurua kazken-gogoko-kopurua)
   (set! azken-iruzkin-kopurua kazken-iruzkin-kopurua)
   (set! liburu-orriko kliburu-orriko)
