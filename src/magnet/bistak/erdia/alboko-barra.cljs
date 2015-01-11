@@ -10,8 +10,10 @@
 (defn azken-iruzkinak [iruzkinak]
   [:div
    [:h3 "Azken iruzkinak"
-    (for [ir @iruzkinak]
-      ^{:key ir} [azken-iruzkina ir])]])
+    (if (empty? @iruzkinak)
+      [:p "Iruzkinik ez."]
+      (for [ir @iruzkinak]
+        ^{:key ir} [azken-iruzkina ir]))]])
 
 (defn alboko-barra
   "Liburu bat eta iruzkinak erakusten ditu."
