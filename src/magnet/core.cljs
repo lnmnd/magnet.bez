@@ -254,8 +254,13 @@
                                        (- (:guztira %) azken-iruzkin-kopurua)
                                        0))))
   ([desp]
-     (entzun (str aurriz "iruzkinak?desplazamendua=" desp "&muga=" azken-iruzkin-kopurua)
-             #(do (reset! azken-iruzkinak (reverse (:iruzkinak %)))))))
+   (entzun (str aurriz "iruzkinak?desplazamendua=" desp "&muga=" azken-iruzkin-kopurua)
+           (fn [xs]
+             (let [irak (reverse (:iruzkinak xs))]
+               (if irak
+                 (reset! azken-iruzkinak irak)
+                 (do (reset! azken-iruzkinak '())
+                     [])))))))
 
 (defn nire-liburuak-lortu
   "Uneko erabiltzaileak gehitutako liburuak lortzen ditu."
