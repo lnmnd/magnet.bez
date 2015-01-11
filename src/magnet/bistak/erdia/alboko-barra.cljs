@@ -15,10 +15,8 @@
       (for [ir @iruzkinak]
         ^{:key ir} [azken-iruzkina ir]))]])
 
-(defn alboko-barra
-  "Liburu bat eta iruzkinak erakusten ditu."
-  [lib iruzkinak]
-  [:div.medium-4.small-12.hide-for-small.columns
+(defn gogoko-liburua [lib]
+  [:div
    [:a {:href (str "#/liburuak/" (:id @lib))}
     [:img {:src (:azala @lib)}]]
    [:div.panel
@@ -26,5 +24,11 @@
     [:h5 {:class "subheader"} (for [x (interpose ", " (:egileak @lib))]
                                 [:span x])]
     [:p (:iruzkin_kopurua @lib) " iruzkin" [:br]
-     (:gogoko_kopurua @lib) " gogoko"]]
+     (:gogoko_kopurua @lib) " gogoko"]]])
+
+(defn alboko-barra
+  "Liburu bat eta iruzkinak erakusten ditu."
+  [lib iruzkinak]
+  [:div.medium-4.small-12.hide-for-small.columns
+   [gogoko-liburua lib]
    [azken-iruzkinak iruzkinak]])
