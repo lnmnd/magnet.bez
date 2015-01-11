@@ -88,7 +88,7 @@
                                                     [:span x])])
         [:input {:type "text" :required true :max-length "256" :on-change #(do (reset! titulua (-> % .-target .-value))
                                                                                (titulua-aztertu))}]
-        [:label "Egileak"]
+        [:label "Egileak (gutxienez bat gehitu)"]
         [:div.row.collapse
          [:div.small-10.columns
           [:input {:type "text" :id "egilea" :placeholder "egile1,egile2" :list "liburua-gehitu-egileak"}]
@@ -115,19 +115,19 @@
          [:option {:value "Ingelesa"}]]
         [:label "Sinopsia"]
         [:textarea {:type "text" :required true :rows "4" :max-length "256" :on-change #(reset! sinopsia (-> % .-target .-value))}]        
-        [:label "Argitaletxea"]
+        [:label "Argitaletxea (hautazkoa)"]
         [:input {:type "text" :max-length "256" :list "liburua-gehitu-argitaletxeak" :on-change #(reset! argitaletxea (-> % .-target .-value))}]
         [:datalist {:id "liburua-gehitu-argitaletxeak"}
          (for [a @argitaletxeak]
            [:option {:value a}])]
         [:label "Urtea"]
         [:input {:type "number" :required true :max-length "4" :on-change #(reset! urtea (-> % .-target .-value))}]
-        [:label "Generoa"]
+        [:label "Generoa (hautazkoa)"]
         [:input {:type "text" :max-length "256" :list "liburua-gehitu-generoak" :on-change #(reset! generoa (-> % .-target .-value))}]
         [:datalist {:id "liburua-gehitu-generoak"}
          (for [x @generoak]
            [:option {:value x}])]
-        [:label "Etiketak"]
+        [:label "Etiketak (hautazkoa)"]
         [:div.row.collapse
          [:div.small-10.columns
           [:input {:type "text" :id "etiketa" :placeholder "etiketa1,etiketa2" :list "liburua-gehitu-etiketak"}]
