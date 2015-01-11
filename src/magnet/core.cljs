@@ -396,7 +396,8 @@
     (etiketak-lortu))  
   (when (contains? #{:index :erregistratu :saioa-hasi :liburua-gehitu :nire-liburuak :nire-iruzkinak :nire-gogokoak :profila :liburua :honi-buruz}
                    mota)
-    (reset! bidea [mota bal])))
+    (reset! bidea [mota bal])
+    (azken-iruzkinak-lortu)))
 
 (defn saio-kud [[mota bal] bide-kan]
   "Saioaren gertaerekin lotutako kudeatzailea."
