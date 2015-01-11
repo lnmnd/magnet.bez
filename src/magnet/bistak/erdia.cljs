@@ -101,20 +101,22 @@
   "Liburuak erakusten ditu, behean orrien nabigazioarekin."
   [liburu-kop orriak libuk]
   [:div
-   (for [li @libuk]
-     ^{:key li} [:a {:href (str "#/liburuak/" (:id li))}
-                 [:div.small-6.medium-4.columns
-                  [:img {:src (:azala li)}]
-                  [:div.panel
-                   [:h5 (:titulua li)]
-                   [:h6.subheader (interpose ", " (:egileak li))]
-                   [:div.row
-                    [:div.small-8.columns
-                     [:p.left (:erabiltzailea li)]]
-                    [:div.small-4.columns
-                     (:iruzkin_kopurua li) " ✍"
-                     [:br]
-                     (:gogoko_kopurua li) " ♥"]]]]])
+   (if (empty? @libuk)
+     [:p "Libururik ez"]
+     (for [li @libuk]
+       ^{:key li} [:a {:href (str "#/liburuak/" (:id li))}
+                   [:div.small-6.medium-4.columns
+                    [:img {:src (:azala li)}]
+                    [:div.panel
+                     [:h5 (:titulua li)]
+                     [:h6.subheader (interpose ", " (:egileak li))]
+                     [:div.row
+                      [:div.small-8.columns
+                       [:p.left (:erabiltzailea li)]]
+                      [:div.small-4.columns
+                       (:iruzkin_kopurua li) " ✍"
+                       [:br]
+                       (:gogoko_kopurua li) " ♥"]]]]]))
    [:hr]
    [:p.left "Liburuak guztira: " @liburu-kop]
    [:ul.right.pagination 
