@@ -30,5 +30,6 @@
   "Liburu bat eta iruzkinak erakusten ditu."
   [lib iruzkinak]
   [:div.medium-4.small-12.hide-for-small.columns
-   [gogoko-liburua lib]
+   (when (> (:gogoko_kopurua @lib) 0)
+     [gogoko-liburua lib])
    [azken-iruzkinak iruzkinak]])
