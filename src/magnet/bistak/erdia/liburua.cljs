@@ -99,7 +99,7 @@
        [:dt "Etiketak"]
        [:dd (for [x (interpose ", " (:etiketak @lib))]
               [:span x])]
-       [:dt "Sinposia"]
+       [:dt "Sinopsia"]
        [:dd (:sinopsia @lib)]]]
      [:div.small-12.medium-6.columns
       [:img {:src (:azala @lib)}]
