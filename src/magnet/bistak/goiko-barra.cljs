@@ -8,7 +8,7 @@
   [:nav {:class "top-bar" :data-topbar true}
    [:ul.title-area
     [:li.name
-     [:h1 [:a {:href "#"} "Liburuak"]]]
+     [:h1 [:a {:href "#"} "Liburutruk"]]]
     [:li {:class "toggle-topbar menu-icon"}
      [:a {:href "#"} [:span "menu"]]]]
    [:section.top-bar-section
