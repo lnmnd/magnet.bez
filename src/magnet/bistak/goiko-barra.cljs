@@ -10,7 +10,7 @@
     [:li.name
      [:h1 [:a {:href "#"} "Liburutruk"]]]
     [:li {:class "toggle-topbar menu-icon"}
-     [:a {:href "#"} [:span "menu"]]]]
+     [:a {:href "#"} [:span "menua"]]]]
    [:section.top-bar-section
     (if (:hasita @saioa)
       [:ul.right
